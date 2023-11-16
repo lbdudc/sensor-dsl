@@ -5,7 +5,7 @@ It parses a DSL instance and generates the spec for the web-based GIS SPL.
 ## Installation
 
 ```
-npm install
+npm install 
 ```
 
 ## Usage
