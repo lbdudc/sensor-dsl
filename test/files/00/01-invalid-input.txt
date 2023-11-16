@@ -1,0 +1,74 @@
+CREATE GIS city_example USING 4326;
+USE GIS city_example;
+
+CREATE ENTITY City (
+  id Long IDENTIFIER,
+  name String DISPLAY_STRING,
+  extension MultiPolygon,
+  points PointOfInterest RELATIONSHIP MAPPED_BY city,
+  streets Street RELATIONSHIP MAPPED_BY city
+);
+
+CREATE ENTITY Street (
+  id Long IDENTIFIER,
+  name String DISPLAY_STRING,
+  type String,
+  path MultiLineString,
+  city City RELATIONSHIP(0..*, 1..1) BIDIRECTIONAL
+);
+
+CREATE ENTITY PointOfInterest (
+  id Long IDENTIFIER,
+  name String DISPLAY_STRING,
+  location Point,
+  type PoiType RELATIONSHIP(0..*, 1..1),
+  city City RELATIONSHIP(0..*, 1..1) BIDIRECTIONAL
+);
+
+CREATE ENTITY PoiType (
+  id Long IDENTIFIER,
+  name String DISPLAY_STRING
+);
+
+CREATE TILE LAYER base AS "OpenStreetMap" (
+  url "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+);
+
+CREATE WMS STYLE streetLayerStyle (
+  styleLayerDescriptor "/home/acortinas/sld/streets-sld.xml"
+);
+
+CREATE WMS LAYER streetLayer AS "Streets" (
+  Street streetLayerStyle
+);
+
+CREATE GEOJSON LAYER pointsOfInterestLayer AS "Points of Interest" (
+  PointOfInterest EDITABLE,
+  fillColor #243452,
+  strokeColor #eeeee3,
+  fillOpacity 0.8,
+  strokeOpacity 0.9
+);
+
+CREATE WMS STYLE cityLayerStyle (
+  styleLayerDescriptor "/home/acortinas/sld/city-sld.xml"
+);
+
+CREATE WMS LAYER cityLayer AS "City" (
+  City cityLayerStyle,
+  Str2eet cityLayerStyle
+);
+
+CREATE MAP streets AS "Streets" (
+  base IS_BASE_LAYER,
+  streetLayer,
+  cityLayer HIDDEN
+);
+
+CREATE MAP points AS "Points of Interest" (
+  base IS_BASE_LAYER,
+  pointsOfInterestLayer,
+  cityLayer HIDDEN
+);
+
+GENERATE GIS city_example;

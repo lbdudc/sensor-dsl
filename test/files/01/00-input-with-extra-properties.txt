@@ -1,0 +1,13 @@
+CREATE GIS city_example USING 4326;
+USE GIS city_example;
+
+SET DEPLOYMENT (
+  "client_deploy_url" "http://domain.es",
+  "geoserver_user" "admin",
+  "geoserver_password" "geoserver",
+  "server_deploy_url" "http://domain.es/backend",
+  "geoserver_url_wms" "http://domain.es/geoserver",
+  "server_deploy_port" "9001"
+);
+
+GENERATE GIS city_example;
