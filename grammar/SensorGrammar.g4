@@ -10,70 +10,57 @@ sentence
 
 createStatement:
   CREATE_SYMBOL (
-    createSensor
-    | createDimension
+    createProduct
     | createRange
+    | createDimension
+    | createSensor
   )
 ;
 
-createSensor:
-  SENSOR_SYMBOL identifier OPAR_SYMBOL
-    INTERVAL_SYMBOL COLON_SYMBOL COMMA_SYMBOL
-    DATASOURCE_SYMBOL COLON_SYMBOL DATASOURCE_SYMBOL COMMA_SYMBOL
-    GEOMETRY_SYMBOL COLON_SYMBOL GEOMETRY_TYPE COMMA_SYMBOL
-  CPAR_SYMBOL 
-  (WITH_SYMBOL PROPERTIES_SYMBOL OPAR_SYMBOL
-    property (COMMA_SYMBOL property)*
-  CPAR_SYMBOL)?
-  (WITH_SYMBOL MEASUREMENT_SYMBOL DATA_SYMBOL OPAR_SYMBOL
-    measurementData (COMMA_SYMBOL measurementData)*
-  CPAR_SYMBOL)?
-  
+createProduct:
+  PRODUCT_SYMBOL identifier USING_SYMBOL srid SCOL_SYMBOL
+; 
 
-
-
-
-
-
-  /// TODO
-  SCOL_SYMBOL
-;
-
-createDimension: createCategoricalDimension | createSpatialDimension;
-
-measurementData:
-  identifier TYPE (UNITS_SYMBOL text)? (ICON_SYMBOL text)? (RANGE_SYMBOL identifier)?
-;
-
-createSpatialDimension:
-  SPATIAL_SYMBOL DIMENSION_SYMBOL identifier OPAR_SYMBOL
-    GEOMETRY_SYMBOL COLON_SYMBOL GEOMETRY_TYPE
-  CPAR_SYMBOL 
-  (WITH_SYMBOL PROPERTIES_SYMBOL OPAR_SYMBOL
-    property (COMMA_SYMBOL property)*
-  CPAR_SYMBOL)?
-  (WITH_SYMBOL PARENT_SYMBOL OPAR_SYMBOL
-    identifier
-  CPAR_SYMBOL)?
-  SCOL_SYMBOL
-;
-
-createCategoricalDimension:
-  CATEGORICAL_SYMBOL DIMENSION_SYMBOL identifier OPAR_SYMBOL
-    FIELD_SYMBOL COLON_SYMBOL property
-  CPAR_SYMBOL
-  SCOL_SYMBOL
-;
-
+// RANGES
 createRange:
   RANGE_SYMBOL identifier OPAR_SYMBOL
-    ((identifier | floatNumber | INT_NUMBER | INFINITY_SYMBOL | MINUS_INFINITY_SYMBOL) (TO_SYMBOL (identifier | floatNumber | INT_NUMBER | INFINITY_SYMBOL | MINUS_INFINITY_SYMBOL))? AS_SYMBOL text (COLOR_SYMBOL hexColor)? COMMA_SYMBOL? )*
+    rangeProperty (COMMA_SYMBOL rangeProperty)*
+  CPAR_SYMBOL SCOL_SYMBOL
+;
+
+rangeProperty:
+  rangeNumber (TO_SYMBOL rangeNumber)? AS_SYMBOL text (COLOR_SYMBOL hexColor)?
+  | DEFAULT_SYMBOL AS_SYMBOL text (COLOR_SYMBOL hexColor)?
+;
+
+rangeNumber:
+  IDENTIFIER
+  | FLOAT_NUMBER
+  | INT_NUMBER
+  | INFINITY_SYMBOL
+  | MINUS_INFINITY_SYMBOL
+;
+
+// DIMENSIONS
+createDimension: createSpatialDimension | createCategoricalDimension;
+
+createSpatialDimension: SPATIAL_SYMBOL DIMENSION_SYMBOL identifier OPAR_SYMBOL
+	  GEOMETRY_SYMBOL COLON_SYMBOL TYPE
   CPAR_SYMBOL
+  createDimensionProperties
   SCOL_SYMBOL
 ;
 
+createCategoricalDimension: CATEGORICAL_SYMBOL DIMENSION_SYMBOL identifier OPAR_SYMBOL
+  FIELD_SYMBOL COLON_SYMBOL identifier
+  CPAR_SYMBOL SCOL_SYMBOL
+;
 
-property: propertyDefinition;
+createDimensionProperties:
+  WITH_SYMBOL PROPERTIES_SYMBOL OPAR_SYMBOL
+    propertyDefinition (COMMA_SYMBOL propertyDefinition)*
+  CPAR_SYMBOL
+;
 
 propertyDefinition:
   identifier TYPE ( 
@@ -81,14 +68,30 @@ propertyDefinition:
   )*
 ;
 
-DATASOURCE_TYPE 
-  : ELASTICSEARCH_SYMBOL
-  | POSTGRES_SYMBOL
+// SENSORS
+createSensor: SENSOR_SYMBOL identifier OPAR_SYMBOL
+    INTERVAL_SYMBOL COLON_SYMBOL INT_NUMBER COMMA_SYMBOL
+    DATASOURCE_SYMBOL COLON_SYMBOL dataSource COMMA_SYMBOL
+    GEOMETRY_SYMBOL COLON_SYMBOL TYPE
+  CPAR_SYMBOL
+    createSensorMeasurementData
+  SCOL_SYMBOL
 ;
 
+createSensorMeasurementData:
+  WITH_SYMBOL MEASUREMENT_SYMBOL DATA_SYMBOL OPAR_SYMBOL
+    createMeasurementProperty (COMMA_SYMBOL createMeasurementProperty)*
+  CPAR_SYMBOL
+;
 
+createMeasurementProperty:
+  identifier TYPE (UNITS_SYMBOL text)? (ICON_SYMBOL text)? (RANGE_SYMBOL identifier)?
+;
+
+srid: INT_NUMBER;
 identifier: IDENTIFIER;
 text: QUOTED_TEXT;
+dataSource: POSTGRES_SYMBOL | ELASTICSEARCH_SYMBOL;
 
 hexColor: HEX_COLOR;
 floatNumber: FLOAT_NUMBER;
@@ -138,6 +141,8 @@ fragment QUOTE_SYMBOL: '"';
 
 CREATE_SYMBOL: C R E A T E;
 SENSOR_SYMBOL: S E N S O R;
+PRODUCT_SYMBOL: P R O D U C T;
+USING_SYMBOL: U S I N G;
 DIMENSION_SYMBOL: D I M E N S I O N;
 RANGE_SYMBOL: R A N G E;
 WITH_SYMBOL: W I T H;
@@ -153,6 +158,7 @@ CATEGORICAL_SYMBOL: C A T E G O R I C A L;
 UNITS_SYMBOL: U N I T S;
 ICON_SYMBOL: I C O N;
 BBOX_SYMBOL: B B O X;
+DEFAULT_SYMBOL: D E F A U L T;
 DISPLAYSTRING_SYMBOL: D I S P L A Y UNDERLINE_SYMBOL S T R I N G;
 FIELD_SYMBOL: F I E L D;
 AS_SYMBOL: A S;
@@ -161,8 +167,8 @@ INFINITY_SYMBOL: I N F I N I T Y;
 MINUS_INFINITY_SYMBOL: DASH_SYMBOL I N F I N I T Y;
 TO_SYMBOL: T O;
 
-ELASTICSEARCH_SYMBOL: QUOTE_SYMBOL E L A S T I C S E A R C H QUOTE_SYMBOL;
-POSTGRES_SYMBOL: QUOTE_SYMBOL P O S T G R E S QUOTE_SYMBOL;
+ELASTICSEARCH_SYMBOL: E L A S T I C S E A R C H;
+POSTGRES_SYMBOL: P O S T G R E S;
 
 TYPE
   : L O N G
@@ -179,11 +185,6 @@ TYPE
   | M U L T I P O I N T
 ;
 
-GEOMETRY_TYPE
-  : P O L Y G O N
-  | P O I N T
-;
-
 POUND_SYMBOL : '#';
 DOT_SYMBOL   : '.';
 OPAR_SYMBOL  : '(';
@@ -192,6 +193,9 @@ COMMA_SYMBOL : ',';
 SCOL_SYMBOL  : ';';
 COLON_SYMBOL : ':';
 DASH_SYMBOL  : '-';
+BRA_SYMBOL   : '[';
+KET_SYMBOL   : ']';
+
 
 HEX_COLOR: POUND_SYMBOL HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT;
 INT_NUMBER: DIGITS;

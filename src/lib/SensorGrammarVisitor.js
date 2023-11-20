@@ -24,20 +24,32 @@ export default class SensorGrammarVisitor extends antlr4.tree.ParseTreeVisitor {
 	}
 
 
-	// Visit a parse tree produced by SensorGrammarParser#createSensor.
-	visitCreateSensor(ctx) {
+	// Visit a parse tree produced by SensorGrammarParser#createProduct.
+	visitCreateProduct(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by SensorGrammarParser#createRange.
+	visitCreateRange(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by SensorGrammarParser#rangeProperty.
+	visitRangeProperty(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by SensorGrammarParser#rangeNumber.
+	visitRangeNumber(ctx) {
 	  return this.visitChildren(ctx);
 	}
 
 
 	// Visit a parse tree produced by SensorGrammarParser#createDimension.
 	visitCreateDimension(ctx) {
-	  return this.visitChildren(ctx);
-	}
-
-
-	// Visit a parse tree produced by SensorGrammarParser#measurementData.
-	visitMeasurementData(ctx) {
 	  return this.visitChildren(ctx);
 	}
 
@@ -54,20 +66,38 @@ export default class SensorGrammarVisitor extends antlr4.tree.ParseTreeVisitor {
 	}
 
 
-	// Visit a parse tree produced by SensorGrammarParser#createRange.
-	visitCreateRange(ctx) {
-	  return this.visitChildren(ctx);
-	}
-
-
-	// Visit a parse tree produced by SensorGrammarParser#property.
-	visitProperty(ctx) {
+	// Visit a parse tree produced by SensorGrammarParser#createDimensionProperties.
+	visitCreateDimensionProperties(ctx) {
 	  return this.visitChildren(ctx);
 	}
 
 
 	// Visit a parse tree produced by SensorGrammarParser#propertyDefinition.
 	visitPropertyDefinition(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by SensorGrammarParser#createSensor.
+	visitCreateSensor(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by SensorGrammarParser#createSensorMeasurementData.
+	visitCreateSensorMeasurementData(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by SensorGrammarParser#createMeasurementProperty.
+	visitCreateMeasurementProperty(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by SensorGrammarParser#srid.
+	visitSrid(ctx) {
 	  return this.visitChildren(ctx);
 	}
 
@@ -80,6 +110,12 @@ export default class SensorGrammarVisitor extends antlr4.tree.ParseTreeVisitor {
 
 	// Visit a parse tree produced by SensorGrammarParser#text.
 	visitText(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by SensorGrammarParser#dataSource.
+	visitDataSource(ctx) {
 	  return this.visitChildren(ctx);
 	}
 

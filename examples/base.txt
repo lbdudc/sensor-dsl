@@ -1,0 +1,72 @@
+CREATE PRODUCT intecmar USING 4326;
+
+CREATE SPATIAL DIMENSION Estuary (
+  geometry: Polygon
+) WITH PROPERTIES (
+  shortName String DISPLAY_STRING,
+  name String,
+  zone String
+);
+
+CREATE SPATIAL DIMENSION Otro (
+  geometry: Point
+) WITH PROPERTIES (
+  nombreCorto String DISPLAY_STRING,
+  nombre String
+);
+
+CREATE RANGE DepthRange (
+  0 TO 3 AS "surface",
+  4.75 TO 5.25 AS "5m",
+  9.75 TO 10.25 AS "10m",
+  19.75 TO 20.25 AS "20m"
+);
+
+CREATE RANGE TempRange (
+  -Infinity TO 0 AS "frio" COLOR #0000FF,
+  10 TO 20 AS "templado" COLOR #00FF00,
+  20 TO Infinity AS "caliente" COLOR #FF0000,
+  DEFAULT AS "desconocido" COLOR #FFFFFF
+);
+
+CREATE RANGE Sexo (
+  hombre AS "hombre" COLOR #0000FF,
+  mujer AS "mujer" COLOR #FF0000
+);
+
+CREATE CATEGORICAL DIMENSION DepthDimension (
+  field: depth
+);
+
+CREATE SENSOR StationObservation (
+  interval: 500,
+  datasource: elasticsearch,
+  geometry: Point
+) WITH MEASUREMENT DATA (
+  temperature Double,
+  temp2 Double UNITS "°C",
+  temp3 Double UNITS "°C" ICON "thermometer",
+  temp4 Double UNITS "°C" ICON "thermometer" RANGE TempRange,
+  temp5 Double ICON "thermometer" RANGE TempRange,
+  temp6 Double RANGE TempRange,
+  temp5 Double ICON "thermometer"
+);
+
+CREATE SENSOR Sens2 (
+  interval: 10000,
+  datasource: elasticsearch,
+  geometry: Point
+) WITH MEASUREMENT DATA (
+  temperature_ITS90 Double UNITS "ºC" ICON "thermometer-low" RANGE TempRange,
+  salinity Double UNITS "PSU",
+  pressure Double UNITS "dbar" ICON "speedometer",
+  ph Double UNITS "pH" ICON "ph",
+  oxygen Double UNITS "mg/l" ICON "gas-cylinder",
+  transmittance Double UNITS "m",
+  irradiance Double UNITS "W/m2",
+  uv_flourescence Double UNITS "mg/m3",
+  density Double UNITS "kg/m3",
+  depth Double UNITS "m",
+  temperature_ITS68 Double UNITS "ºC" ICON "thermometer-low",
+  conductivity Double UNITS "S/m"
+);

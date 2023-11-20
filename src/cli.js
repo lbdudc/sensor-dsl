@@ -2,7 +2,7 @@
 
 import meow from "meow";
 import fs from "fs";
-import gisdslParser from "./index.js";
+import sensordslParser from "./index.js";
 import path from "path";
 
 const usage = "Usage: gisdsl input output";
@@ -26,7 +26,7 @@ const input = fs.readFileSync(inputPath, {
   encoding: "utf-8",
 });
 
-const spec = gisdslParser(input, cli.flags.debug);
+const spec = sensordslParser(input, cli.flags.debug);
 
 const outputPath = path.resolve(process.cwd(), cli.input.at(1));
 fs.writeFileSync(outputPath, JSON.stringify(spec, null, 2), "utf8");

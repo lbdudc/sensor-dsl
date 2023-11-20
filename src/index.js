@@ -22,5 +22,5 @@ export default function parse(inputStr, debug = false) {
   const tree = parser.parse();
   visitor.start(tree);
 
-  return store.getLastGeneratedProduct();
+  return store.getProduct();
 }
