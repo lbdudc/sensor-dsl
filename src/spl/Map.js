@@ -17,12 +17,11 @@ class Map {
     return this.name;
   }
 
-  addLayer(layer, isBaseLayer = false, hidden = false) {
-    this.layers.push({
-      name: layer,
-      baseLayer: isBaseLayer,
-      selected: !hidden,
-    });
+  addLayer(layer, isBaseLayer, hidden) {
+    const newLayer = layer;
+    if (isBaseLayer != null) newLayer.baseLayer = isBaseLayer;
+    if (hidden != null) newLayer.selected = hidden;
+    this.layers.push(layer);
   }
 
   toString() {

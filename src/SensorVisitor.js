@@ -143,9 +143,9 @@ class Visitor extends SensorGrammarVisitor {
         color: hasColor ? ctx.getChild(6).getText() : null,
         style: new GeoJSONLayerStyle(
           range.id +
-            "-" +
-            ctx.getChild(4).getText().replace(/['"]+/g, "") +
-            "Style",
+          "-" +
+          ctx.getChild(4).getText().replace(/['"]+/g, "") +
+          "Style",
           color,
           color,
           1,
@@ -162,9 +162,9 @@ class Visitor extends SensorGrammarVisitor {
         color: hasColor ? ctx.getChild(4).getText() : null,
         style: new GeoJSONLayerStyle(
           range.id +
-            "-" +
-            ctx.getChild(2).getText().replace(/['"]+/g, "") +
-            "Style",
+          "-" +
+          ctx.getChild(2).getText().replace(/['"]+/g, "") +
+          "Style",
           color,
           color,
           1,
@@ -223,8 +223,14 @@ class Visitor extends SensorGrammarVisitor {
       "base",
       "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     );
-    map.addLayer(baseLayer, true);
-    this.store.getProduct().addLayer(baseLayer);
+    map.addLayer(baseLayer);
+
+    this.store.getProduct().addLayer({
+      name: "base",
+      baseLayer: true,
+      selected: true,
+      order: 0
+    });
 
     const layer = new GeoJSONLayer(
       sensor.defaultLayer,
@@ -242,7 +248,16 @@ class Visitor extends SensorGrammarVisitor {
       "orangePolygon",
     ];
     map.addLayer(layer);
-    this.store.getProduct().addLayer(layer);
+
+    this.store.getProduct().addLayer(
+      {
+        name: sensor.defaultLayer,
+        baseLayer: false,
+        style: "grayPoint",
+        selected: true,
+        order: 1
+      }
+    );
 
     // ADD MAP
     this.store.getProduct().addMap(defaultMap, map);
@@ -336,6 +351,14 @@ class Visitor extends SensorGrammarVisitor {
                 range.maxValue == "Infinity"
                   ? range.maxValue
                   : parseFloat(range.maxValue);
+
+              if (range.value != null) {
+                return {
+                  value : range.value,
+                  label: range.label,
+                  style: range.style.name,
+                }
+              }
               return {
                 minValue: minValue,
                 maxValue: maxValue,
@@ -376,10 +399,13 @@ class Visitor extends SensorGrammarVisitor {
     }
 
     // ADD TO LAYER AVAILABLE STYLES
-    this.store
+    const layer = this.store
       .getProduct()
-      .getLayer(sensor.defaultLayer)
-      .availableStyles.push(sensorName + "Style");
+      .getMap(sensor.defaultMap).layers
+      .find((l) => l.name == sensor.defaultLayer);
+
+    if (layer != null)
+      layer.availableStyles.push(sensorName + "Style");
 
     super.visitCreateMeasurementProperty(ctx);
   }

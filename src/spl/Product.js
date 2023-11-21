@@ -87,7 +87,7 @@ class Product {
   }
 
   getMap(id) {
-    return this.maps.find((m) => m.id == id);
+    return this.maps.find((m) => m.name == id);
   }
 
   addMap(id, map) {
