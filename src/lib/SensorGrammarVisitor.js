@@ -72,14 +72,26 @@ export default class SensorGrammarVisitor extends antlr4.tree.ParseTreeVisitor {
 	}
 
 
-	// Visit a parse tree produced by SensorGrammarParser#propertyDefinition.
-	visitPropertyDefinition(ctx) {
+	// Visit a parse tree produced by SensorGrammarParser#dimPropertyDefinition.
+	visitDimPropertyDefinition(ctx) {
 	  return this.visitChildren(ctx);
 	}
 
 
 	// Visit a parse tree produced by SensorGrammarParser#createSensor.
 	visitCreateSensor(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by SensorGrammarParser#createSensorProperties.
+	visitCreateSensorProperties(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by SensorGrammarParser#sensorPropertyDefinition.
+	visitSensorPropertyDefinition(ctx) {
 	  return this.visitChildren(ctx);
 	}
 

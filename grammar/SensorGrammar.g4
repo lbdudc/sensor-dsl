@@ -58,11 +58,11 @@ createCategoricalDimension: CATEGORICAL_SYMBOL DIMENSION_SYMBOL identifier OPAR_
 
 createDimensionProperties:
   WITH_SYMBOL PROPERTIES_SYMBOL OPAR_SYMBOL
-    propertyDefinition (COMMA_SYMBOL propertyDefinition)*
+    dimPropertyDefinition (COMMA_SYMBOL dimPropertyDefinition)*
   CPAR_SYMBOL
 ;
 
-propertyDefinition:
+dimPropertyDefinition:
   identifier TYPE ( 
     DISPLAYSTRING_SYMBOL
   )*
@@ -74,8 +74,23 @@ createSensor: SENSOR_SYMBOL identifier OPAR_SYMBOL
     DATASOURCE_SYMBOL COLON_SYMBOL dataSource COMMA_SYMBOL
     GEOMETRY_SYMBOL COLON_SYMBOL TYPE
   CPAR_SYMBOL
+    createSensorProperties
     createSensorMeasurementData
   SCOL_SYMBOL
+;
+
+createSensorProperties:
+  WITH_SYMBOL PROPERTIES_SYMBOL OPAR_SYMBOL
+    sensorPropertyDefinition (COMMA_SYMBOL sensorPropertyDefinition)*
+  CPAR_SYMBOL
+;
+
+sensorPropertyDefinition:
+  identifier TYPE (
+     DISPLAYSTRING_SYMBOL
+    | REQUIRED_SYMBOL
+    | UNIQUE_SYMBOL
+  )*
 ;
 
 createSensorMeasurementData:
@@ -163,6 +178,8 @@ DISPLAYSTRING_SYMBOL: D I S P L A Y UNDERLINE_SYMBOL S T R I N G;
 FIELD_SYMBOL: F I E L D;
 AS_SYMBOL: A S;
 COLOR_SYMBOL: C O L O R;
+REQUIRED_SYMBOL: R E Q U I R E D;
+UNIQUE_SYMBOL: U N I Q U E;
 INFINITY_SYMBOL: I N F I N I T Y;
 MINUS_INFINITY_SYMBOL: DASH_SYMBOL I N F I N I T Y;
 TO_SYMBOL: T O;
@@ -173,10 +190,12 @@ POSTGRES_SYMBOL: P O S T G R E S;
 TYPE
   : L O N G
   | B O O L E A N
+  | F L O A T
   | I N T E G E R
   | D O U B L E
   | L O C A L D A T E
   | S T R I N G
+  | D A T E T I M E
   | L I N E S T R I N G
   | M U L T I L I N E S T R I N G
   | P O L Y G O N

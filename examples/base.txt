@@ -42,20 +42,13 @@ CREATE SENSOR StationObservation (
   interval: 500,
   datasource: elasticsearch,
   geometry: Point
-) WITH MEASUREMENT DATA (
-  temperature Double,
-  temp2 Double UNITS "°C",
-  temp3 Double UNITS "°C" ICON "thermometer",
-  temp4 Double UNITS "°C" ICON "thermometer" RANGE TempRange,
-  temp5 Double ICON "thermometer" RANGE TempRange,
-  temp6 Double RANGE TempRange,
-  temp5 Double ICON "thermometer"
-);
-
-CREATE SENSOR Sens2 (
-  interval: 10000,
-  datasource: elasticsearch,
-  geometry: Point
+) WITH PROPERTIES (
+  maxDepth Float,
+  code String,
+  name String,
+  description String,
+  startTime Datetime,
+  endTime Datetime
 ) WITH MEASUREMENT DATA (
   temperature_ITS90 Double UNITS "ºC" ICON "thermometer-low" RANGE TempRange,
   salinity Double UNITS "PSU",
@@ -67,6 +60,5 @@ CREATE SENSOR Sens2 (
   uv_flourescence Double UNITS "mg/m3",
   density Double UNITS "kg/m3",
   depth Double UNITS "m",
-  temperature_ITS68 Double UNITS "ºC" ICON "thermometer-low",
   conductivity Double UNITS "S/m"
 );

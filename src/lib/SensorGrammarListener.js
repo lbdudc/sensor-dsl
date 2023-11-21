@@ -104,12 +104,12 @@ export default class SensorGrammarListener extends antlr4.tree.ParseTreeListener
 	}
 
 
-	// Enter a parse tree produced by SensorGrammarParser#propertyDefinition.
-	enterPropertyDefinition(ctx) {
+	// Enter a parse tree produced by SensorGrammarParser#dimPropertyDefinition.
+	enterDimPropertyDefinition(ctx) {
 	}
 
-	// Exit a parse tree produced by SensorGrammarParser#propertyDefinition.
-	exitPropertyDefinition(ctx) {
+	// Exit a parse tree produced by SensorGrammarParser#dimPropertyDefinition.
+	exitDimPropertyDefinition(ctx) {
 	}
 
 
@@ -119,6 +119,24 @@ export default class SensorGrammarListener extends antlr4.tree.ParseTreeListener
 
 	// Exit a parse tree produced by SensorGrammarParser#createSensor.
 	exitCreateSensor(ctx) {
+	}
+
+
+	// Enter a parse tree produced by SensorGrammarParser#createSensorProperties.
+	enterCreateSensorProperties(ctx) {
+	}
+
+	// Exit a parse tree produced by SensorGrammarParser#createSensorProperties.
+	exitCreateSensorProperties(ctx) {
+	}
+
+
+	// Enter a parse tree produced by SensorGrammarParser#sensorPropertyDefinition.
+	enterSensorPropertyDefinition(ctx) {
+	}
+
+	// Exit a parse tree produced by SensorGrammarParser#sensorPropertyDefinition.
+	exitSensorPropertyDefinition(ctx) {
 	}
 
 

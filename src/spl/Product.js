@@ -29,6 +29,30 @@ class Product {
     return this.entities.find((e) => e.name == name);
   }
 
+  addRelationship(source, target, sourceOpts, targetOpts) {
+    const existingRelationship = this.getRelationship(
+      source,
+      target,
+      sourceOpts.label
+    );
+    if (existingRelationship) {
+      existingRelationship.update(sourceOpts, targetOpts);
+    } else {
+      this.relationships.push(
+        new Relationship(source, target, sourceOpts, targetOpts)
+      );
+    }
+  }
+
+  getRelationship(source, target, sourceLabel) {
+    return this.relationships.find(
+      (e) =>
+        e.source == source &&
+        e.target == target &&
+        e.sourceOpts.label == sourceLabel
+    );
+  }
+
   addSensor(name, interval, datasource, geom) {
     if (this.getSensor(name)) {
       throw `Sensor ${name} already exists!!!`;
@@ -40,6 +64,41 @@ class Product {
 
   getSensor(id) {
     return this.dataWarehouse.sensors.find((s) => s.id == id);
+  }
+
+  getMaps() {
+    return this.maps;
+  }
+
+  getLayer(id) {
+    return this.layers.find((l) => l.getId() == id);
+  }
+
+  addLayer(layer) {
+    this.layers.push(layer);
+  }
+
+  getStyle(id) {
+    return this.styles.find((s) => s.getId() == id);
+  }
+
+  addStyle(style) {
+    this.styles.push(style);
+  }
+
+  getMap(id) {
+    return this.maps.find((m) => m.id == id);
+  }
+
+  addMap(id, map) {
+    this.maps.push(map);
+  }
+
+  addDeploymentProperty(key, value) {
+    if (!this.extra) {
+      this.extra = {};
+    }
+    this.extra[key] = value;
   }
 
   /**
@@ -137,6 +196,40 @@ class Property {
       ":" +
       this.class +
       (this.params ? "(" + Object.keys(this.params).join(", ") + ")" : "")
+    );
+  }
+}
+
+class Relationship {
+  constructor(source, target, sourceOpts, targetOpts) {
+    this.source = source;
+    this.target = target;
+    this.sourceOpts = sourceOpts;
+    this.targetOpts = targetOpts;
+    if (!this.targetOpts.label) {
+      this.targetOpts.label = this.source.toLowerCase();
+      if (this.targetOpts.multiplicity.indexOf("*") != -1) {
+        this.targetOpts.label += "s";
+      }
+    }
+  }
+
+  update(sourceOpts, targetOpts) {
+    if (targetOpts.label) {
+      this.targetOpts.label = targetOpts.label;
+    }
+    if (targetOpts.multiplicity) {
+      this.targetOpts.multiplicity = targetOpts.multiplicity;
+    }
+    if (sourceOpts.multiplicity) {
+      this.sourceOpts.multiplicity = sourceOpts.multiplicity;
+    }
+  }
+
+  toString() {
+    return (
+      `${this.source}.${this.sourceOpts.label}(${this.sourceOpts.multiplicity})` +
+      ` -> ${this.target}.${this.targetOpts.label}(${this.targetOpts.multiplicity})`
     );
   }
 }

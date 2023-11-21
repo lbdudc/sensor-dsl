@@ -81,6 +81,9 @@ function transformation(spec) {
         entities: spec.entities,
         enums: [],
       },
+      dataWarehouse: {
+        sensors: spec.dataWarehouse.sensors,
+      },
     },
     mapViewer: {
       maps: spec.maps,

@@ -1,5 +1,13 @@
 import SensorGrammarVisitor from "./lib/SensorGrammarVisitor.js";
 import Product from "./spl/Product.js";
+import {
+  TileLayer,
+  GeoJSONLayer,
+  Map,
+  GeoJSONLayerStyle,
+  StaticIntervalsStyle,
+} from "./spl/Map.js";
+import { getPropertyParams } from "./GISVisitorHelper.js";
 
 class Visitor extends SensorGrammarVisitor {
   constructor(store, debug) {
@@ -29,6 +37,17 @@ class Visitor extends SensorGrammarVisitor {
     const srid = ctx.getChild(3).getText();
     this.log(`visitCreateGIS: ${gisName}`);
     this.store.setProduct(new Product(gisName, srid));
+
+    // CREATE BASE STYLES
+    const baseStyles = [
+      new GeoJSONLayerStyle("redPoint", "#FF0000", 0.5, 1, 1),
+      new GeoJSONLayerStyle("greenPoint", "#008000", 0.5, 1, 1),
+      new GeoJSONLayerStyle("orangePoint", "#FFA500", 0.5, 1, 1),
+      new GeoJSONLayerStyle("redPolygon", "#FF0000", 0.5, 1, 1),
+      new GeoJSONLayerStyle("greenPolygon", "#008000", 0.5, 1, 1),
+      new GeoJSONLayerStyle("orangePolygon", "#FFA500", 0.5, 1, 1),
+    ];
+    baseStyles.forEach((style) => this.store.getProduct().addStyle(style));
   }
 
   // --------   DIMENSIONS  --------
@@ -79,7 +98,7 @@ class Visitor extends SensorGrammarVisitor {
     this.store.setCurrentDimension(null);
   }
 
-  visitPropertyDefinition(ctx) {
+  visitDimPropertyDefinition(ctx) {
     const propertyName = ctx.getChild(0).getText();
     const propertyType = ctx.getChild(1).getText();
     const hasDisplayString = ctx.getChildCount() == 3;
@@ -95,7 +114,7 @@ class Visitor extends SensorGrammarVisitor {
     }
 
     this.store.getCurrentDimension().properties.push(dimProps);
-    super.visitPropertyDefinition(ctx);
+    super.visitDimPropertyDefinition(ctx);
   }
 
   // --------   RANGES  --------
@@ -111,23 +130,46 @@ class Visitor extends SensorGrammarVisitor {
 
   visitRangeProperty(ctx) {
     let rangeProps = {};
+    const range = this.store.getCurrentRange();
     const hasToSymbol = ctx.getChild(1).getText() == "TO";
 
     if (hasToSymbol) {
       const hasColor = ctx.getChildCount() == 7;
+      const color = hasColor ? ctx.getChild(6).getText() : "#808080";
       rangeProps = {
-        fromValue: ctx.getChild(0).getText(),
-        toValue: ctx.getChild(2).getText(),
+        minValue: ctx.getChild(0).getText(),
+        maxValue: ctx.getChild(2).getText(),
         label: ctx.getChild(4).getText().replace(/['"]+/g, ""),
         color: hasColor ? ctx.getChild(6).getText() : null,
+        style: new GeoJSONLayerStyle(
+          range.id +
+            "-" +
+            ctx.getChild(4).getText().replace(/['"]+/g, "") +
+            "Style",
+          color,
+          color,
+          1,
+          1
+        ),
       };
     } else {
       // Does not have TO symbol
       const hasColor = ctx.getChildCount() == 5;
+      const color = hasColor ? ctx.getChild(4).getText() : "#808080";
       rangeProps = {
         value: ctx.getChild(0).getText(),
         label: ctx.getChild(2).getText().replace(/['"]+/g, ""),
         color: hasColor ? ctx.getChild(4).getText() : null,
+        style: new GeoJSONLayerStyle(
+          range.id +
+            "-" +
+            ctx.getChild(2).getText().replace(/['"]+/g, "") +
+            "Style",
+          color,
+          color,
+          1,
+          1
+        ),
       };
     }
 
@@ -135,9 +177,7 @@ class Visitor extends SensorGrammarVisitor {
       delete rangeProps.color;
     }
 
-    const range = this.store.getCurrentRange();
     range.properties.push(rangeProps);
-
     super.visitRangeProperty(ctx);
   }
 
@@ -158,6 +198,78 @@ class Visitor extends SensorGrammarVisitor {
     this.store.setCurrentSensor(null);
   }
 
+  visitCreateSensorProperties(ctx) {
+    const sensor = this.store.getCurrentSensor();
+
+    // ADD ENTITY AND SET ID AND GEOMETRY
+    this.store.getProduct().addEntity(sensor.entity);
+    this.store.setCurrentEntity(sensor.entity);
+    this.store
+      .getCurrentEntity()
+      .addProperty(
+        "id",
+        "Long",
+        getPropertyParams(["identifier", "required", "unique"])
+      );
+    this.store.getCurrentEntity().addProperty("geometry", sensor.geom);
+
+    // ADD BASE LAYER AND SENSOR LAYER
+    const { id, defaultMap } = sensor;
+
+    const map = new Map(defaultMap, id + " Map");
+
+    const baseLayer = new TileLayer(
+      "base",
+      "base",
+      "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    );
+    map.addLayer(baseLayer, true);
+    this.store.getProduct().addLayer(baseLayer);
+
+    const layer = new GeoJSONLayer(
+      sensor.defaultLayer,
+      sensor.entity,
+      sensor.entity + "-geometry",
+      false,
+      "grayPoint"
+    );
+    layer.availableStyles = [
+      "greenPoint",
+      "redPoint",
+      "orangePoint",
+      "greenPolygon",
+      "redPolygon",
+      "orangePolygon",
+    ];
+    map.addLayer(layer);
+    this.store.getProduct().addLayer(layer);
+
+    // ADD MAP
+    this.store.getProduct().addMap(defaultMap, map);
+
+    super.visitCreateSensorProperties(ctx);
+
+    this.store.setCurrentEntity(null);
+  }
+
+  visitSensorPropertyDefinition(ctx) {
+    const pName = ctx.getChild(0).getText();
+    this.log(`visitPropertyDefinition: ${pName}`);
+    const pType = ctx.getChild(1).getText();
+
+    this.store.getCurrentEntity().addProperty(
+      pName,
+      pType,
+      getPropertyParams(
+        ctx.children
+          .slice(2)
+          .filter((s) => s.getSymbol)
+          .map((s) => s.getSymbol().text.toLowerCase())
+      )
+    );
+  }
+
+  // --------   SENSOR MEASUREMENTS  --------
   visitCreateSensorMeasurementData(ctx) {
     super.visitCreateSensorMeasurementData(ctx);
   }
@@ -199,6 +311,75 @@ class Visitor extends SensorGrammarVisitor {
       sensorProps.type = sensorType;
       sensor.addMeasureData(sensorProps);
     }
+
+    // ADD STYLES FOR EACH MEASURE DATA
+    // IF HAS CUSTOM RANGES, NEED TO ADD TO AVAILABLE STYLES
+    const customRange = this.store.getRange(sensorProps.range);
+    if (customRange) {
+      // ADD TO LAYER AVAILABLE STYLES
+      customRange.properties.forEach((range) => {
+        this.store.getProduct().addStyle(range.style);
+      });
+
+      this.store.getProduct().addStyle(
+        new StaticIntervalsStyle(
+          sensorName + "Style",
+          "data." + sensorName,
+          customRange.properties
+            .filter((range) => range.value != "DEFAULT")
+            .map((range) => {
+              const minValue =
+                range.minValue == "-Infinity"
+                  ? range.minValue
+                  : parseFloat(range.minValue);
+              const maxValue =
+                range.maxValue == "Infinity"
+                  ? range.maxValue
+                  : parseFloat(range.maxValue);
+              return {
+                minValue: minValue,
+                maxValue: maxValue,
+                label: range.label,
+                style: range.style.name,
+              };
+            }),
+          customRange.properties
+            .filter((range) => range.value == "DEFAULT")
+            .map((range) => range.style.name)[0]
+        )
+      );
+    } else {
+      this.store.getProduct().addStyle(
+        new StaticIntervalsStyle(
+          sensorName + "Style",
+          "data." + sensorName,
+          [
+            {
+              minValue: "-Infinity",
+              maxValue: 20,
+              style: "greenPoint",
+            },
+            {
+              minValue: 20,
+              maxValue: 40,
+              style: "orangePoint",
+            },
+            {
+              minValue: 40,
+              maxValue: "Infinity",
+              style: "redPoint",
+            },
+          ],
+          "grayPoint"
+        )
+      );
+    }
+
+    // ADD TO LAYER AVAILABLE STYLES
+    this.store
+      .getProduct()
+      .getLayer(sensor.defaultLayer)
+      .availableStyles.push(sensorName + "Style");
 
     super.visitCreateMeasurementProperty(ctx);
   }

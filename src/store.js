@@ -4,6 +4,7 @@ const store = {
   currentDimension: null,
   currentRange: null,
   currentSensor: null,
+  currentLayer: null,
   dimensions: [],
   ranges: [],
   lastGeneratedProduct: null,
@@ -113,6 +114,21 @@ function setCurrentEntity(entityName) {
   }
 }
 
+function getCurrentLayer() {
+  return store.currentLayer;
+}
+
+function setCurrentLayer(layerName) {
+  if (!layerName) {
+    store.currentLayer = null;
+  } else {
+    store.currentLayer = getProduct().getLayer(layerName);
+    if (!store.currentLayer) {
+      throw `Layer ${layerName} does not exist in current product!!!`;
+    }
+  }
+}
+
 function reset() {
   store.product = {};
 }
@@ -126,6 +142,8 @@ export default {
   setCurrentSensor,
   getCurrentRange,
   setCurrentRange,
+  getCurrentLayer,
+  setCurrentLayer,
   addSpatialDimension,
   addCategoricalDimension,
   getDimension,
