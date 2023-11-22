@@ -42,13 +42,17 @@ CREATE RANGE TempRange (
   DEFAULT AS "desconocido" COLOR #FFFFFF
 );
 
-CREATE RANGE Sexo (
+CREATE RANGE SexoRange (
   hombre AS "hombre" COLOR #0000FF,
   mujer AS "mujer" COLOR #FF0000
 );
 
 CREATE CATEGORICAL DIMENSION DepthDimension (
   field: depth
+);
+
+CREATE CATEGORICAL DIMENSION SexoDimension (
+  field: sex
 );
 
 CREATE SENSOR StationObservation (
@@ -80,4 +84,8 @@ CREATE SENSOR StationObservation (
   Section
 ) WITH SPATIAL DIMENSIONS Barrio (
   Barrio
+) WITH CATEGORICAL DIMENSIONS (
+  DepthDimension RANGE DepthRange,
+  SexoDimension RANGE SexoRange,
+  SexoDimension
 );

@@ -4,87 +4,96 @@ import antlr4 from 'antlr4';
 import SensorGrammarListener from './SensorGrammarListener.js';
 import SensorGrammarVisitor from './SensorGrammarVisitor.js';
 
-const serializedATN = [4,1,50,270,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,
+const serializedATN = [4,1,50,297,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,
 4,2,5,7,5,2,6,7,6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,
 2,13,7,13,2,14,7,14,2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,
-20,7,20,2,21,7,21,2,22,7,22,2,23,7,23,2,24,7,24,1,0,4,0,52,8,0,11,0,12,0,
-53,1,1,1,1,1,2,1,2,1,2,1,2,1,2,3,2,63,8,2,1,3,1,3,1,3,1,3,1,3,1,3,1,4,1,
-4,1,4,1,4,1,4,1,4,5,4,77,8,4,10,4,12,4,80,9,4,1,4,1,4,1,4,1,5,1,5,1,5,3,
-5,88,8,5,1,5,1,5,1,5,1,5,3,5,94,8,5,1,5,1,5,1,5,1,5,1,5,3,5,101,8,5,3,5,
-103,8,5,1,6,1,6,1,7,1,7,3,7,109,8,7,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,
-1,8,3,8,121,8,8,1,8,1,8,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,10,1,10,
-1,10,1,10,1,10,1,10,5,10,141,8,10,10,10,12,10,144,9,10,1,10,1,10,1,11,1,
-11,1,11,1,11,1,11,1,11,5,11,154,8,11,10,11,12,11,157,9,11,1,11,1,11,1,12,
-1,12,1,12,5,12,164,8,12,10,12,12,12,167,9,12,1,13,1,13,1,13,1,13,1,13,1,
-13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,5,13,187,
-8,13,10,13,12,13,190,9,13,1,13,1,13,1,14,1,14,1,14,1,14,1,14,1,14,5,14,200,
-8,14,10,14,12,14,203,9,14,1,14,1,14,1,15,1,15,1,15,5,15,210,8,15,10,15,12,
-15,213,9,15,1,16,1,16,1,16,1,16,1,16,1,16,1,16,5,16,222,8,16,10,16,12,16,
-225,9,16,1,16,1,16,1,17,1,17,1,17,1,17,3,17,233,8,17,1,17,1,17,3,17,237,
-8,17,1,17,1,17,3,17,241,8,17,1,18,1,18,1,18,1,18,1,18,1,18,1,18,1,18,5,18,
-251,8,18,10,18,12,18,254,9,18,1,18,1,18,1,19,1,19,1,20,1,20,1,21,1,21,1,
-22,1,22,1,23,1,23,1,24,1,24,1,24,0,0,25,0,2,4,6,8,10,12,14,16,18,20,22,24,
-26,28,30,32,34,36,38,40,42,44,46,48,0,3,3,0,28,29,45,46,49,49,2,0,22,22,
-26,27,1,0,31,32,266,0,51,1,0,0,0,2,55,1,0,0,0,4,57,1,0,0,0,6,64,1,0,0,0,
-8,70,1,0,0,0,10,102,1,0,0,0,12,104,1,0,0,0,14,108,1,0,0,0,16,110,1,0,0,0,
-18,124,1,0,0,0,20,134,1,0,0,0,22,147,1,0,0,0,24,160,1,0,0,0,26,168,1,0,0,
-0,28,193,1,0,0,0,30,206,1,0,0,0,32,214,1,0,0,0,34,228,1,0,0,0,36,242,1,0,
-0,0,38,257,1,0,0,0,40,259,1,0,0,0,42,261,1,0,0,0,44,263,1,0,0,0,46,265,1,
-0,0,0,48,267,1,0,0,0,50,52,3,2,1,0,51,50,1,0,0,0,52,53,1,0,0,0,53,51,1,0,
-0,0,53,54,1,0,0,0,54,1,1,0,0,0,55,56,3,4,2,0,56,3,1,0,0,0,57,62,5,1,0,0,
-58,63,3,6,3,0,59,63,3,8,4,0,60,63,3,14,7,0,61,63,3,26,13,0,62,58,1,0,0,0,
-62,59,1,0,0,0,62,60,1,0,0,0,62,61,1,0,0,0,63,5,1,0,0,0,64,65,5,3,0,0,65,
-66,3,40,20,0,66,67,5,4,0,0,67,68,3,38,19,0,68,69,5,39,0,0,69,7,1,0,0,0,70,
-71,5,7,0,0,71,72,3,40,20,0,72,73,5,36,0,0,73,78,3,10,5,0,74,75,5,38,0,0,
-75,77,3,10,5,0,76,74,1,0,0,0,77,80,1,0,0,0,78,76,1,0,0,0,78,79,1,0,0,0,79,
-81,1,0,0,0,80,78,1,0,0,0,81,82,5,37,0,0,82,83,5,39,0,0,83,9,1,0,0,0,84,87,
-3,12,6,0,85,86,5,30,0,0,86,88,3,12,6,0,87,85,1,0,0,0,87,88,1,0,0,0,88,89,
-1,0,0,0,89,90,5,24,0,0,90,93,3,42,21,0,91,92,5,25,0,0,92,94,3,46,23,0,93,
-91,1,0,0,0,93,94,1,0,0,0,94,103,1,0,0,0,95,96,5,21,0,0,96,97,5,24,0,0,97,
-100,3,42,21,0,98,99,5,25,0,0,99,101,3,46,23,0,100,98,1,0,0,0,100,101,1,0,
-0,0,101,103,1,0,0,0,102,84,1,0,0,0,102,95,1,0,0,0,103,11,1,0,0,0,104,105,
-7,0,0,0,105,13,1,0,0,0,106,109,3,16,8,0,107,109,3,18,9,0,108,106,1,0,0,0,
-108,107,1,0,0,0,109,15,1,0,0,0,110,111,5,15,0,0,111,112,5,5,0,0,112,113,
-3,40,20,0,113,114,5,36,0,0,114,115,5,12,0,0,115,116,5,40,0,0,116,117,5,33,
-0,0,117,118,5,37,0,0,118,120,3,22,11,0,119,121,3,20,10,0,120,119,1,0,0,0,
-120,121,1,0,0,0,121,122,1,0,0,0,122,123,5,39,0,0,123,17,1,0,0,0,124,125,
-5,17,0,0,125,126,5,5,0,0,126,127,3,40,20,0,127,128,5,36,0,0,128,129,5,23,
-0,0,129,130,5,40,0,0,130,131,3,40,20,0,131,132,5,37,0,0,132,133,5,39,0,0,
-133,19,1,0,0,0,134,135,5,8,0,0,135,136,5,16,0,0,136,137,5,36,0,0,137,142,
-3,40,20,0,138,139,5,38,0,0,139,141,3,40,20,0,140,138,1,0,0,0,141,144,1,0,
-0,0,142,140,1,0,0,0,142,143,1,0,0,0,143,145,1,0,0,0,144,142,1,0,0,0,145,
-146,5,37,0,0,146,21,1,0,0,0,147,148,5,8,0,0,148,149,5,9,0,0,149,150,5,36,
-0,0,150,155,3,24,12,0,151,152,5,38,0,0,152,154,3,24,12,0,153,151,1,0,0,0,
-154,157,1,0,0,0,155,153,1,0,0,0,155,156,1,0,0,0,156,158,1,0,0,0,157,155,
-1,0,0,0,158,159,5,37,0,0,159,23,1,0,0,0,160,161,3,40,20,0,161,165,5,33,0,
-0,162,164,5,22,0,0,163,162,1,0,0,0,164,167,1,0,0,0,165,163,1,0,0,0,165,166,
-1,0,0,0,166,25,1,0,0,0,167,165,1,0,0,0,168,169,5,2,0,0,169,170,3,40,20,0,
-170,171,5,36,0,0,171,172,5,10,0,0,172,173,5,40,0,0,173,174,5,45,0,0,174,
-175,5,38,0,0,175,176,5,11,0,0,176,177,5,40,0,0,177,178,3,44,22,0,178,179,
-5,38,0,0,179,180,5,12,0,0,180,181,5,40,0,0,181,182,5,33,0,0,182,183,5,37,
-0,0,183,184,3,28,14,0,184,188,3,32,16,0,185,187,3,36,18,0,186,185,1,0,0,
-0,187,190,1,0,0,0,188,186,1,0,0,0,188,189,1,0,0,0,189,191,1,0,0,0,190,188,
-1,0,0,0,191,192,5,39,0,0,192,27,1,0,0,0,193,194,5,8,0,0,194,195,5,9,0,0,
-195,196,5,36,0,0,196,201,3,30,15,0,197,198,5,38,0,0,198,200,3,30,15,0,199,
-197,1,0,0,0,200,203,1,0,0,0,201,199,1,0,0,0,201,202,1,0,0,0,202,204,1,0,
-0,0,203,201,1,0,0,0,204,205,5,37,0,0,205,29,1,0,0,0,206,207,3,40,20,0,207,
-211,5,33,0,0,208,210,7,1,0,0,209,208,1,0,0,0,210,213,1,0,0,0,211,209,1,0,
-0,0,211,212,1,0,0,0,212,31,1,0,0,0,213,211,1,0,0,0,214,215,5,8,0,0,215,216,
-5,13,0,0,216,217,5,14,0,0,217,218,5,36,0,0,218,223,3,34,17,0,219,220,5,38,
-0,0,220,222,3,34,17,0,221,219,1,0,0,0,222,225,1,0,0,0,223,221,1,0,0,0,223,
-224,1,0,0,0,224,226,1,0,0,0,225,223,1,0,0,0,226,227,5,37,0,0,227,33,1,0,
-0,0,228,229,3,40,20,0,229,232,5,33,0,0,230,231,5,18,0,0,231,233,3,42,21,
-0,232,230,1,0,0,0,232,233,1,0,0,0,233,236,1,0,0,0,234,235,5,19,0,0,235,237,
-3,42,21,0,236,234,1,0,0,0,236,237,1,0,0,0,237,240,1,0,0,0,238,239,5,7,0,
-0,239,241,3,40,20,0,240,238,1,0,0,0,240,241,1,0,0,0,241,35,1,0,0,0,242,243,
-5,8,0,0,243,244,5,15,0,0,244,245,5,6,0,0,245,246,3,40,20,0,246,247,5,36,
-0,0,247,252,3,40,20,0,248,249,5,38,0,0,249,251,3,40,20,0,250,248,1,0,0,0,
-251,254,1,0,0,0,252,250,1,0,0,0,252,253,1,0,0,0,253,255,1,0,0,0,254,252,
-1,0,0,0,255,256,5,37,0,0,256,37,1,0,0,0,257,258,5,45,0,0,258,39,1,0,0,0,
-259,260,5,49,0,0,260,41,1,0,0,0,261,262,5,50,0,0,262,43,1,0,0,0,263,264,
-7,2,0,0,264,45,1,0,0,0,265,266,5,44,0,0,266,47,1,0,0,0,267,268,5,46,0,0,
-268,49,1,0,0,0,20,53,62,78,87,93,100,102,108,120,142,155,165,188,201,211,
-223,232,236,240,252];
+20,7,20,2,21,7,21,2,22,7,22,2,23,7,23,2,24,7,24,2,25,7,25,1,0,4,0,54,8,0,
+11,0,12,0,55,1,1,1,1,1,2,1,2,1,2,1,2,1,2,3,2,65,8,2,1,3,1,3,1,3,1,3,1,3,
+1,3,1,4,1,4,1,4,1,4,1,4,1,4,5,4,79,8,4,10,4,12,4,82,9,4,1,4,1,4,1,4,1,5,
+1,5,1,5,3,5,90,8,5,1,5,1,5,1,5,1,5,3,5,96,8,5,1,5,1,5,1,5,1,5,1,5,3,5,103,
+8,5,3,5,105,8,5,1,6,1,6,1,7,1,7,3,7,111,8,7,1,8,1,8,1,8,1,8,1,8,1,8,1,8,
+1,8,1,8,1,8,3,8,123,8,8,1,8,1,8,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,
+1,10,1,10,1,10,1,10,1,10,1,10,5,10,143,8,10,10,10,12,10,146,9,10,1,10,1,
+10,1,11,1,11,1,11,1,11,1,11,1,11,5,11,156,8,11,10,11,12,11,159,9,11,1,11,
+1,11,1,12,1,12,1,12,5,12,166,8,12,10,12,12,12,169,9,12,1,13,1,13,1,13,1,
+13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,
+5,13,189,8,13,10,13,12,13,192,9,13,1,13,3,13,195,8,13,1,13,1,13,1,14,1,14,
+1,14,1,14,1,14,1,14,5,14,205,8,14,10,14,12,14,208,9,14,1,14,1,14,1,15,1,
+15,1,15,5,15,215,8,15,10,15,12,15,218,9,15,1,16,1,16,1,16,1,16,1,16,1,16,
+1,16,5,16,227,8,16,10,16,12,16,230,9,16,1,16,1,16,1,17,1,17,1,17,1,17,3,
+17,238,8,17,1,17,1,17,3,17,242,8,17,1,17,1,17,3,17,246,8,17,1,18,1,18,1,
+18,1,18,1,18,1,18,1,18,1,18,5,18,256,8,18,10,18,12,18,259,9,18,1,18,1,18,
+1,19,1,19,1,19,1,19,1,19,1,19,1,19,3,19,270,8,19,1,19,1,19,1,19,1,19,3,19,
+276,8,19,5,19,278,8,19,10,19,12,19,281,9,19,1,19,1,19,1,20,1,20,1,21,1,21,
+1,22,1,22,1,23,1,23,1,24,1,24,1,25,1,25,1,25,0,0,26,0,2,4,6,8,10,12,14,16,
+18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,0,3,3,0,28,29,45,46,49,
+49,2,0,22,22,26,27,1,0,31,32,296,0,53,1,0,0,0,2,57,1,0,0,0,4,59,1,0,0,0,
+6,66,1,0,0,0,8,72,1,0,0,0,10,104,1,0,0,0,12,106,1,0,0,0,14,110,1,0,0,0,16,
+112,1,0,0,0,18,126,1,0,0,0,20,136,1,0,0,0,22,149,1,0,0,0,24,162,1,0,0,0,
+26,170,1,0,0,0,28,198,1,0,0,0,30,211,1,0,0,0,32,219,1,0,0,0,34,233,1,0,0,
+0,36,247,1,0,0,0,38,262,1,0,0,0,40,284,1,0,0,0,42,286,1,0,0,0,44,288,1,0,
+0,0,46,290,1,0,0,0,48,292,1,0,0,0,50,294,1,0,0,0,52,54,3,2,1,0,53,52,1,0,
+0,0,54,55,1,0,0,0,55,53,1,0,0,0,55,56,1,0,0,0,56,1,1,0,0,0,57,58,3,4,2,0,
+58,3,1,0,0,0,59,64,5,1,0,0,60,65,3,6,3,0,61,65,3,8,4,0,62,65,3,14,7,0,63,
+65,3,26,13,0,64,60,1,0,0,0,64,61,1,0,0,0,64,62,1,0,0,0,64,63,1,0,0,0,65,
+5,1,0,0,0,66,67,5,3,0,0,67,68,3,42,21,0,68,69,5,4,0,0,69,70,3,40,20,0,70,
+71,5,39,0,0,71,7,1,0,0,0,72,73,5,7,0,0,73,74,3,42,21,0,74,75,5,36,0,0,75,
+80,3,10,5,0,76,77,5,38,0,0,77,79,3,10,5,0,78,76,1,0,0,0,79,82,1,0,0,0,80,
+78,1,0,0,0,80,81,1,0,0,0,81,83,1,0,0,0,82,80,1,0,0,0,83,84,5,37,0,0,84,85,
+5,39,0,0,85,9,1,0,0,0,86,89,3,12,6,0,87,88,5,30,0,0,88,90,3,12,6,0,89,87,
+1,0,0,0,89,90,1,0,0,0,90,91,1,0,0,0,91,92,5,24,0,0,92,95,3,44,22,0,93,94,
+5,25,0,0,94,96,3,48,24,0,95,93,1,0,0,0,95,96,1,0,0,0,96,105,1,0,0,0,97,98,
+5,21,0,0,98,99,5,24,0,0,99,102,3,44,22,0,100,101,5,25,0,0,101,103,3,48,24,
+0,102,100,1,0,0,0,102,103,1,0,0,0,103,105,1,0,0,0,104,86,1,0,0,0,104,97,
+1,0,0,0,105,11,1,0,0,0,106,107,7,0,0,0,107,13,1,0,0,0,108,111,3,16,8,0,109,
+111,3,18,9,0,110,108,1,0,0,0,110,109,1,0,0,0,111,15,1,0,0,0,112,113,5,15,
+0,0,113,114,5,5,0,0,114,115,3,42,21,0,115,116,5,36,0,0,116,117,5,12,0,0,
+117,118,5,40,0,0,118,119,5,33,0,0,119,120,5,37,0,0,120,122,3,22,11,0,121,
+123,3,20,10,0,122,121,1,0,0,0,122,123,1,0,0,0,123,124,1,0,0,0,124,125,5,
+39,0,0,125,17,1,0,0,0,126,127,5,17,0,0,127,128,5,5,0,0,128,129,3,42,21,0,
+129,130,5,36,0,0,130,131,5,23,0,0,131,132,5,40,0,0,132,133,3,42,21,0,133,
+134,5,37,0,0,134,135,5,39,0,0,135,19,1,0,0,0,136,137,5,8,0,0,137,138,5,16,
+0,0,138,139,5,36,0,0,139,144,3,42,21,0,140,141,5,38,0,0,141,143,3,42,21,
+0,142,140,1,0,0,0,143,146,1,0,0,0,144,142,1,0,0,0,144,145,1,0,0,0,145,147,
+1,0,0,0,146,144,1,0,0,0,147,148,5,37,0,0,148,21,1,0,0,0,149,150,5,8,0,0,
+150,151,5,9,0,0,151,152,5,36,0,0,152,157,3,24,12,0,153,154,5,38,0,0,154,
+156,3,24,12,0,155,153,1,0,0,0,156,159,1,0,0,0,157,155,1,0,0,0,157,158,1,
+0,0,0,158,160,1,0,0,0,159,157,1,0,0,0,160,161,5,37,0,0,161,23,1,0,0,0,162,
+163,3,42,21,0,163,167,5,33,0,0,164,166,5,22,0,0,165,164,1,0,0,0,166,169,
+1,0,0,0,167,165,1,0,0,0,167,168,1,0,0,0,168,25,1,0,0,0,169,167,1,0,0,0,170,
+171,5,2,0,0,171,172,3,42,21,0,172,173,5,36,0,0,173,174,5,10,0,0,174,175,
+5,40,0,0,175,176,5,45,0,0,176,177,5,38,0,0,177,178,5,11,0,0,178,179,5,40,
+0,0,179,180,3,46,23,0,180,181,5,38,0,0,181,182,5,12,0,0,182,183,5,40,0,0,
+183,184,5,33,0,0,184,185,5,37,0,0,185,186,3,28,14,0,186,190,3,32,16,0,187,
+189,3,36,18,0,188,187,1,0,0,0,189,192,1,0,0,0,190,188,1,0,0,0,190,191,1,
+0,0,0,191,194,1,0,0,0,192,190,1,0,0,0,193,195,3,38,19,0,194,193,1,0,0,0,
+194,195,1,0,0,0,195,196,1,0,0,0,196,197,5,39,0,0,197,27,1,0,0,0,198,199,
+5,8,0,0,199,200,5,9,0,0,200,201,5,36,0,0,201,206,3,30,15,0,202,203,5,38,
+0,0,203,205,3,30,15,0,204,202,1,0,0,0,205,208,1,0,0,0,206,204,1,0,0,0,206,
+207,1,0,0,0,207,209,1,0,0,0,208,206,1,0,0,0,209,210,5,37,0,0,210,29,1,0,
+0,0,211,212,3,42,21,0,212,216,5,33,0,0,213,215,7,1,0,0,214,213,1,0,0,0,215,
+218,1,0,0,0,216,214,1,0,0,0,216,217,1,0,0,0,217,31,1,0,0,0,218,216,1,0,0,
+0,219,220,5,8,0,0,220,221,5,13,0,0,221,222,5,14,0,0,222,223,5,36,0,0,223,
+228,3,34,17,0,224,225,5,38,0,0,225,227,3,34,17,0,226,224,1,0,0,0,227,230,
+1,0,0,0,228,226,1,0,0,0,228,229,1,0,0,0,229,231,1,0,0,0,230,228,1,0,0,0,
+231,232,5,37,0,0,232,33,1,0,0,0,233,234,3,42,21,0,234,237,5,33,0,0,235,236,
+5,18,0,0,236,238,3,44,22,0,237,235,1,0,0,0,237,238,1,0,0,0,238,241,1,0,0,
+0,239,240,5,19,0,0,240,242,3,44,22,0,241,239,1,0,0,0,241,242,1,0,0,0,242,
+245,1,0,0,0,243,244,5,7,0,0,244,246,3,42,21,0,245,243,1,0,0,0,245,246,1,
+0,0,0,246,35,1,0,0,0,247,248,5,8,0,0,248,249,5,15,0,0,249,250,5,6,0,0,250,
+251,3,42,21,0,251,252,5,36,0,0,252,257,3,42,21,0,253,254,5,38,0,0,254,256,
+3,42,21,0,255,253,1,0,0,0,256,259,1,0,0,0,257,255,1,0,0,0,257,258,1,0,0,
+0,258,260,1,0,0,0,259,257,1,0,0,0,260,261,5,37,0,0,261,37,1,0,0,0,262,263,
+5,8,0,0,263,264,5,17,0,0,264,265,5,6,0,0,265,266,5,36,0,0,266,269,3,42,21,
+0,267,268,5,7,0,0,268,270,3,42,21,0,269,267,1,0,0,0,269,270,1,0,0,0,270,
+279,1,0,0,0,271,272,5,38,0,0,272,275,3,42,21,0,273,274,5,7,0,0,274,276,3,
+42,21,0,275,273,1,0,0,0,275,276,1,0,0,0,276,278,1,0,0,0,277,271,1,0,0,0,
+278,281,1,0,0,0,279,277,1,0,0,0,279,280,1,0,0,0,280,282,1,0,0,0,281,279,
+1,0,0,0,282,283,5,37,0,0,283,39,1,0,0,0,284,285,5,45,0,0,285,41,1,0,0,0,
+286,287,5,49,0,0,287,43,1,0,0,0,288,289,5,50,0,0,289,45,1,0,0,0,290,291,
+7,2,0,0,291,47,1,0,0,0,292,293,5,44,0,0,293,49,1,0,0,0,294,295,5,46,0,0,
+295,51,1,0,0,0,24,55,64,80,89,95,102,104,110,122,144,157,167,190,194,206,
+216,228,237,241,245,257,269,275,279];
 
 
 const atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -125,8 +134,8 @@ export default class SensorGrammarParser extends antlr4.Parser {
                          "dimPropertyDefinition", "createSensor", "createSensorProperties", 
                          "sensorPropertyDefinition", "createSensorMeasurementData", 
                          "createMeasurementProperty", "addSpatialDimensionToSensor", 
-                         "srid", "identifier", "text", "dataSource", "hexColor", 
-                         "floatNumber" ];
+                         "addCategoricalDimensionToSensor", "srid", "identifier", 
+                         "text", "dataSource", "hexColor", "floatNumber" ];
 
     constructor(input) {
         super(input);
@@ -144,13 +153,13 @@ export default class SensorGrammarParser extends antlr4.Parser {
 	    var _la = 0;
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 51; 
+	        this.state = 53; 
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        do {
-	            this.state = 50;
+	            this.state = 52;
 	            this.sentence();
-	            this.state = 53; 
+	            this.state = 55; 
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	        } while(_la===1);
@@ -175,7 +184,7 @@ export default class SensorGrammarParser extends antlr4.Parser {
 	    this.enterRule(localctx, 2, SensorGrammarParser.RULE_sentence);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 55;
+	        this.state = 57;
 	        this.createStatement();
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -198,26 +207,26 @@ export default class SensorGrammarParser extends antlr4.Parser {
 	    this.enterRule(localctx, 4, SensorGrammarParser.RULE_createStatement);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 57;
+	        this.state = 59;
 	        this.match(SensorGrammarParser.CREATE_SYMBOL);
-	        this.state = 62;
+	        this.state = 64;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case 3:
-	            this.state = 58;
+	            this.state = 60;
 	            this.createProduct();
 	            break;
 	        case 7:
-	            this.state = 59;
+	            this.state = 61;
 	            this.createRange();
 	            break;
 	        case 15:
 	        case 17:
-	            this.state = 60;
+	            this.state = 62;
 	            this.createDimension();
 	            break;
 	        case 2:
-	            this.state = 61;
+	            this.state = 63;
 	            this.createSensor();
 	            break;
 	        default:
@@ -244,15 +253,15 @@ export default class SensorGrammarParser extends antlr4.Parser {
 	    this.enterRule(localctx, 6, SensorGrammarParser.RULE_createProduct);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 64;
-	        this.match(SensorGrammarParser.PRODUCT_SYMBOL);
-	        this.state = 65;
-	        this.identifier();
 	        this.state = 66;
-	        this.match(SensorGrammarParser.USING_SYMBOL);
+	        this.match(SensorGrammarParser.PRODUCT_SYMBOL);
 	        this.state = 67;
-	        this.srid();
+	        this.identifier();
 	        this.state = 68;
+	        this.match(SensorGrammarParser.USING_SYMBOL);
+	        this.state = 69;
+	        this.srid();
+	        this.state = 70;
 	        this.match(SensorGrammarParser.SCOL_SYMBOL);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -276,29 +285,29 @@ export default class SensorGrammarParser extends antlr4.Parser {
 	    var _la = 0;
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 70;
-	        this.match(SensorGrammarParser.RANGE_SYMBOL);
-	        this.state = 71;
-	        this.identifier();
 	        this.state = 72;
-	        this.match(SensorGrammarParser.OPAR_SYMBOL);
+	        this.match(SensorGrammarParser.RANGE_SYMBOL);
 	        this.state = 73;
+	        this.identifier();
+	        this.state = 74;
+	        this.match(SensorGrammarParser.OPAR_SYMBOL);
+	        this.state = 75;
 	        this.rangeProperty();
-	        this.state = 78;
+	        this.state = 80;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        while(_la===38) {
-	            this.state = 74;
+	            this.state = 76;
 	            this.match(SensorGrammarParser.COMMA_SYMBOL);
-	            this.state = 75;
+	            this.state = 77;
 	            this.rangeProperty();
-	            this.state = 80;
+	            this.state = 82;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	        }
-	        this.state = 81;
+	        this.state = 83;
 	        this.match(SensorGrammarParser.CPAR_SYMBOL);
-	        this.state = 82;
+	        this.state = 84;
 	        this.match(SensorGrammarParser.SCOL_SYMBOL);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -321,7 +330,7 @@ export default class SensorGrammarParser extends antlr4.Parser {
 	    this.enterRule(localctx, 10, SensorGrammarParser.RULE_rangeProperty);
 	    var _la = 0;
 	    try {
-	        this.state = 102;
+	        this.state = 104;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case 28:
@@ -330,48 +339,48 @@ export default class SensorGrammarParser extends antlr4.Parser {
 	        case 46:
 	        case 49:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 84;
+	            this.state = 86;
 	            this.rangeNumber();
-	            this.state = 87;
+	            this.state = 89;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	            if(_la===30) {
-	                this.state = 85;
+	                this.state = 87;
 	                this.match(SensorGrammarParser.TO_SYMBOL);
-	                this.state = 86;
+	                this.state = 88;
 	                this.rangeNumber();
 	            }
 
-	            this.state = 89;
+	            this.state = 91;
 	            this.match(SensorGrammarParser.AS_SYMBOL);
-	            this.state = 90;
+	            this.state = 92;
 	            this.text();
-	            this.state = 93;
+	            this.state = 95;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	            if(_la===25) {
-	                this.state = 91;
+	                this.state = 93;
 	                this.match(SensorGrammarParser.COLOR_SYMBOL);
-	                this.state = 92;
+	                this.state = 94;
 	                this.hexColor();
 	            }
 
 	            break;
 	        case 21:
 	            this.enterOuterAlt(localctx, 2);
-	            this.state = 95;
-	            this.match(SensorGrammarParser.DEFAULT_SYMBOL);
-	            this.state = 96;
-	            this.match(SensorGrammarParser.AS_SYMBOL);
 	            this.state = 97;
+	            this.match(SensorGrammarParser.DEFAULT_SYMBOL);
+	            this.state = 98;
+	            this.match(SensorGrammarParser.AS_SYMBOL);
+	            this.state = 99;
 	            this.text();
-	            this.state = 100;
+	            this.state = 102;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	            if(_la===25) {
-	                this.state = 98;
+	                this.state = 100;
 	                this.match(SensorGrammarParser.COLOR_SYMBOL);
-	                this.state = 99;
+	                this.state = 101;
 	                this.hexColor();
 	            }
 
@@ -401,7 +410,7 @@ export default class SensorGrammarParser extends antlr4.Parser {
 	    var _la = 0;
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 104;
+	        this.state = 106;
 	        _la = this._input.LA(1);
 	        if(!(((((_la - 28)) & ~0x1f) === 0 && ((1 << (_la - 28)) & 2490371) !== 0))) {
 	        this._errHandler.recoverInline(this);
@@ -430,17 +439,17 @@ export default class SensorGrammarParser extends antlr4.Parser {
 	    let localctx = new CreateDimensionContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 14, SensorGrammarParser.RULE_createDimension);
 	    try {
-	        this.state = 108;
+	        this.state = 110;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case 15:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 106;
+	            this.state = 108;
 	            this.createSpatialDimension();
 	            break;
 	        case 17:
 	            this.enterOuterAlt(localctx, 2);
-	            this.state = 107;
+	            this.state = 109;
 	            this.createCategoricalDimension();
 	            break;
 	        default:
@@ -468,33 +477,33 @@ export default class SensorGrammarParser extends antlr4.Parser {
 	    var _la = 0;
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 110;
-	        this.match(SensorGrammarParser.SPATIAL_SYMBOL);
-	        this.state = 111;
-	        this.match(SensorGrammarParser.DIMENSION_SYMBOL);
 	        this.state = 112;
-	        this.identifier();
+	        this.match(SensorGrammarParser.SPATIAL_SYMBOL);
 	        this.state = 113;
-	        this.match(SensorGrammarParser.OPAR_SYMBOL);
+	        this.match(SensorGrammarParser.DIMENSION_SYMBOL);
 	        this.state = 114;
-	        this.match(SensorGrammarParser.GEOMETRY_SYMBOL);
+	        this.identifier();
 	        this.state = 115;
-	        this.match(SensorGrammarParser.COLON_SYMBOL);
+	        this.match(SensorGrammarParser.OPAR_SYMBOL);
 	        this.state = 116;
-	        this.match(SensorGrammarParser.TYPE);
+	        this.match(SensorGrammarParser.GEOMETRY_SYMBOL);
 	        this.state = 117;
-	        this.match(SensorGrammarParser.CPAR_SYMBOL);
+	        this.match(SensorGrammarParser.COLON_SYMBOL);
 	        this.state = 118;
-	        this.createDimensionProperties();
+	        this.match(SensorGrammarParser.TYPE);
+	        this.state = 119;
+	        this.match(SensorGrammarParser.CPAR_SYMBOL);
 	        this.state = 120;
+	        this.createDimensionProperties();
+	        this.state = 122;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        if(_la===8) {
-	            this.state = 119;
+	            this.state = 121;
 	            this.createParentDimension();
 	        }
 
-	        this.state = 122;
+	        this.state = 124;
 	        this.match(SensorGrammarParser.SCOL_SYMBOL);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -517,23 +526,23 @@ export default class SensorGrammarParser extends antlr4.Parser {
 	    this.enterRule(localctx, 18, SensorGrammarParser.RULE_createCategoricalDimension);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 124;
-	        this.match(SensorGrammarParser.CATEGORICAL_SYMBOL);
-	        this.state = 125;
-	        this.match(SensorGrammarParser.DIMENSION_SYMBOL);
 	        this.state = 126;
-	        this.identifier();
+	        this.match(SensorGrammarParser.CATEGORICAL_SYMBOL);
 	        this.state = 127;
-	        this.match(SensorGrammarParser.OPAR_SYMBOL);
+	        this.match(SensorGrammarParser.DIMENSION_SYMBOL);
 	        this.state = 128;
-	        this.match(SensorGrammarParser.FIELD_SYMBOL);
-	        this.state = 129;
-	        this.match(SensorGrammarParser.COLON_SYMBOL);
-	        this.state = 130;
 	        this.identifier();
+	        this.state = 129;
+	        this.match(SensorGrammarParser.OPAR_SYMBOL);
+	        this.state = 130;
+	        this.match(SensorGrammarParser.FIELD_SYMBOL);
 	        this.state = 131;
-	        this.match(SensorGrammarParser.CPAR_SYMBOL);
+	        this.match(SensorGrammarParser.COLON_SYMBOL);
 	        this.state = 132;
+	        this.identifier();
+	        this.state = 133;
+	        this.match(SensorGrammarParser.CPAR_SYMBOL);
+	        this.state = 134;
 	        this.match(SensorGrammarParser.SCOL_SYMBOL);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -557,27 +566,27 @@ export default class SensorGrammarParser extends antlr4.Parser {
 	    var _la = 0;
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 134;
-	        this.match(SensorGrammarParser.WITH_SYMBOL);
-	        this.state = 135;
-	        this.match(SensorGrammarParser.PARENT_SYMBOL);
 	        this.state = 136;
-	        this.match(SensorGrammarParser.OPAR_SYMBOL);
+	        this.match(SensorGrammarParser.WITH_SYMBOL);
 	        this.state = 137;
+	        this.match(SensorGrammarParser.PARENT_SYMBOL);
+	        this.state = 138;
+	        this.match(SensorGrammarParser.OPAR_SYMBOL);
+	        this.state = 139;
 	        this.identifier();
-	        this.state = 142;
+	        this.state = 144;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        while(_la===38) {
-	            this.state = 138;
+	            this.state = 140;
 	            this.match(SensorGrammarParser.COMMA_SYMBOL);
-	            this.state = 139;
+	            this.state = 141;
 	            this.identifier();
-	            this.state = 144;
+	            this.state = 146;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	        }
-	        this.state = 145;
+	        this.state = 147;
 	        this.match(SensorGrammarParser.CPAR_SYMBOL);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -601,27 +610,27 @@ export default class SensorGrammarParser extends antlr4.Parser {
 	    var _la = 0;
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 147;
-	        this.match(SensorGrammarParser.WITH_SYMBOL);
-	        this.state = 148;
-	        this.match(SensorGrammarParser.PROPERTIES_SYMBOL);
 	        this.state = 149;
-	        this.match(SensorGrammarParser.OPAR_SYMBOL);
+	        this.match(SensorGrammarParser.WITH_SYMBOL);
 	        this.state = 150;
+	        this.match(SensorGrammarParser.PROPERTIES_SYMBOL);
+	        this.state = 151;
+	        this.match(SensorGrammarParser.OPAR_SYMBOL);
+	        this.state = 152;
 	        this.dimPropertyDefinition();
-	        this.state = 155;
+	        this.state = 157;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        while(_la===38) {
-	            this.state = 151;
+	            this.state = 153;
 	            this.match(SensorGrammarParser.COMMA_SYMBOL);
-	            this.state = 152;
+	            this.state = 154;
 	            this.dimPropertyDefinition();
-	            this.state = 157;
+	            this.state = 159;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	        }
-	        this.state = 158;
+	        this.state = 160;
 	        this.match(SensorGrammarParser.CPAR_SYMBOL);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -645,17 +654,17 @@ export default class SensorGrammarParser extends antlr4.Parser {
 	    var _la = 0;
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 160;
+	        this.state = 162;
 	        this.identifier();
-	        this.state = 161;
+	        this.state = 163;
 	        this.match(SensorGrammarParser.TYPE);
-	        this.state = 165;
+	        this.state = 167;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        while(_la===22) {
-	            this.state = 162;
+	            this.state = 164;
 	            this.match(SensorGrammarParser.DISPLAYSTRING_SYMBOL);
-	            this.state = 167;
+	            this.state = 169;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	        }
@@ -681,51 +690,62 @@ export default class SensorGrammarParser extends antlr4.Parser {
 	    var _la = 0;
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 168;
-	        this.match(SensorGrammarParser.SENSOR_SYMBOL);
-	        this.state = 169;
-	        this.identifier();
 	        this.state = 170;
-	        this.match(SensorGrammarParser.OPAR_SYMBOL);
+	        this.match(SensorGrammarParser.SENSOR_SYMBOL);
 	        this.state = 171;
-	        this.match(SensorGrammarParser.INTERVAL_SYMBOL);
+	        this.identifier();
 	        this.state = 172;
-	        this.match(SensorGrammarParser.COLON_SYMBOL);
+	        this.match(SensorGrammarParser.OPAR_SYMBOL);
 	        this.state = 173;
-	        this.match(SensorGrammarParser.INT_NUMBER);
+	        this.match(SensorGrammarParser.INTERVAL_SYMBOL);
 	        this.state = 174;
-	        this.match(SensorGrammarParser.COMMA_SYMBOL);
+	        this.match(SensorGrammarParser.COLON_SYMBOL);
 	        this.state = 175;
-	        this.match(SensorGrammarParser.DATASOURCE_SYMBOL);
+	        this.match(SensorGrammarParser.INT_NUMBER);
 	        this.state = 176;
-	        this.match(SensorGrammarParser.COLON_SYMBOL);
-	        this.state = 177;
-	        this.dataSource();
-	        this.state = 178;
 	        this.match(SensorGrammarParser.COMMA_SYMBOL);
-	        this.state = 179;
-	        this.match(SensorGrammarParser.GEOMETRY_SYMBOL);
-	        this.state = 180;
+	        this.state = 177;
+	        this.match(SensorGrammarParser.DATASOURCE_SYMBOL);
+	        this.state = 178;
 	        this.match(SensorGrammarParser.COLON_SYMBOL);
+	        this.state = 179;
+	        this.dataSource();
+	        this.state = 180;
+	        this.match(SensorGrammarParser.COMMA_SYMBOL);
 	        this.state = 181;
-	        this.match(SensorGrammarParser.TYPE);
+	        this.match(SensorGrammarParser.GEOMETRY_SYMBOL);
 	        this.state = 182;
-	        this.match(SensorGrammarParser.CPAR_SYMBOL);
+	        this.match(SensorGrammarParser.COLON_SYMBOL);
 	        this.state = 183;
-	        this.createSensorProperties();
+	        this.match(SensorGrammarParser.TYPE);
 	        this.state = 184;
+	        this.match(SensorGrammarParser.CPAR_SYMBOL);
+	        this.state = 185;
+	        this.createSensorProperties();
+	        this.state = 186;
 	        this.createSensorMeasurementData();
-	        this.state = 188;
+	        this.state = 190;
+	        this._errHandler.sync(this);
+	        var _alt = this._interp.adaptivePredict(this._input,12,this._ctx)
+	        while(_alt!=2 && _alt!=antlr4.atn.ATN.INVALID_ALT_NUMBER) {
+	            if(_alt===1) {
+	                this.state = 187;
+	                this.addSpatialDimensionToSensor(); 
+	            }
+	            this.state = 192;
+	            this._errHandler.sync(this);
+	            _alt = this._interp.adaptivePredict(this._input,12,this._ctx);
+	        }
+
+	        this.state = 194;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
-	        while(_la===8) {
-	            this.state = 185;
-	            this.addSpatialDimensionToSensor();
-	            this.state = 190;
-	            this._errHandler.sync(this);
-	            _la = this._input.LA(1);
+	        if(_la===8) {
+	            this.state = 193;
+	            this.addCategoricalDimensionToSensor();
 	        }
-	        this.state = 191;
+
+	        this.state = 196;
 	        this.match(SensorGrammarParser.SCOL_SYMBOL);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -749,27 +769,27 @@ export default class SensorGrammarParser extends antlr4.Parser {
 	    var _la = 0;
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 193;
+	        this.state = 198;
 	        this.match(SensorGrammarParser.WITH_SYMBOL);
-	        this.state = 194;
+	        this.state = 199;
 	        this.match(SensorGrammarParser.PROPERTIES_SYMBOL);
-	        this.state = 195;
+	        this.state = 200;
 	        this.match(SensorGrammarParser.OPAR_SYMBOL);
-	        this.state = 196;
-	        this.sensorPropertyDefinition();
 	        this.state = 201;
+	        this.sensorPropertyDefinition();
+	        this.state = 206;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        while(_la===38) {
-	            this.state = 197;
+	            this.state = 202;
 	            this.match(SensorGrammarParser.COMMA_SYMBOL);
-	            this.state = 198;
-	            this.sensorPropertyDefinition();
 	            this.state = 203;
+	            this.sensorPropertyDefinition();
+	            this.state = 208;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	        }
-	        this.state = 204;
+	        this.state = 209;
 	        this.match(SensorGrammarParser.CPAR_SYMBOL);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -793,15 +813,15 @@ export default class SensorGrammarParser extends antlr4.Parser {
 	    var _la = 0;
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 206;
-	        this.identifier();
-	        this.state = 207;
-	        this.match(SensorGrammarParser.TYPE);
 	        this.state = 211;
+	        this.identifier();
+	        this.state = 212;
+	        this.match(SensorGrammarParser.TYPE);
+	        this.state = 216;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        while((((_la) & ~0x1f) === 0 && ((1 << _la) & 205520896) !== 0)) {
-	            this.state = 208;
+	            this.state = 213;
 	            _la = this._input.LA(1);
 	            if(!((((_la) & ~0x1f) === 0 && ((1 << _la) & 205520896) !== 0))) {
 	            this._errHandler.recoverInline(this);
@@ -810,7 +830,7 @@ export default class SensorGrammarParser extends antlr4.Parser {
 	            	this._errHandler.reportMatch(this);
 	                this.consume();
 	            }
-	            this.state = 213;
+	            this.state = 218;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	        }
@@ -836,29 +856,29 @@ export default class SensorGrammarParser extends antlr4.Parser {
 	    var _la = 0;
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 214;
+	        this.state = 219;
 	        this.match(SensorGrammarParser.WITH_SYMBOL);
-	        this.state = 215;
+	        this.state = 220;
 	        this.match(SensorGrammarParser.MEASUREMENT_SYMBOL);
-	        this.state = 216;
+	        this.state = 221;
 	        this.match(SensorGrammarParser.DATA_SYMBOL);
-	        this.state = 217;
+	        this.state = 222;
 	        this.match(SensorGrammarParser.OPAR_SYMBOL);
-	        this.state = 218;
-	        this.createMeasurementProperty();
 	        this.state = 223;
+	        this.createMeasurementProperty();
+	        this.state = 228;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        while(_la===38) {
-	            this.state = 219;
+	            this.state = 224;
 	            this.match(SensorGrammarParser.COMMA_SYMBOL);
-	            this.state = 220;
-	            this.createMeasurementProperty();
 	            this.state = 225;
+	            this.createMeasurementProperty();
+	            this.state = 230;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	        }
-	        this.state = 226;
+	        this.state = 231;
 	        this.match(SensorGrammarParser.CPAR_SYMBOL);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -882,37 +902,37 @@ export default class SensorGrammarParser extends antlr4.Parser {
 	    var _la = 0;
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 228;
+	        this.state = 233;
 	        this.identifier();
-	        this.state = 229;
+	        this.state = 234;
 	        this.match(SensorGrammarParser.TYPE);
-	        this.state = 232;
+	        this.state = 237;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        if(_la===18) {
-	            this.state = 230;
+	            this.state = 235;
 	            this.match(SensorGrammarParser.UNITS_SYMBOL);
-	            this.state = 231;
+	            this.state = 236;
 	            this.text();
 	        }
 
-	        this.state = 236;
+	        this.state = 241;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        if(_la===19) {
-	            this.state = 234;
+	            this.state = 239;
 	            this.match(SensorGrammarParser.ICON_SYMBOL);
-	            this.state = 235;
+	            this.state = 240;
 	            this.text();
 	        }
 
-	        this.state = 240;
+	        this.state = 245;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        if(_la===7) {
-	            this.state = 238;
+	            this.state = 243;
 	            this.match(SensorGrammarParser.RANGE_SYMBOL);
-	            this.state = 239;
+	            this.state = 244;
 	            this.identifier();
 	        }
 
@@ -938,31 +958,97 @@ export default class SensorGrammarParser extends antlr4.Parser {
 	    var _la = 0;
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 242;
-	        this.match(SensorGrammarParser.WITH_SYMBOL);
-	        this.state = 243;
-	        this.match(SensorGrammarParser.SPATIAL_SYMBOL);
-	        this.state = 244;
-	        this.match(SensorGrammarParser.DIMENSIONS_SYMBOL);
-	        this.state = 245;
-	        this.identifier();
-	        this.state = 246;
-	        this.match(SensorGrammarParser.OPAR_SYMBOL);
 	        this.state = 247;
+	        this.match(SensorGrammarParser.WITH_SYMBOL);
+	        this.state = 248;
+	        this.match(SensorGrammarParser.SPATIAL_SYMBOL);
+	        this.state = 249;
+	        this.match(SensorGrammarParser.DIMENSIONS_SYMBOL);
+	        this.state = 250;
 	        this.identifier();
+	        this.state = 251;
+	        this.match(SensorGrammarParser.OPAR_SYMBOL);
 	        this.state = 252;
+	        this.identifier();
+	        this.state = 257;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        while(_la===38) {
-	            this.state = 248;
+	            this.state = 253;
 	            this.match(SensorGrammarParser.COMMA_SYMBOL);
-	            this.state = 249;
-	            this.identifier();
 	            this.state = 254;
+	            this.identifier();
+	            this.state = 259;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	        }
-	        this.state = 255;
+	        this.state = 260;
+	        this.match(SensorGrammarParser.CPAR_SYMBOL);
+	    } catch (re) {
+	    	if(re instanceof antlr4.error.RecognitionException) {
+		        localctx.exception = re;
+		        this._errHandler.reportError(this, re);
+		        this._errHandler.recover(this, re);
+		    } else {
+		    	throw re;
+		    }
+	    } finally {
+	        this.exitRule();
+	    }
+	    return localctx;
+	}
+
+
+
+	addCategoricalDimensionToSensor() {
+	    let localctx = new AddCategoricalDimensionToSensorContext(this, this._ctx, this.state);
+	    this.enterRule(localctx, 38, SensorGrammarParser.RULE_addCategoricalDimensionToSensor);
+	    var _la = 0;
+	    try {
+	        this.enterOuterAlt(localctx, 1);
+	        this.state = 262;
+	        this.match(SensorGrammarParser.WITH_SYMBOL);
+	        this.state = 263;
+	        this.match(SensorGrammarParser.CATEGORICAL_SYMBOL);
+	        this.state = 264;
+	        this.match(SensorGrammarParser.DIMENSIONS_SYMBOL);
+	        this.state = 265;
+	        this.match(SensorGrammarParser.OPAR_SYMBOL);
+	        this.state = 266;
+	        this.identifier();
+	        this.state = 269;
+	        this._errHandler.sync(this);
+	        _la = this._input.LA(1);
+	        if(_la===7) {
+	            this.state = 267;
+	            this.match(SensorGrammarParser.RANGE_SYMBOL);
+	            this.state = 268;
+	            this.identifier();
+	        }
+
+	        this.state = 279;
+	        this._errHandler.sync(this);
+	        _la = this._input.LA(1);
+	        while(_la===38) {
+	            this.state = 271;
+	            this.match(SensorGrammarParser.COMMA_SYMBOL);
+	            this.state = 272;
+	            this.identifier();
+	            this.state = 275;
+	            this._errHandler.sync(this);
+	            _la = this._input.LA(1);
+	            if(_la===7) {
+	                this.state = 273;
+	                this.match(SensorGrammarParser.RANGE_SYMBOL);
+	                this.state = 274;
+	                this.identifier();
+	            }
+
+	            this.state = 281;
+	            this._errHandler.sync(this);
+	            _la = this._input.LA(1);
+	        }
+	        this.state = 282;
 	        this.match(SensorGrammarParser.CPAR_SYMBOL);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -982,10 +1068,10 @@ export default class SensorGrammarParser extends antlr4.Parser {
 
 	srid() {
 	    let localctx = new SridContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 38, SensorGrammarParser.RULE_srid);
+	    this.enterRule(localctx, 40, SensorGrammarParser.RULE_srid);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 257;
+	        this.state = 284;
 	        this.match(SensorGrammarParser.INT_NUMBER);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -1005,10 +1091,10 @@ export default class SensorGrammarParser extends antlr4.Parser {
 
 	identifier() {
 	    let localctx = new IdentifierContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 40, SensorGrammarParser.RULE_identifier);
+	    this.enterRule(localctx, 42, SensorGrammarParser.RULE_identifier);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 259;
+	        this.state = 286;
 	        this.match(SensorGrammarParser.IDENTIFIER);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -1028,10 +1114,10 @@ export default class SensorGrammarParser extends antlr4.Parser {
 
 	text() {
 	    let localctx = new TextContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 42, SensorGrammarParser.RULE_text);
+	    this.enterRule(localctx, 44, SensorGrammarParser.RULE_text);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 261;
+	        this.state = 288;
 	        this.match(SensorGrammarParser.QUOTED_TEXT);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -1051,11 +1137,11 @@ export default class SensorGrammarParser extends antlr4.Parser {
 
 	dataSource() {
 	    let localctx = new DataSourceContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 44, SensorGrammarParser.RULE_dataSource);
+	    this.enterRule(localctx, 46, SensorGrammarParser.RULE_dataSource);
 	    var _la = 0;
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 263;
+	        this.state = 290;
 	        _la = this._input.LA(1);
 	        if(!(_la===31 || _la===32)) {
 	        this._errHandler.recoverInline(this);
@@ -1082,10 +1168,10 @@ export default class SensorGrammarParser extends antlr4.Parser {
 
 	hexColor() {
 	    let localctx = new HexColorContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 46, SensorGrammarParser.RULE_hexColor);
+	    this.enterRule(localctx, 48, SensorGrammarParser.RULE_hexColor);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 265;
+	        this.state = 292;
 	        this.match(SensorGrammarParser.HEX_COLOR);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -1105,10 +1191,10 @@ export default class SensorGrammarParser extends antlr4.Parser {
 
 	floatNumber() {
 	    let localctx = new FloatNumberContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 48, SensorGrammarParser.RULE_floatNumber);
+	    this.enterRule(localctx, 50, SensorGrammarParser.RULE_floatNumber);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 267;
+	        this.state = 294;
 	        this.match(SensorGrammarParser.FLOAT_NUMBER);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -1198,12 +1284,13 @@ SensorGrammarParser.RULE_sensorPropertyDefinition = 15;
 SensorGrammarParser.RULE_createSensorMeasurementData = 16;
 SensorGrammarParser.RULE_createMeasurementProperty = 17;
 SensorGrammarParser.RULE_addSpatialDimensionToSensor = 18;
-SensorGrammarParser.RULE_srid = 19;
-SensorGrammarParser.RULE_identifier = 20;
-SensorGrammarParser.RULE_text = 21;
-SensorGrammarParser.RULE_dataSource = 22;
-SensorGrammarParser.RULE_hexColor = 23;
-SensorGrammarParser.RULE_floatNumber = 24;
+SensorGrammarParser.RULE_addCategoricalDimensionToSensor = 19;
+SensorGrammarParser.RULE_srid = 20;
+SensorGrammarParser.RULE_identifier = 21;
+SensorGrammarParser.RULE_text = 22;
+SensorGrammarParser.RULE_dataSource = 23;
+SensorGrammarParser.RULE_hexColor = 24;
+SensorGrammarParser.RULE_floatNumber = 25;
 
 class ParseContext extends antlr4.ParserRuleContext {
 
@@ -2155,6 +2242,10 @@ class CreateSensorContext extends antlr4.ParserRuleContext {
 	    }
 	};
 
+	addCategoricalDimensionToSensor() {
+	    return this.getTypedRuleContext(AddCategoricalDimensionToSensorContext,0);
+	};
+
 	enterRule(listener) {
 	    if(listener instanceof SensorGrammarListener ) {
 	        listener.enterCreateSensor(this);
@@ -2582,6 +2673,100 @@ class AddSpatialDimensionToSensorContext extends antlr4.ParserRuleContext {
 
 
 
+class AddCategoricalDimensionToSensorContext extends antlr4.ParserRuleContext {
+
+    constructor(parser, parent, invokingState) {
+        if(parent===undefined) {
+            parent = null;
+        }
+        if(invokingState===undefined || invokingState===null) {
+            invokingState = -1;
+        }
+        super(parent, invokingState);
+        this.parser = parser;
+        this.ruleIndex = SensorGrammarParser.RULE_addCategoricalDimensionToSensor;
+    }
+
+	WITH_SYMBOL() {
+	    return this.getToken(SensorGrammarParser.WITH_SYMBOL, 0);
+	};
+
+	CATEGORICAL_SYMBOL() {
+	    return this.getToken(SensorGrammarParser.CATEGORICAL_SYMBOL, 0);
+	};
+
+	DIMENSIONS_SYMBOL() {
+	    return this.getToken(SensorGrammarParser.DIMENSIONS_SYMBOL, 0);
+	};
+
+	OPAR_SYMBOL() {
+	    return this.getToken(SensorGrammarParser.OPAR_SYMBOL, 0);
+	};
+
+	identifier = function(i) {
+	    if(i===undefined) {
+	        i = null;
+	    }
+	    if(i===null) {
+	        return this.getTypedRuleContexts(IdentifierContext);
+	    } else {
+	        return this.getTypedRuleContext(IdentifierContext,i);
+	    }
+	};
+
+	CPAR_SYMBOL() {
+	    return this.getToken(SensorGrammarParser.CPAR_SYMBOL, 0);
+	};
+
+	RANGE_SYMBOL = function(i) {
+		if(i===undefined) {
+			i = null;
+		}
+	    if(i===null) {
+	        return this.getTokens(SensorGrammarParser.RANGE_SYMBOL);
+	    } else {
+	        return this.getToken(SensorGrammarParser.RANGE_SYMBOL, i);
+	    }
+	};
+
+
+	COMMA_SYMBOL = function(i) {
+		if(i===undefined) {
+			i = null;
+		}
+	    if(i===null) {
+	        return this.getTokens(SensorGrammarParser.COMMA_SYMBOL);
+	    } else {
+	        return this.getToken(SensorGrammarParser.COMMA_SYMBOL, i);
+	    }
+	};
+
+
+	enterRule(listener) {
+	    if(listener instanceof SensorGrammarListener ) {
+	        listener.enterAddCategoricalDimensionToSensor(this);
+		}
+	}
+
+	exitRule(listener) {
+	    if(listener instanceof SensorGrammarListener ) {
+	        listener.exitAddCategoricalDimensionToSensor(this);
+		}
+	}
+
+	accept(visitor) {
+	    if ( visitor instanceof SensorGrammarVisitor ) {
+	        return visitor.visitAddCategoricalDimensionToSensor(this);
+	    } else {
+	        return visitor.visitChildren(this);
+	    }
+	}
+
+
+}
+
+
+
 class SridContext extends antlr4.ParserRuleContext {
 
     constructor(parser, parent, invokingState) {
@@ -2864,6 +3049,7 @@ SensorGrammarParser.SensorPropertyDefinitionContext = SensorPropertyDefinitionCo
 SensorGrammarParser.CreateSensorMeasurementDataContext = CreateSensorMeasurementDataContext; 
 SensorGrammarParser.CreateMeasurementPropertyContext = CreateMeasurementPropertyContext; 
 SensorGrammarParser.AddSpatialDimensionToSensorContext = AddSpatialDimensionToSensorContext; 
+SensorGrammarParser.AddCategoricalDimensionToSensorContext = AddCategoricalDimensionToSensorContext; 
 SensorGrammarParser.SridContext = SridContext; 
 SensorGrammarParser.IdentifierContext = IdentifierContext; 
 SensorGrammarParser.TextContext = TextContext; 

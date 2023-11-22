@@ -385,6 +385,33 @@ class Visitor extends SensorGrammarVisitor {
     }
   }
 
+  // --------   SENSOR WITH CATEGORICAL DIMENIONS  --------
+  visitAddCategoricalDimensionToSensor(ctx) {
+    // const sensor = this.store.getCurrentSensor();
+
+    let index = 4;
+    while (index < ctx.getChildCount()) {
+      // CHECK IF DIMENSION EXISTS
+      const dimName = ctx.getChild(index).getText();
+      const dim = this.store.getDimension(dimName);
+      console.log(dimName, dim);
+
+      if (dim == null) {
+        throw `Dimension ${dimName} not found!`;
+      }
+
+      // Check if has custom ranges
+      const hasCustomRanges = ctx.getChild(index + 1).getText() == "RANGE";
+      console.log(hasCustomRanges);
+      // const rangeName = hasCustomRanges ? ctx.getChild(index + 2).getText() : null;
+
+      // TODO, ADD TO SENSOR DIMENSIONS
+
+      index += hasCustomRanges ? 4 : 2;
+    }
+    // TODO: Add categorical dimension to sensor
+  }
+
   // --------   SENSOR MEASUREMENTS  --------
   visitCreateSensorMeasurementData(ctx) {
     super.visitCreateSensorMeasurementData(ctx);
