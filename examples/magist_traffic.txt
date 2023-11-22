@@ -1,0 +1,57 @@
+CREATE PRODUCT magist USING 4326;
+
+// DIMENSIONS
+
+CREATE SPATIAL DIMENSION Municipality (
+	geometry: Polygon
+) WITH PROPERTIES (
+	cMun Integer DISPLAY_STRING
+);
+
+CREATE SPATIAL DIMENSION District (
+	geometry: Polygon
+) WITH PROPERTIES (
+	cDis Integer DISPLAY_STRING
+) WITH PARENT (
+	Municipality 
+);
+
+CREATE SPATIAL DIMENSION Section (
+	geometry: Polygon
+) WITH PROPERTIES (
+	cSec Integer DISPLAY_STRING
+) WITH PARENT (
+	District 
+);
+
+CREATE SPATIAL DIMENSION Barrio (
+	geometry: Polygon
+) WITH PROPERTIES (
+	cBarrio Integer DISPLAY_STRING
+);
+
+// RANGES
+
+// SENSORS
+CREATE SENSOR TrafficObservation (
+	interval: 300,
+	datasource: elasticsearch,
+	geometry: Point
+) WITH PROPERTIES (
+	descripcion String,
+	accesoAsociado Long,
+	subarea Long,
+	codCent String,
+	nombre String
+) WITH MEASUREMENT DATA (
+	intensidad Double UNITS "veh/h" ICON "network_check",
+	velocidad Double UNITS "km/h" ICON "speed",
+	ocupacion Double UNITS "%" ICON "emoji_transportation"
+) WITH SPATIAL DIMENSIONS Administrative (
+	Section,
+	District,
+	Municipality
+) WITH SPATIAL DIMENSIONS Barrio (
+	Barrio
+);
+//WITH BBOX ([40.42, -3.7], 12);
