@@ -48,12 +48,18 @@ createSpatialDimension: SPATIAL_SYMBOL DIMENSION_SYMBOL identifier OPAR_SYMBOL
 	  GEOMETRY_SYMBOL COLON_SYMBOL TYPE
   CPAR_SYMBOL
   createDimensionProperties
+  createParentDimension?
   SCOL_SYMBOL
 ;
 
 createCategoricalDimension: CATEGORICAL_SYMBOL DIMENSION_SYMBOL identifier OPAR_SYMBOL
   FIELD_SYMBOL COLON_SYMBOL identifier
   CPAR_SYMBOL SCOL_SYMBOL
+;
+
+createParentDimension: WITH_SYMBOL PARENT_SYMBOL OPAR_SYMBOL
+  identifier (COMMA_SYMBOL identifier)*
+  CPAR_SYMBOL
 ;
 
 createDimensionProperties:

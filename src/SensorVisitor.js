@@ -66,12 +66,13 @@ class Visitor extends SensorGrammarVisitor {
     const parsedGemType =
       dimGeomType.charAt(0).toUpperCase() + dimGeomType.slice(1).toLowerCase();
 
+    // Adds to dimension and to entities
     this.store.addSpatialDimension(dimensionName, parsedGemType);
     this.store.setCurrentDimension(dimensionName);
 
     super.visitCreateSpatialDimension(ctx);
-
     this.store.setCurrentDimension(null);
+    this.store.setCurrentEntity(null);
   }
 
   visitCreateDimensionProperties(ctx) {
@@ -113,8 +114,49 @@ class Visitor extends SensorGrammarVisitor {
       delete dimProps.displayString;
     }
 
+    this.store.getCurrentEntity().addProperty(
+      propertyName,
+      propertyType,
+      getPropertyParams(
+        ctx.children
+          .slice(2)
+          .filter((s) => s.getSymbol)
+          .map((s) => s.getSymbol().text.toLowerCase())
+      )
+    );
+
     this.store.getCurrentDimension().properties.push(dimProps);
     super.visitDimPropertyDefinition(ctx);
+  }
+
+  // PARENT DIMENSION
+  visitCreateParentDimension(ctx) {
+    const dimensionName = ctx.getChild(3).getText();
+
+    const parentDim = this.store.getDimension(dimensionName);
+
+    if (parentDim == null) {
+      throw `Dimension ${dimensionName} not found!`;
+    }
+
+    // Create relationship between current entity and parent dimension
+    const sourceOpts = {
+      label: "belongs",
+      multiplicity: "0..1",
+    };
+    const targetOpts = {
+      label: "contains",
+      multiplicity: "0..*",
+    };
+    const rSource = this.store.getCurrentEntity().name;
+    const rTarget = parentDim.id;
+
+    this.store
+      .getProduct()
+      .addRelationship(rSource, rTarget, sourceOpts, targetOpts);
+
+    super.visitCreateParentDimension(ctx);
+    this.store.setCurrentDimension(null);
   }
 
   // --------   RANGES  --------
@@ -143,9 +185,9 @@ class Visitor extends SensorGrammarVisitor {
         color: hasColor ? ctx.getChild(6).getText() : null,
         style: new GeoJSONLayerStyle(
           range.id +
-          "-" +
-          ctx.getChild(4).getText().replace(/['"]+/g, "") +
-          "Style",
+            "-" +
+            ctx.getChild(4).getText().replace(/['"]+/g, "") +
+            "Style",
           color,
           color,
           1,
@@ -162,9 +204,9 @@ class Visitor extends SensorGrammarVisitor {
         color: hasColor ? ctx.getChild(4).getText() : null,
         style: new GeoJSONLayerStyle(
           range.id +
-          "-" +
-          ctx.getChild(2).getText().replace(/['"]+/g, "") +
-          "Style",
+            "-" +
+            ctx.getChild(2).getText().replace(/['"]+/g, "") +
+            "Style",
           color,
           color,
           1,
@@ -229,7 +271,7 @@ class Visitor extends SensorGrammarVisitor {
       name: "base",
       baseLayer: true,
       selected: true,
-      order: 0
+      order: 0,
     });
 
     const layer = new GeoJSONLayer(
@@ -249,15 +291,13 @@ class Visitor extends SensorGrammarVisitor {
     ];
     map.addLayer(layer);
 
-    this.store.getProduct().addLayer(
-      {
-        name: sensor.defaultLayer,
-        baseLayer: false,
-        style: "grayPoint",
-        selected: true,
-        order: 1
-      }
-    );
+    this.store.getProduct().addLayer({
+      name: sensor.defaultLayer,
+      baseLayer: false,
+      style: "grayPoint",
+      selected: true,
+      order: 1,
+    });
 
     // ADD MAP
     this.store.getProduct().addMap(defaultMap, map);
@@ -354,10 +394,10 @@ class Visitor extends SensorGrammarVisitor {
 
               if (range.value != null) {
                 return {
-                  value : range.value,
+                  value: range.value,
                   label: range.label,
                   style: range.style.name,
-                }
+                };
               }
               return {
                 minValue: minValue,
@@ -401,11 +441,10 @@ class Visitor extends SensorGrammarVisitor {
     // ADD TO LAYER AVAILABLE STYLES
     const layer = this.store
       .getProduct()
-      .getMap(sensor.defaultMap).layers
-      .find((l) => l.name == sensor.defaultLayer);
+      .getMap(sensor.defaultMap)
+      .layers.find((l) => l.name == sensor.defaultLayer);
 
-    if (layer != null)
-      layer.availableStyles.push(sensorName + "Style");
+    if (layer != null) layer.availableStyles.push(sensorName + "Style");
 
     super.visitCreateMeasurementProperty(ctx);
   }

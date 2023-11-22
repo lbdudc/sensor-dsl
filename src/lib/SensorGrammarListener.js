@@ -95,6 +95,15 @@ export default class SensorGrammarListener extends antlr4.tree.ParseTreeListener
 	}
 
 
+	// Enter a parse tree produced by SensorGrammarParser#createParentDimension.
+	enterCreateParentDimension(ctx) {
+	}
+
+	// Exit a parse tree produced by SensorGrammarParser#createParentDimension.
+	exitCreateParentDimension(ctx) {
+	}
+
+
 	// Enter a parse tree produced by SensorGrammarParser#createDimensionProperties.
 	enterCreateDimensionProperties(ctx) {
 	}

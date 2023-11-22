@@ -1,3 +1,5 @@
+import { getPropertyParams } from "./GISVisitorHelper.js";
+
 const store = {
   product: {},
   currentEntity: null,
@@ -25,6 +27,24 @@ function addSpatialDimension(dimensionName, geomType) {
     type: "SPATIAL",
     geomType: geomType,
     properties: [],
+  });
+
+  // Add Entity and set initial id and geometry
+  this.getProduct().addEntity(dimensionName);
+  this.setCurrentEntity(dimensionName);
+  this.getCurrentEntity().addProperty(
+    "id",
+    "Long",
+    getPropertyParams(["identifier", "required", "unique"])
+  );
+  this.getCurrentEntity().addProperty("geometry", geomType);
+
+  // Add Layer and set initial id and geometry
+  this.getProduct().addLayer({
+    name: dimensionName,
+    baseLayer: false,
+    style: geomType == "Point" ? "grayPoint" : "grayPolygon",
+    selected: false,
   });
 }
 

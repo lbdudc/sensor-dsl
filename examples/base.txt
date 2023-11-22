@@ -8,11 +8,26 @@ CREATE SPATIAL DIMENSION Estuary (
   zone String
 );
 
-CREATE SPATIAL DIMENSION Otro (
-  geometry: Point
+CREATE SPATIAL DIMENSION Municipality (
+	geometry: Polygon
 ) WITH PROPERTIES (
-  nombreCorto String DISPLAY_STRING,
-  nombre String
+	cMun Integer DISPLAY_STRING
+);
+
+CREATE SPATIAL DIMENSION District (
+	geometry: Polygon
+) WITH PROPERTIES (
+	cDis Integer DISPLAY_STRING
+) WITH PARENT (
+	Municipality 
+);
+
+CREATE SPATIAL DIMENSION Section (
+	geometry: Polygon
+) WITH PROPERTIES (
+	cSec Integer DISPLAY_STRING
+) WITH PARENT (
+	District 
 );
 
 CREATE RANGE DepthRange (

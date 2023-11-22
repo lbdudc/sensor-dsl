@@ -66,6 +66,12 @@ export default class SensorGrammarVisitor extends antlr4.tree.ParseTreeVisitor {
 	}
 
 
+	// Visit a parse tree produced by SensorGrammarParser#createParentDimension.
+	visitCreateParentDimension(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
 	// Visit a parse tree produced by SensorGrammarParser#createDimensionProperties.
 	visitCreateDimensionProperties(ctx) {
 	  return this.visitChildren(ctx);
