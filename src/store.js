@@ -38,14 +38,6 @@ function addSpatialDimension(dimensionName, geomType) {
     getPropertyParams(["identifier", "required", "unique"])
   );
   this.getCurrentEntity().addProperty("geometry", geomType);
-
-  // Add Layer and set initial id and geometry
-  this.getProduct().addLayer({
-    name: dimensionName,
-    baseLayer: false,
-    style: geomType == "Point" ? "grayPoint" : "grayPolygon",
-    selected: false,
-  });
 }
 
 function addCategoricalDimension(dimensionName, fieldProp) {

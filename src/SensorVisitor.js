@@ -265,14 +265,15 @@ class Visitor extends SensorGrammarVisitor {
       "base",
       "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     );
-    map.addLayer(baseLayer);
 
-    this.store.getProduct().addLayer({
+    map.addLayer({
       name: "base",
       baseLayer: true,
       selected: true,
       order: 0,
     });
+
+    this.store.getProduct().addLayer(baseLayer);
 
     const layer = new GeoJSONLayer(
       sensor.defaultLayer,
@@ -289,15 +290,15 @@ class Visitor extends SensorGrammarVisitor {
       "redPolygon",
       "orangePolygon",
     ];
-    map.addLayer(layer);
-
-    this.store.getProduct().addLayer({
+    map.addLayer({
       name: sensor.defaultLayer,
       baseLayer: false,
       style: "grayPoint",
       selected: true,
       order: 1,
     });
+
+    this.store.getProduct().addLayer(layer);
 
     // ADD MAP
     this.store.getProduct().addMap(defaultMap, map);
@@ -322,6 +323,66 @@ class Visitor extends SensorGrammarVisitor {
           .map((s) => s.getSymbol().text.toLowerCase())
       )
     );
+  }
+
+  // --------   SENSOR WITH SPATIAL DIMENIONS  --------
+  visitAddSpatialDimensionToSensor(ctx) {
+    const sensor = this.store.getCurrentSensor();
+    const dimRelName = ctx.getChild(3).getText();
+
+    // iterate all dimensions
+    let index = 5;
+    while (index < ctx.getChildCount()) {
+      const dimName = ctx.getChild(index).getText();
+      const dim = this.store.getDimension(dimName);
+
+      if (dim == null) {
+        throw `Dimension ${dimName} not found!`;
+      }
+
+      // Add to sensor dimensions
+      if (sensor.dimensions.find((d) => d.id == dimRelName) == null) {
+        sensor.dimensions.push({
+          id: dimRelName,
+          type: "SPATIAL",
+          entities: [dimName],
+        });
+      } else {
+        sensor.dimensions
+          .find((d) => d.id == dimRelName)
+          .entities.push(dimName);
+      }
+
+      // Addd layer to map
+      const layer = new GeoJSONLayer(
+        dim.id,
+        dim.id,
+        dim.id + "-geometry",
+        false,
+        dim.geomType == "Point" ? "grayPoint" : "grayPolygon"
+      );
+
+      // ADD styles for each sensor property
+      layer.availableStyles = ["grayPolygon"];
+      sensor.measureData.forEach((measure) => {
+        layer.availableStyles.push(measure.id + "Style");
+        if (dim.geomType == "Polygon")
+          layer.availableStyles.push(measure.id + "Style_POLYGON");
+      });
+
+      const map = this.store.getProduct().getMap(sensor.defaultMap);
+      map.addLayer({
+        name: dim.id,
+        baseLayer: false,
+        style: dim.geomType == "Point" ? "grayPoint" : "grayPolygon",
+        selected: true,
+        order: map.layers.length,
+      });
+
+      this.store.getProduct().addLayer(layer);
+
+      index += 2;
+    }
   }
 
   // --------   SENSOR MEASUREMENTS  --------
@@ -367,6 +428,10 @@ class Visitor extends SensorGrammarVisitor {
       sensor.addMeasureData(sensorProps);
     }
 
+    // Add styles to layer
+    const layer = this.store.getProduct().getLayer(sensor.defaultLayer);
+    layer.availableStyles.push(sensorName + "Style");
+
     // ADD STYLES FOR EACH MEASURE DATA
     // IF HAS CUSTOM RANGES, NEED TO ADD TO AVAILABLE STYLES
     const customRange = this.store.getRange(sensorProps.range);
@@ -376,76 +441,97 @@ class Visitor extends SensorGrammarVisitor {
         this.store.getProduct().addStyle(range.style);
       });
 
-      this.store.getProduct().addStyle(
-        new StaticIntervalsStyle(
-          sensorName + "Style",
-          "data." + sensorName,
-          customRange.properties
-            .filter((range) => range.value != "DEFAULT")
-            .map((range) => {
-              const minValue =
-                range.minValue == "-Infinity"
-                  ? range.minValue
-                  : parseFloat(range.minValue);
-              const maxValue =
-                range.maxValue == "Infinity"
-                  ? range.maxValue
-                  : parseFloat(range.maxValue);
+      const styleNames = [
+        {
+          name: sensorName + "Style",
+          property: "data." + sensorName,
+          type: "Point",
+        },
+        {
+          name: sensorName + "Style_POLYGON",
+          property: "data." + sensorName,
+          type: "Polygon",
+        },
+      ];
 
-              if (range.value != null) {
+      styleNames.forEach((sensorStyle) => {
+        this.store.getProduct().addStyle(
+          new StaticIntervalsStyle(
+            sensorStyle.name,
+            sensorStyle.property,
+            customRange.properties
+              .filter((range) => range.value != "DEFAULT")
+              .map((range) => {
+                const minValue =
+                  range.minValue == "-Infinity"
+                    ? range.minValue
+                    : parseFloat(range.minValue);
+                const maxValue =
+                  range.maxValue == "Infinity"
+                    ? range.maxValue
+                    : parseFloat(range.maxValue);
+
+                if (range.value != null) {
+                  return {
+                    value: range.value,
+                    label: range.label,
+                    style: range.style.name,
+                  };
+                }
                 return {
-                  value: range.value,
+                  minValue: minValue,
+                  maxValue: maxValue,
                   label: range.label,
                   style: range.style.name,
                 };
-              }
-              return {
-                minValue: minValue,
-                maxValue: maxValue,
-                label: range.label,
-                style: range.style.name,
-              };
-            }),
-          customRange.properties
-            .filter((range) => range.value == "DEFAULT")
-            .map((range) => range.style.name)[0]
-        )
-      );
+              }),
+            customRange.properties
+              .filter((range) => range.value == "DEFAULT")
+              .map((range) => range.style.name)[0]
+          )
+        );
+      });
     } else {
-      this.store.getProduct().addStyle(
-        new StaticIntervalsStyle(
-          sensorName + "Style",
-          "data." + sensorName,
-          [
-            {
-              minValue: "-Infinity",
-              maxValue: 20,
-              style: "greenPoint",
-            },
-            {
-              minValue: 20,
-              maxValue: 40,
-              style: "orangePoint",
-            },
-            {
-              minValue: 40,
-              maxValue: "Infinity",
-              style: "redPoint",
-            },
-          ],
-          "grayPoint"
-        )
-      );
+      const styleNames = [
+        {
+          name: sensorName + "Style",
+          property: "data." + sensorName,
+          type: "Point",
+        },
+        {
+          name: sensorName + "Style_POLYGON",
+          property: "data." + sensorName,
+          type: "Polygon",
+        },
+      ];
+
+      styleNames.forEach((sensorStyle) => {
+        this.store.getProduct().addStyle(
+          new StaticIntervalsStyle(
+            sensorStyle.name,
+            sensorStyle.property,
+            [
+              {
+                minValue: "-Infinity",
+                maxValue: 20,
+                style: "greenPoint",
+              },
+              {
+                minValue: 20,
+                maxValue: 40,
+                style: "orangePoint",
+              },
+              {
+                minValue: 40,
+                maxValue: "Infinity",
+                style: "redPoint",
+              },
+            ],
+            sensorStyle.type == "Point" ? "grayPoint" : "grayPolygon"
+          )
+        );
+      });
     }
-
-    // ADD TO LAYER AVAILABLE STYLES
-    const layer = this.store
-      .getProduct()
-      .getMap(sensor.defaultMap)
-      .layers.find((l) => l.name == sensor.defaultLayer);
-
-    if (layer != null) layer.availableStyles.push(sensorName + "Style");
-
     super.visitCreateMeasurementProperty(ctx);
   }
 }

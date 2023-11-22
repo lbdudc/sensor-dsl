@@ -1,13 +1,5 @@
 CREATE PRODUCT intecmar USING 4326;
 
-CREATE SPATIAL DIMENSION Estuary (
-  geometry: Polygon
-) WITH PROPERTIES (
-  shortName String DISPLAY_STRING,
-  name String,
-  zone String
-);
-
 CREATE SPATIAL DIMENSION Municipality (
 	geometry: Polygon
 ) WITH PROPERTIES (
@@ -28,6 +20,12 @@ CREATE SPATIAL DIMENSION Section (
 	cSec Integer DISPLAY_STRING
 ) WITH PARENT (
 	District 
+);
+
+CREATE SPATIAL DIMENSION Barrio (
+	geometry: Polygon
+) WITH PROPERTIES (
+	cBarrio Integer DISPLAY_STRING
 );
 
 CREATE RANGE DepthRange (
@@ -76,4 +74,10 @@ CREATE SENSOR StationObservation (
   density Double UNITS "kg/m3",
   depth Double UNITS "m",
   conductivity Double UNITS "S/m"
+) WITH SPATIAL DIMENSIONS Administrative (
+  Municipality,
+  District,
+  Section
+) WITH SPATIAL DIMENSIONS Barrio (
+  Barrio
 );

@@ -167,6 +167,15 @@ export default class SensorGrammarListener extends antlr4.tree.ParseTreeListener
 	}
 
 
+	// Enter a parse tree produced by SensorGrammarParser#addSpatialDimensionToSensor.
+	enterAddSpatialDimensionToSensor(ctx) {
+	}
+
+	// Exit a parse tree produced by SensorGrammarParser#addSpatialDimensionToSensor.
+	exitAddSpatialDimensionToSensor(ctx) {
+	}
+
+
 	// Enter a parse tree produced by SensorGrammarParser#srid.
 	enterSrid(ctx) {
 	}

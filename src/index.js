@@ -4,6 +4,7 @@ import SensorGrammarParser from "./lib/SensorGrammarParser.js";
 import ErrorListener from "./error/ErrorListener.js";
 import SensorVisitor from "./SensorVisitor.js";
 import store from "./store.js";
+import { transformation } from "./GISVisitorHelper.js";
 
 export default function parse(inputStr, debug = false) {
   const chars = new antlr4.InputStream(inputStr);
@@ -22,5 +23,6 @@ export default function parse(inputStr, debug = false) {
   const tree = parser.parse();
   visitor.start(tree);
 
-  return store.getProduct();
+  // return store.getProduct();
+  return transformation(store.getProduct());
 }

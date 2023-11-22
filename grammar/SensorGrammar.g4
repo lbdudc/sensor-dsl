@@ -82,6 +82,7 @@ createSensor: SENSOR_SYMBOL identifier OPAR_SYMBOL
   CPAR_SYMBOL
     createSensorProperties
     createSensorMeasurementData
+    addSpatialDimensionToSensor*
   SCOL_SYMBOL
 ;
 
@@ -107,6 +108,12 @@ createSensorMeasurementData:
 
 createMeasurementProperty:
   identifier TYPE (UNITS_SYMBOL text)? (ICON_SYMBOL text)? (RANGE_SYMBOL identifier)?
+;
+
+addSpatialDimensionToSensor:
+  WITH_SYMBOL SPATIAL_SYMBOL DIMENSIONS_SYMBOL identifier OPAR_SYMBOL
+    identifier (COMMA_SYMBOL identifier)*
+  CPAR_SYMBOL
 ;
 
 srid: INT_NUMBER;
@@ -165,6 +172,7 @@ SENSOR_SYMBOL: S E N S O R;
 PRODUCT_SYMBOL: P R O D U C T;
 USING_SYMBOL: U S I N G;
 DIMENSION_SYMBOL: D I M E N S I O N;
+DIMENSIONS_SYMBOL: D I M E N S I O N S;
 RANGE_SYMBOL: R A N G E;
 WITH_SYMBOL: W I T H;
 PROPERTIES_SYMBOL: P R O P E R T I E S;
