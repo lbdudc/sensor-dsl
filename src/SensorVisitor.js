@@ -129,7 +129,7 @@ class Visitor extends SensorGrammarVisitor {
     super.visitDimPropertyDefinition(ctx);
   }
 
-  // PARENT DIMENSION
+  // DIMENSIONS PARENT
   visitCreateParentDimension(ctx) {
     const dimensionName = ctx.getChild(3).getText();
 
@@ -325,7 +325,7 @@ class Visitor extends SensorGrammarVisitor {
     );
   }
 
-  // --------   SENSOR WITH SPATIAL DIMENIONS  --------
+  // SENSOR WITH SPATIAL DIMENIONS  --------
   visitAddSpatialDimensionToSensor(ctx) {
     const sensor = this.store.getCurrentSensor();
     const dimRelName = ctx.getChild(3).getText();
@@ -385,16 +385,15 @@ class Visitor extends SensorGrammarVisitor {
     }
   }
 
-  // --------   SENSOR WITH CATEGORICAL DIMENIONS  --------
+  // SENSOR WITH CATEGORICAL DIMENIONS  --------
   visitAddCategoricalDimensionToSensor(ctx) {
-    // const sensor = this.store.getCurrentSensor();
+    const sensor = this.store.getCurrentSensor();
 
     let index = 4;
     while (index < ctx.getChildCount()) {
       // CHECK IF DIMENSION EXISTS
       const dimName = ctx.getChild(index).getText();
       const dim = this.store.getDimension(dimName);
-      console.log(dimName, dim);
 
       if (dim == null) {
         throw `Dimension ${dimName} not found!`;
@@ -402,17 +401,47 @@ class Visitor extends SensorGrammarVisitor {
 
       // Check if has custom ranges
       const hasCustomRanges = ctx.getChild(index + 1).getText() == "RANGE";
-      console.log(hasCustomRanges);
-      // const rangeName = hasCustomRanges ? ctx.getChild(index + 2).getText() : null;
+      
+      const dimToAdd =  {
+        id: dimName,
+        type: "CATEGORICAL",
+        field: dim.field
+      }
 
-      // TODO, ADD TO SENSOR DIMENSIONS
+      if (hasCustomRanges) {
+        const rangeName = ctx.getChild(index + 2).getText();
+        const range = this.store.getRange(rangeName);
+        
+        if (range == null) {
+          throw `Range ${rangeName} not found!`;
+        }
+
+        dimToAdd.categories = range.properties.map((prop) => {
+          const from = prop.minValue == "-Infinity" ? prop.minValue : parseFloat(prop.minValue);
+          const to = prop.maxValue == "Infinity" ? prop.maxValue : parseFloat(prop.maxValue);
+
+          const finalObj = {
+            value: prop.value,
+            from: isNaN(from) ? null : from,
+            to: isNaN(to) ? null : to,
+            label: prop.label
+          }
+
+          if (finalObj.value == null) delete finalObj.value;
+          if (finalObj.from == null) delete finalObj.from;
+          if (finalObj.to == null) delete finalObj.to;
+
+          return finalObj
+        });
+      }
+
+      sensor.addDimension(dimToAdd);
 
       index += hasCustomRanges ? 4 : 2;
     }
-    // TODO: Add categorical dimension to sensor
   }
 
-  // --------   SENSOR MEASUREMENTS  --------
+  // SENSOR MEASUREMENTS  --------
   visitCreateSensorMeasurementData(ctx) {
     super.visitCreateSensorMeasurementData(ctx);
   }
@@ -560,6 +589,27 @@ class Visitor extends SensorGrammarVisitor {
       });
     }
     super.visitCreateMeasurementProperty(ctx);
+  }
+
+  // SENSOR MAP BBOX  --------
+  visitAddBBXToSensor(ctx) {
+    const sensor = this.store.getCurrentSensor();
+
+    const hasBracket = ctx.getChild(3).getText() == "[";
+    const lat = hasBracket
+      ? ctx.getChild(4).getText()
+      : ctx.getChild(3).getText();
+
+    const lon = hasBracket
+      ? ctx.getChild(5).getText()
+      : ctx.getChild(4).getText();
+    
+    const zoom = hasBracket
+      ? ctx.getChild(6).getText()
+      : ctx.getChild(5).getText();
+    
+    const map = this.store.getProduct().getMap(sensor.defaultMap);
+    map.setCenter(lat, lon, zoom);
   }
 }
 

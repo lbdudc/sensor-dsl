@@ -88,4 +88,4 @@ CREATE SENSOR StationObservation (
   DepthDimension RANGE DepthRange,
   SexoDimension RANGE SexoRange,
   SexoDimension
-);
+) WITH BBOX ( [40.42, -3.7], 12);

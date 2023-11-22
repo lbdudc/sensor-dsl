@@ -84,6 +84,7 @@ createSensor: SENSOR_SYMBOL identifier OPAR_SYMBOL
     createSensorMeasurementData
     addSpatialDimensionToSensor*
     addCategoricalDimensionToSensor?
+    addBBXToSensor?
   SCOL_SYMBOL
 ;
 
@@ -120,6 +121,13 @@ addSpatialDimensionToSensor:
 addCategoricalDimensionToSensor:
   WITH_SYMBOL CATEGORICAL_SYMBOL DIMENSIONS_SYMBOL OPAR_SYMBOL
     identifier (RANGE_SYMBOL identifier)? (COMMA_SYMBOL identifier (RANGE_SYMBOL identifier)?)*
+  CPAR_SYMBOL
+;
+
+addBBXToSensor:
+  WITH_SYMBOL BBOX_SYMBOL OPAR_SYMBOL
+    BRA_SYMBOL FLOAT_NUMBER COMMA_SYMBOL FLOAT_NUMBER KET_SYMBOL COMMA_SYMBOL INT_NUMBER
+    | FLOAT_NUMBER COMMA_SYMBOL FLOAT_NUMBER COMMA_SYMBOL INT_NUMBER
   CPAR_SYMBOL
 ;
 

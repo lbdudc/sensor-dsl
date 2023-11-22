@@ -6,9 +6,10 @@ import GeoJSONLayerStyle from "./GeoJSONLayerStyle.js";
 import StaticIntervalsStyle from "./StaticIntervalsStyle.js";
 
 class Map {
-  constructor(id, label, sortable = false) {
+  constructor(id, label, sortable = false, center) {
     this.name = id;
     this.label = label;
+    this.center = center || { lat: 40.42, lng: -3.7, zoom: 12 };
     this.sortable = sortable;
     this.layers = [];
   }
@@ -22,6 +23,20 @@ class Map {
     if (isBaseLayer != null) newLayer.baseLayer = isBaseLayer;
     if (hidden != null) newLayer.selected = hidden;
     this.layers.push(layer);
+  }
+
+  setCenter(lat, lng, zoom) {
+    lat = parseFloat(lat);
+    lng = parseFloat(lng);
+    zoom = parseInt(zoom);
+    
+    if (isNaN(lat) || isNaN(lng) || isNaN(zoom)) {
+      throw new Error(
+        "Invalid center coordinates: " + JSON.stringify({ lat, lng, zoom })
+      );
+    }
+
+    this.center = { lat, lng, zoom };
   }
 
   toString() {
