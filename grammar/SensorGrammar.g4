@@ -126,8 +126,7 @@ addCategoricalDimensionToSensor:
 
 addBBXToSensor:
   WITH_SYMBOL BBOX_SYMBOL OPAR_SYMBOL
-    BRA_SYMBOL FLOAT_NUMBER COMMA_SYMBOL FLOAT_NUMBER KET_SYMBOL COMMA_SYMBOL INT_NUMBER
-    | FLOAT_NUMBER COMMA_SYMBOL FLOAT_NUMBER COMMA_SYMBOL INT_NUMBER
+    BRA_SYMBOL? coordinate KET_SYMBOL? COMMA_SYMBOL INT_NUMBER
   CPAR_SYMBOL
 ;
 
@@ -135,9 +134,15 @@ srid: INT_NUMBER;
 identifier: IDENTIFIER;
 text: QUOTED_TEXT;
 dataSource: POSTGRES_SYMBOL | ELASTICSEARCH_SYMBOL;
-
 hexColor: HEX_COLOR;
 floatNumber: FLOAT_NUMBER;
+
+negativeFloat:
+  DASH_SYMBOL? FLOAT_NUMBER
+;
+
+coordinate:
+  negativeFloat COMMA_SYMBOL negativeFloat;
 
 //-----------------------------------------------------------------------
 

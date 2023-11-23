@@ -126,6 +126,12 @@ export default class SensorGrammarVisitor extends antlr4.tree.ParseTreeVisitor {
 	}
 
 
+	// Visit a parse tree produced by SensorGrammarParser#addBBXToSensor.
+	visitAddBBXToSensor(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
 	// Visit a parse tree produced by SensorGrammarParser#srid.
 	visitSrid(ctx) {
 	  return this.visitChildren(ctx);
@@ -158,6 +164,18 @@ export default class SensorGrammarVisitor extends antlr4.tree.ParseTreeVisitor {
 
 	// Visit a parse tree produced by SensorGrammarParser#floatNumber.
 	visitFloatNumber(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by SensorGrammarParser#negativeFloat.
+	visitNegativeFloat(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by SensorGrammarParser#coordinate.
+	visitCoordinate(ctx) {
 	  return this.visitChildren(ctx);
 	}
 

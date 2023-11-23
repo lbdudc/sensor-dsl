@@ -401,37 +401,43 @@ class Visitor extends SensorGrammarVisitor {
 
       // Check if has custom ranges
       const hasCustomRanges = ctx.getChild(index + 1).getText() == "RANGE";
-      
-      const dimToAdd =  {
+
+      const dimToAdd = {
         id: dimName,
         type: "CATEGORICAL",
-        field: dim.field
-      }
+        field: dim.field,
+      };
 
       if (hasCustomRanges) {
         const rangeName = ctx.getChild(index + 2).getText();
         const range = this.store.getRange(rangeName);
-        
+
         if (range == null) {
           throw `Range ${rangeName} not found!`;
         }
 
         dimToAdd.categories = range.properties.map((prop) => {
-          const from = prop.minValue == "-Infinity" ? prop.minValue : parseFloat(prop.minValue);
-          const to = prop.maxValue == "Infinity" ? prop.maxValue : parseFloat(prop.maxValue);
+          const from =
+            prop.minValue == "-Infinity"
+              ? prop.minValue
+              : parseFloat(prop.minValue);
+          const to =
+            prop.maxValue == "Infinity"
+              ? prop.maxValue
+              : parseFloat(prop.maxValue);
 
           const finalObj = {
             value: prop.value,
             from: isNaN(from) ? null : from,
             to: isNaN(to) ? null : to,
-            label: prop.label
-          }
+            label: prop.label,
+          };
 
           if (finalObj.value == null) delete finalObj.value;
           if (finalObj.from == null) delete finalObj.from;
           if (finalObj.to == null) delete finalObj.to;
 
-          return finalObj
+          return finalObj;
         });
       }
 
@@ -596,18 +602,15 @@ class Visitor extends SensorGrammarVisitor {
     const sensor = this.store.getCurrentSensor();
 
     const hasBracket = ctx.getChild(3).getText() == "[";
-    const lat = hasBracket
-      ? ctx.getChild(4).getText()
-      : ctx.getChild(3).getText();
 
-    const lon = hasBracket
-      ? ctx.getChild(5).getText()
-      : ctx.getChild(4).getText();
-    
+    const [lat, lon] = hasBracket
+      ? ctx.getChild(4).getText().split(",")
+      : ctx.getChild(3).getText().split(",");
+
     const zoom = hasBracket
-      ? ctx.getChild(6).getText()
+      ? ctx.getChild(7).getText()
       : ctx.getChild(5).getText();
-    
+
     const map = this.store.getProduct().getMap(sensor.defaultMap);
     map.setCenter(lat, lon, zoom);
   }

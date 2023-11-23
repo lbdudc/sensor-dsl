@@ -185,6 +185,15 @@ export default class SensorGrammarListener extends antlr4.tree.ParseTreeListener
 	}
 
 
+	// Enter a parse tree produced by SensorGrammarParser#addBBXToSensor.
+	enterAddBBXToSensor(ctx) {
+	}
+
+	// Exit a parse tree produced by SensorGrammarParser#addBBXToSensor.
+	exitAddBBXToSensor(ctx) {
+	}
+
+
 	// Enter a parse tree produced by SensorGrammarParser#srid.
 	enterSrid(ctx) {
 	}
@@ -236,6 +245,24 @@ export default class SensorGrammarListener extends antlr4.tree.ParseTreeListener
 
 	// Exit a parse tree produced by SensorGrammarParser#floatNumber.
 	exitFloatNumber(ctx) {
+	}
+
+
+	// Enter a parse tree produced by SensorGrammarParser#negativeFloat.
+	enterNegativeFloat(ctx) {
+	}
+
+	// Exit a parse tree produced by SensorGrammarParser#negativeFloat.
+	exitNegativeFloat(ctx) {
+	}
+
+
+	// Enter a parse tree produced by SensorGrammarParser#coordinate.
+	enterCoordinate(ctx) {
+	}
+
+	// Exit a parse tree produced by SensorGrammarParser#coordinate.
+	exitCoordinate(ctx) {
 	}
 
 

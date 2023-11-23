@@ -52,5 +52,6 @@ CREATE SENSOR StationObservation (
   Estuary
 ) WITH CATEGORICAL DIMENSIONS (
   Depth RANGE DepthRange
-); 
-// WITH BBOX ( [40.42, -3.7], 12);
+) WITH BBOX ([40.42, -3.7], 12);
+
+  
