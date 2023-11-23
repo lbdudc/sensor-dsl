@@ -27,7 +27,7 @@ CREATE RANGE DepthRange (
 // SENSORS
 
 CREATE SENSOR StationObservation (
-  interval: 500,
+  interval: 300,
   datasource: elasticsearch,
   geometry: Point
 ) WITH PROPERTIES (
@@ -35,8 +35,8 @@ CREATE SENSOR StationObservation (
   code String,
   name String,
   description String,
-  startTime Datetime,
-  endTime Datetime
+  startTime DateTime,
+  endTime DateTime
 ) WITH MEASUREMENT DATA (
   temperature_ITS90 Double UNITS "ºC" ICON "thermometer-low" RANGE TempRange,
   salinity Double UNITS "PSU",
@@ -52,6 +52,16 @@ CREATE SENSOR StationObservation (
   Estuary
 ) WITH CATEGORICAL DIMENSIONS (
   Depth RANGE DepthRange
-) WITH BBOX ([40.42, -3.7], 12);
+) WITH BBOX ([42.7, -8.1], 9);
 
+
+SET DEPLOYMENT (
+  "client_deploy_url" "https://pcmg.citic.udc.es",
+  "geoserver_url" "http://cronos.lbd.org.es/geoserver",
+  "geoserver_url_wms" "http://cronos.lbd.org.es/geoserver/wms",
+  "geoserver_user" "admin",
+  "geoserver_password" "$$geoserver$$",
+  "server_deploy_url" "https://pcmg.citic.udc.es/backend",
+  "server_deploy_port" "9001"
+);
   

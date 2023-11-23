@@ -7,7 +7,7 @@ import {
   GeoJSONLayerStyle,
   StaticIntervalsStyle,
 } from "./spl/Map.js";
-import { getPropertyParams } from "./GISVisitorHelper.js";
+import { getPropertyParams } from "./SensorVisitorHelper.js";
 
 class Visitor extends SensorGrammarVisitor {
   constructor(store, debug) {
@@ -42,9 +42,11 @@ class Visitor extends SensorGrammarVisitor {
     const baseStyles = [
       new GeoJSONLayerStyle("redPoint", "#FF0000", 0.5, 1, 1),
       new GeoJSONLayerStyle("greenPoint", "#008000", 0.5, 1, 1),
+      new GeoJSONLayerStyle("grayPoint", "#808080", 0.5, 1, 1),
       new GeoJSONLayerStyle("orangePoint", "#FFA500", 0.5, 1, 1),
       new GeoJSONLayerStyle("redPolygon", "#FF0000", 0.5, 1, 1),
       new GeoJSONLayerStyle("greenPolygon", "#008000", 0.5, 1, 1),
+      new GeoJSONLayerStyle("grayPolygon", "#808080", 0.5, 1, 1),
       new GeoJSONLayerStyle("orangePolygon", "#FFA500", 0.5, 1, 1),
     ];
     baseStyles.forEach((style) => this.store.getProduct().addStyle(style));
@@ -184,10 +186,7 @@ class Visitor extends SensorGrammarVisitor {
         label: ctx.getChild(4).getText().replace(/['"]+/g, ""),
         color: hasColor ? ctx.getChild(6).getText() : null,
         style: new GeoJSONLayerStyle(
-          range.id +
-            "-" +
-            ctx.getChild(4).getText().replace(/['"]+/g, "") +
-            "Style",
+          range.id + "-" + ctx.getChild(4).getText().replace(/['"]+/g, ""),
           color,
           color,
           1,
@@ -203,10 +202,7 @@ class Visitor extends SensorGrammarVisitor {
         label: ctx.getChild(2).getText().replace(/['"]+/g, ""),
         color: hasColor ? ctx.getChild(4).getText() : null,
         style: new GeoJSONLayerStyle(
-          range.id +
-            "-" +
-            ctx.getChild(2).getText().replace(/['"]+/g, "") +
-            "Style",
+          range.id + "-" + ctx.getChild(2).getText().replace(/['"]+/g, ""),
           color,
           color,
           1,
@@ -284,9 +280,11 @@ class Visitor extends SensorGrammarVisitor {
     );
     layer.availableStyles = [
       "greenPoint",
+      "grayPoint",
       "redPoint",
       "orangePoint",
       "greenPolygon",
+      "grayPolygon",
       "redPolygon",
       "orangePolygon",
     ];
@@ -365,9 +363,9 @@ class Visitor extends SensorGrammarVisitor {
       // ADD styles for each sensor property
       layer.availableStyles = ["grayPolygon"];
       sensor.measureData.forEach((measure) => {
-        layer.availableStyles.push(measure.id + "Style");
+        layer.availableStyles.push(measure.name);
         if (dim.geomType == "Polygon")
-          layer.availableStyles.push(measure.id + "Style_POLYGON");
+          layer.availableStyles.push(measure.name + "_POLYGON");
       });
 
       const map = this.store.getProduct().getMap(sensor.defaultMap);
@@ -375,7 +373,7 @@ class Visitor extends SensorGrammarVisitor {
         name: dim.id,
         baseLayer: false,
         style: dim.geomType == "Point" ? "grayPoint" : "grayPolygon",
-        selected: true,
+        selected: false,
         order: map.layers.length,
       });
 
@@ -480,19 +478,19 @@ class Visitor extends SensorGrammarVisitor {
       }
 
       sensor.addMeasureData({
-        id: sensorName,
+        name: sensorName,
         type: sensorType,
         ...sensorProps,
       });
     } else {
-      sensorProps.id = sensorName;
+      sensorProps.name = sensorName;
       sensorProps.type = sensorType;
       sensor.addMeasureData(sensorProps);
     }
 
     // Add styles to layer
     const layer = this.store.getProduct().getLayer(sensor.defaultLayer);
-    layer.availableStyles.push(sensorName + "Style");
+    layer.availableStyles.push(sensorName);
 
     // ADD STYLES FOR EACH MEASURE DATA
     // IF HAS CUSTOM RANGES, NEED TO ADD TO AVAILABLE STYLES
@@ -505,12 +503,12 @@ class Visitor extends SensorGrammarVisitor {
 
       const styleNames = [
         {
-          name: sensorName + "Style",
+          name: sensorName,
           property: "data." + sensorName,
           type: "Point",
         },
         {
-          name: sensorName + "Style_POLYGON",
+          name: sensorName + "_POLYGON",
           property: "data." + sensorName,
           type: "Polygon",
         },
@@ -556,12 +554,12 @@ class Visitor extends SensorGrammarVisitor {
     } else {
       const styleNames = [
         {
-          name: sensorName + "Style",
+          name: sensorName,
           property: "data." + sensorName,
           type: "Point",
         },
         {
-          name: sensorName + "Style_POLYGON",
+          name: sensorName + "_POLYGON",
           property: "data." + sensorName,
           type: "Polygon",
         },

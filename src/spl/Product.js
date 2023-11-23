@@ -7,6 +7,11 @@ class Product {
     if (srid != 4326) {
       console.warn("Only SRID 4326 supported!");
     }
+    this.languages = ["en", "es", "gl"];
+    this.packageInfo = {
+      artifactId: name,
+      groupId: `es.udc.lbd.${name}`,
+    };
     this.entities = [];
     this.relationships = [];
     this.dataWarehouse = {
@@ -128,6 +133,7 @@ class Entity {
   constructor(name) {
     this.name = name;
     this.properties = [];
+    this.displayString = "$id";
   }
 
   addProperty(name, type, params) {

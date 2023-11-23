@@ -1,4 +1,4 @@
-import { getPropertyParams } from "./GISVisitorHelper.js";
+import { getPropertyParams } from "./SensorVisitorHelper.js";
 
 const store = {
   product: {},
