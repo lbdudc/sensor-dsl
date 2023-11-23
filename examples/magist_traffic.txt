@@ -3,13 +3,13 @@ CREATE PRODUCT magist USING 4326;
 // DIMENSIONS
 
 CREATE SPATIAL DIMENSION Municipality (
-	geometry: Polygon
+	geometry: Geometry
 ) WITH PROPERTIES (
 	cMun Integer DISPLAY_STRING
 );
 
 CREATE SPATIAL DIMENSION District (
-	geometry: Polygon
+	geometry: Geometry
 ) WITH PROPERTIES (
 	cDis Integer DISPLAY_STRING
 ) WITH PARENT (
@@ -17,7 +17,7 @@ CREATE SPATIAL DIMENSION District (
 );
 
 CREATE SPATIAL DIMENSION Section (
-	geometry: Polygon
+	geometry: Geometry
 ) WITH PROPERTIES (
 	cSec Integer DISPLAY_STRING
 ) WITH PARENT (
@@ -25,7 +25,7 @@ CREATE SPATIAL DIMENSION Section (
 );
 
 CREATE SPATIAL DIMENSION Barrio (
-	geometry: Polygon
+	geometry: Geometry
 ) WITH PROPERTIES (
 	cBarrio Integer DISPLAY_STRING
 );
@@ -53,5 +53,17 @@ CREATE SENSOR TrafficObservation (
 	Municipality
 ) WITH SPATIAL DIMENSIONS Barrio (
 	Barrio
+) WITH BBOX ([40.42, -3.7], 12);
+
+// DEPLOYMENT INFO
+
+SET DEPLOYMENT (
+	"client_deploy_url" "https://magist.citic.udc.es",
+	"geoserver_url" "http://cronos.lbd.org.es/geoserver",
+	"geoserver_url_wms" "http://cronos.lbd.org.es/geoserver/wms",
+	"geoserver_user" "admin",
+	"geoserver_password" "$$geoserver$$",
+	"server_deploy_url" "https://magist.citic.udc.es/backend",
+	"server_deploy_port" "9001"
 );
-//WITH BBOX ([40.42, -3.7], 12);
+  

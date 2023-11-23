@@ -3,13 +3,13 @@ CREATE PRODUCT magist USING 4326;
 // DIMENSIONS
 
 CREATE SPATIAL DIMENSION Municipality (
-	geometry: Polygon
+	geometry: Geometry
 ) WITH PROPERTIES (
 	cMun Integer DISPLAY_STRING
 );
 
 CREATE SPATIAL DIMENSION District (
-	geometry: Polygon
+	geometry: Geometry
 ) WITH PROPERTIES (
 	cDis Integer DISPLAY_STRING
 ) WITH PARENT (
@@ -17,7 +17,7 @@ CREATE SPATIAL DIMENSION District (
 );
 
 CREATE SPATIAL DIMENSION Section (
-	geometry: Polygon
+	geometry: Geometry
 ) WITH PROPERTIES (
 	cSec Integer DISPLAY_STRING
 ) WITH PARENT (
@@ -25,7 +25,7 @@ CREATE SPATIAL DIMENSION Section (
 );
 
 CREATE SPATIAL DIMENSION Voronoi (
-	geometry: Polygon
+	geometry: Geometry
 ) WITH PROPERTIES (
 	magnitude Integer DISPLAY_STRING
 );

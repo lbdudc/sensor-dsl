@@ -46,7 +46,7 @@ rangeNumber:
 createDimension: createSpatialDimension | createCategoricalDimension;
 
 createSpatialDimension: SPATIAL_SYMBOL DIMENSION_SYMBOL identifier OPAR_SYMBOL
-	  GEOMETRY_SYMBOL COLON_SYMBOL TYPE
+	  GEOMETRY_SYMBOL COLON_SYMBOL (TYPE | GEOMETRY_SYMBOL)
   CPAR_SYMBOL
   createDimensionProperties
   createParentDimension?
