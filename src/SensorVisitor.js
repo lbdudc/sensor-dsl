@@ -40,14 +40,14 @@ class Visitor extends SensorGrammarVisitor {
 
     // CREATE BASE STYLES
     const baseStyles = [
-      new GeoJSONLayerStyle("redPoint", "#FF0000", 0.5, 1, 1),
-      new GeoJSONLayerStyle("greenPoint", "#008000", 0.5, 1, 1),
-      new GeoJSONLayerStyle("grayPoint", "#808080", 0.5, 1, 1),
-      new GeoJSONLayerStyle("orangePoint", "#FFA500", 0.5, 1, 1),
-      new GeoJSONLayerStyle("redPolygon", "#FF0000", 0.5, 1, 1),
-      new GeoJSONLayerStyle("greenPolygon", "#008000", 0.5, 1, 1),
-      new GeoJSONLayerStyle("grayPolygon", "#808080", 0.5, 1, 1),
-      new GeoJSONLayerStyle("orangePolygon", "#FFA500", 0.5, 1, 1),
+      new GeoJSONLayerStyle("redPoint", "#FF0000", "#FF0000", 1, 1),
+      new GeoJSONLayerStyle("greenPoint", "#008000", 1, 1),
+      new GeoJSONLayerStyle("grayPoint", "#808080", 1, 1),
+      new GeoJSONLayerStyle("orangePoint", "#FFA500", 1, 1),
+      new GeoJSONLayerStyle("redPolygon", "#FF0000", "#FF0000", 0.5, 1),
+      new GeoJSONLayerStyle("greenPolygon", "#008000", "#008000", 0.5, 1),
+      new GeoJSONLayerStyle("grayPolygon", "#808080", "#808080", 0.5, 1),
+      new GeoJSONLayerStyle("orangePolygon", "#FFA500", "#FFA500", 0.5, 1),
     ];
     baseStyles.forEach((style) => this.store.getProduct().addStyle(style));
   }
@@ -364,7 +364,7 @@ class Visitor extends SensorGrammarVisitor {
       layer.availableStyles = ["grayPolygon"];
       sensor.measureData.forEach((measure) => {
         layer.availableStyles.push(measure.name);
-        if (dim.geomType == "Polygon")
+        if (dim.geomType == "Polygon" || dim.geomType == "Geometry")
           layer.availableStyles.push(measure.name + "_POLYGON");
       });
 
