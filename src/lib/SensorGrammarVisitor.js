@@ -132,6 +132,18 @@ export default class SensorGrammarVisitor extends antlr4.tree.ParseTreeVisitor {
 	}
 
 
+	// Visit a parse tree produced by SensorGrammarParser#setDeployment.
+	visitSetDeployment(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
+	// Visit a parse tree produced by SensorGrammarParser#deploymentProperty.
+	visitDeploymentProperty(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
 	// Visit a parse tree produced by SensorGrammarParser#srid.
 	visitSrid(ctx) {
 	  return this.visitChildren(ctx);

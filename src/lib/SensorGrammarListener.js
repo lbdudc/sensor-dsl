@@ -194,6 +194,24 @@ export default class SensorGrammarListener extends antlr4.tree.ParseTreeListener
 	}
 
 
+	// Enter a parse tree produced by SensorGrammarParser#setDeployment.
+	enterSetDeployment(ctx) {
+	}
+
+	// Exit a parse tree produced by SensorGrammarParser#setDeployment.
+	exitSetDeployment(ctx) {
+	}
+
+
+	// Enter a parse tree produced by SensorGrammarParser#deploymentProperty.
+	enterDeploymentProperty(ctx) {
+	}
+
+	// Exit a parse tree produced by SensorGrammarParser#deploymentProperty.
+	exitDeploymentProperty(ctx) {
+	}
+
+
 	// Enter a parse tree produced by SensorGrammarParser#srid.
 	enterSrid(ctx) {
 	}

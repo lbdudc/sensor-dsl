@@ -6,6 +6,7 @@ parse
 
 sentence
   : createStatement
+  | setDeployment
 ;
 
 createStatement:
@@ -130,6 +131,15 @@ addBBXToSensor:
   CPAR_SYMBOL
 ;
 
+// DEPLOYMENT
+setDeployment:
+  SET_SYMBOL DEPLOYMENT_SYMBOL OPAR_SYMBOL
+	  deploymentProperty (COMMA_SYMBOL deploymentProperty)*
+  CPAR_SYMBOL SCOL_SYMBOL
+;
+
+deploymentProperty: text text;
+
 srid: INT_NUMBER;
 identifier: IDENTIFIER;
 text: QUOTED_TEXT;
@@ -217,6 +227,8 @@ UNIQUE_SYMBOL: U N I Q U E;
 INFINITY_SYMBOL: I N F I N I T Y;
 MINUS_INFINITY_SYMBOL: DASH_SYMBOL I N F I N I T Y;
 TO_SYMBOL: T O;
+SET_SYMBOL: S E T;
+DEPLOYMENT_SYMBOL: D E P L O Y M E N T;
 
 ELASTICSEARCH_SYMBOL: E L A S T I C S E A R C H;
 POSTGRES_SYMBOL: P O S T G R E S;

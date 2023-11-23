@@ -614,6 +614,18 @@ class Visitor extends SensorGrammarVisitor {
     const map = this.store.getProduct().getMap(sensor.defaultMap);
     map.setCenter(lat, lon, zoom);
   }
+
+  /* ****************** Deployment ************************ */
+
+  visitDeploymentProperty(ctx) {
+    this.log(`visitDeploymentProperty`);
+    this.store
+      .getProduct()
+      .addDeploymentProperty(
+        ctx.getChild(0).getText().slice(1, -1),
+        ctx.getChild(1).getText().slice(1, -1)
+      );
+  }
 }
 
 export default Visitor;
