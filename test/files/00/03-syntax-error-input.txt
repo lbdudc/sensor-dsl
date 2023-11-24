@@ -1,10 +1,9 @@
-CREATE GIS city_example USING 4326;
-USE GIS city_example;
+CREATE PRODUCT magist USING 4326;
 
-CREATE ENTITY City (
-  id Long IDENTsIFIER,
-  name String DISPLAY_STRING,
-  extension MultiPolygon,
-  points PointOfInterest RELATIONSHIP MAPPED_BY city,
-  streets Street RELATIONSHIP MAPPED_BY city
+// DIMENSIONS
+
+CREATE SPATIAL DIMENsSION Municipality (
+	geometry: Geometry
+) WITH PROPERTIES (
+	cMun Integer DISPLAY_STRING
 );

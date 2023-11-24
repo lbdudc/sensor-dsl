@@ -41,9 +41,9 @@ class Visitor extends SensorGrammarVisitor {
     // CREATE BASE STYLES
     const baseStyles = [
       new GeoJSONLayerStyle("redPoint", "#FF0000", "#FF0000", 1, 1),
-      new GeoJSONLayerStyle("greenPoint", "#008000", 1, 1),
-      new GeoJSONLayerStyle("grayPoint", "#808080", 1, 1),
-      new GeoJSONLayerStyle("orangePoint", "#FFA500", 1, 1),
+      new GeoJSONLayerStyle("greenPoint", "#008000", "#008000", 1, 1),
+      new GeoJSONLayerStyle("grayPoint", "#808080", "#808080", 1, 1),
+      new GeoJSONLayerStyle("orangePoint", "#FFA500", "#FFA500", 1, 1),
       new GeoJSONLayerStyle("redPolygon", "#FF0000", "#FF0000", 0.5, 1),
       new GeoJSONLayerStyle("greenPolygon", "#008000", "#008000", 0.5, 1),
       new GeoJSONLayerStyle("grayPolygon", "#808080", "#808080", 0.5, 1),
@@ -269,7 +269,9 @@ class Visitor extends SensorGrammarVisitor {
       order: 0,
     });
 
-    this.store.getProduct().addLayer(baseLayer);
+    // try to find previous base layer, if exists dont add
+    if (this.store.getProduct().getLayer("base") == null)
+      this.store.getProduct().addLayer(baseLayer);
 
     const layer = new GeoJSONLayer(
       sensor.defaultLayer,
@@ -278,16 +280,20 @@ class Visitor extends SensorGrammarVisitor {
       false,
       "grayPoint"
     );
-    layer.availableStyles = [
-      "greenPoint",
-      "grayPoint",
-      "redPoint",
-      "orangePoint",
-      "greenPolygon",
-      "grayPolygon",
-      "redPolygon",
-      "orangePolygon",
-    ];
+
+    // if its null or empty array, add default styles
+    if (layer.availableStyles == null || layer.availableStyles.length == 0) {
+      layer.availableStyles = [
+        "greenPoint",
+        "grayPoint",
+        "redPoint",
+        "orangePoint",
+        "greenPolygon",
+        "grayPolygon",
+        "redPolygon",
+        "orangePolygon",
+      ];
+    }
     map.addLayer({
       name: sensor.defaultLayer,
       baseLayer: false,
@@ -296,7 +302,10 @@ class Visitor extends SensorGrammarVisitor {
       order: 1,
     });
 
-    this.store.getProduct().addLayer(layer);
+    // try to find previous layer, if exists dont add
+    if (this.store.getProduct().getLayer(sensor.defaultLayer) == null) {
+      this.store.getProduct().addLayer(layer);
+    }
 
     // ADD MAP
     this.store.getProduct().addMap(defaultMap, map);
@@ -361,7 +370,9 @@ class Visitor extends SensorGrammarVisitor {
       );
 
       // ADD styles for each sensor property
-      layer.availableStyles = ["grayPolygon"];
+      if (layer.availableStyles == null || layer.availableStyles.length == 0) {
+        layer.availableStyles = ["grayPolygon"];
+      }
       sensor.measureData.forEach((measure) => {
         layer.availableStyles.push(measure.name);
         if (dim.geomType == "Polygon" || dim.geomType == "Geometry")
@@ -377,7 +388,20 @@ class Visitor extends SensorGrammarVisitor {
         order: map.layers.length,
       });
 
-      this.store.getProduct().addLayer(layer);
+      // try to find previous layer, if exists dont add
+      if (this.store.getProduct().getLayer(dim.id) == null) {
+        this.store.getProduct().addLayer(layer);
+      } else {
+        // if exists, push the available styles and remove duplicates
+        this.store
+          .getProduct()
+          .getLayer(dim.id)
+          .availableStyles.push(...layer.availableStyles);
+
+        this.store.getProduct().getLayer(dim.id).availableStyles = [
+          ...new Set(this.store.getProduct().getLayer(dim.id).availableStyles),
+        ];
+      }
 
       index += 2;
     }

@@ -16,13 +16,6 @@ test("Testing standard run", () => {
   assert.deepEqual(result, expected);
 });
 
-test("Wrong entity in WMS layer", () => {
-  const input = readFile(p("00/01-invalid-input.txt"));
-  assert.throws(() => {
-    parse(input);
-  }, /ERROR: entity Str2eet required by layer cityLayer does not exists!!/);
-});
-
 test("Testing more complex run", () => {
   const input = readFile(p("00/02-input.txt"));
   const expected = JSON.parse(readFile(p("00/02-expected.json")));

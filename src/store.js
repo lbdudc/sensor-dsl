@@ -143,6 +143,14 @@ function setCurrentLayer(layerName) {
 
 function reset() {
   store.product = {};
+  store.currentEntity = null;
+  store.currentDimension = null;
+  store.currentRange = null;
+  store.currentSensor = null;
+  store.currentLayer = null;
+  store.dimensions = [];
+  store.ranges = [];
+  store.lastGeneratedProduct = null;
 }
 
 export default {

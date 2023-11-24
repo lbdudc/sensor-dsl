@@ -1,73 +1,55 @@
-CREATE GIS city_example USING 4326;
-USE GIS city_example;
+CREATE PRODUCT intecmar USING 4326;
 
-CREATE ENTITY City (
-  id Long IDENTIFIER,
-  name String DISPLAY_STRING,
-  extension MultiPolygon,
-  points PointOfInterest RELATIONSHIP MAPPED_BY city,
-  streets Street RELATIONSHIP MAPPED_BY city
+// DIMENSIONS
+
+CREATE SPATIAL DIMENSION Estuary (
+		geometry: Polygon
+) WITH PROPERTIES (
+		shortName String DISPLAY_STRING,
+		name String,
+		zone String
 );
 
-CREATE ENTITY Street (
-  id Long IDENTIFIER,
-  name String DISPLAY_STRING,
-  type String,
-  path MultiLineString,
-  city City RELATIONSHIP(0..*, 1..1) BIDIRECTIONAL
+CREATE CATEGORICAL DIMENSION Depth (
+	field: depth
 );
 
-CREATE ENTITY PointOfInterest (
-  id Long IDENTIFIER,
-  name String DISPLAY_STRING,
-  location Point,
-  type PoiType RELATIONSHIP(0..*, 1..1),
-  city City RELATIONSHIP(0..*, 1..1) BIDIRECTIONAL
+// RANGES
+
+CREATE RANGE DepthRange (
+  0 TO 3 AS "surface",
+	4.75 TO 5.25 AS "5m",
+  9.75 TO 10.25 AS "10m",
+  14.75 TO 15.25 AS "15m",
+  19.75 TO 20.25 AS "20m"
 );
 
-CREATE ENTITY PoiType (
-  id Long IDENTIFIER,
-  name String DISPLAY_STRING
-);
+// SENSORS
 
-CREATE TILE LAYER base AS "OpenStreetMap" (
-  url "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-);
-
-CREATE WMS STYLE streetLayerStyle (
-  styleLayerDescriptor "/home/acortinas/sld/streets-sld.xml"
-);
-
-CREATE WMS LAYER streetLayer AS "Streets" (
-  Street streetLayerStyle
-);
-
-CREATE GEOJSON LAYER pointsOfInterestLayer AS "Points of Interest" (
-  PointOfInterest EDITABLE,
-  fillColor #243452,
-  strokeColor #eeeee3,
-  fillOpacity 0.8,
-  strokeOpacity 0.9
-);
-
-CREATE WMS STYLE cityLayerStyle (
-  styleLayerDescriptor "/home/acortinas/sld/city-sld.xml"
-);
-
-CREATE WMS LAYER cityLayer AS "City" (
-  City cityLayerStyle
-);
-
-CREATE MAP streets AS "Streets" (
-  base IS_BASE_LAYER,
-  streetLayer,
-  cityLayer HIDDEN
-);
-
-CREATE MAP points AS "Points of Interest" (
-  base IS_BASE_LAYER,
-  pointsOfInterestLayer,
-  cityLayer HIDDEN
-);
-
-GENERATE GIS city_example;
+CREATE SENSOR StationObservation (
+  interval: 300,
+  datasource: elasticsearch,
+  geometry: Point
+) WITH PROPERTIES (
+  maxDepth Float,
+  code String,
+  name String,
+  description String,
+  startTime DateTime,
+  endTime DateTime
+) WITH MEASUREMENT DATA (
+  temperature_ITS90 Double UNITS "ºC" ICON "thermometer-low" RANGE TempRange,
+  salinity Double UNITS "PSU",
+  pressure Double UNITS "dbar" ICON "speedometer",
+  ph Double UNITS "pH" ICON "ph",
+  oxygen Double UNITS "mg/l" ICON "gas-cylinder",
+  transmittance Double UNITS "m",
+  irradiance Double UNITS "W/m2",
+  uv_flourescence Double UNITS "mg/m3",
+  density Double UNITS "kg/m3",
+  conductivity Double UNITS "S/m"
+) WITH SPATIAL DIMENSIONS Estuary (
+  Estuary
+) WITH CATEGORICAL DIMENSIONS (
+  Depth RANGE DepthRange
+) WITH BBOX ([42.7, -8.1], 9);
