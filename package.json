@@ -1,7 +1,12 @@
 {
+  "name": "sensor-dsl",
   "author": "Victor Lamas",
-  "bin": {
-    "sensor-dsl": "src/cli.js"
+  "version": "0.1.3",
+  "description": "Sensor DSL is a domain specific language for describing sensors and their data.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.lbd.org.es/pcmg/sensor-dsl.git"
   },
   "dependencies": {
     "meow": "^12.0.1",
@@ -25,8 +30,6 @@
       "prettier --write"
     ]
   },
-  "main": "index.js",
-  "name": "sensor-dsl",
   "scripts": {
     "build-grammar": "antlr -Dlanguage=JavaScript -lib grammar -o src/lib -visitor -Xexact-output-dir grammar/SensorGrammar.g4",
     "lint": "npm-run-all lint_eslint lint_prettier",
@@ -34,13 +37,5 @@
     "lint_prettier": "prettier --write --ignore-unknown src test",
     "prepare": "husky install",
     "test": "mocha --ui qunit"
-  },
-  "type": "module",
-  "exports": {
-    ".": {
-      "import": "./src/index.js",
-      "require": "./src/index.js"
-    }
-  },
-  "version": "0.1.3"
+  }
 }
