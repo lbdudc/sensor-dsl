@@ -37,9 +37,9 @@
   },
   "type": "module",
   "exports": {
-    "./node_modules/antlr4": {
-      "import": "./node_modules/antlr4/dist/antlr4.js",
-      "require": "./node_modules/antlr4/dist/antlr4.js"
+    ".": {
+      "import": "./src/index.js",
+      "require": "./src/index.js"
     }
   },
   "version": "0.1.3"
