@@ -5,7 +5,7 @@ import fs from "fs";
 import sensordslParser from "./index.js";
 import path from "path";
 
-const usage = "Usage: gisdsl input output";
+const usage = "Usage: sensor-dsl input output";
 
 const cli = meow(usage, {
   importMeta: import.meta,
