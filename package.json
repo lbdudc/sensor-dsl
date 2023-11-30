@@ -36,5 +36,11 @@
     "test": "mocha --ui qunit"
   },
   "type": "module",
+  "exports": {
+    "./node_modules/antlr4": {
+      "import": "./node_modules/antlr4/dist/antlr4.js",
+      "require": "./node_modules/antlr4/dist/antlr4.js"
+    }
+  },
   "version": "0.1.3"
 }
