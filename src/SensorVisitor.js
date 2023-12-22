@@ -598,17 +598,19 @@ class Visitor extends SensorGrammarVisitor {
               {
                 minValue: "-Infinity",
                 maxValue: 20,
-                style: "greenPoint",
+                style:
+                  sensorStyle.type == "Point" ? "greenPoint" : "greenPolygon",
               },
               {
                 minValue: 20,
                 maxValue: 40,
-                style: "orangePoint",
+                style:
+                  sensorStyle.type == "Point" ? "orangePoint" : "orangePolygon",
               },
               {
                 minValue: 40,
                 maxValue: "Infinity",
-                style: "redPoint",
+                style: sensorStyle.type == "Point" ? "redPoint" : "redPolygon",
               },
             ],
             sensorStyle.type == "Point" ? "grayPoint" : "grayPolygon"
