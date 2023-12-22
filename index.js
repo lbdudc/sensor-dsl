@@ -1,3 +1,3 @@
-import parse from "./src/index.js";
+import { parse, reset } from "./src/index.js";
 
-export default parse;
+export default { parse, reset };

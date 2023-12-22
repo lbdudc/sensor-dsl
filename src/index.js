@@ -6,7 +6,7 @@ import SensorVisitor from "./SensorVisitor.js";
 import store from "./store.js";
 import { transformation } from "./SensorVisitorHelper.js";
 
-export default function parse(inputStr, debug = false) {
+export function parse(inputStr, debug = false) {
   const chars = new antlr4.InputStream(inputStr);
   const lexer = new SensorGrammarLexer(chars);
   lexer.strictMode = false; // do not use js strictMode
@@ -25,4 +25,8 @@ export default function parse(inputStr, debug = false) {
 
   // return store.getProduct();
   return transformation(store.getProduct());
+}
+
+export function reset() {
+  store.reset();
 }
