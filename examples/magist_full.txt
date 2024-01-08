@@ -124,3 +124,8 @@ CREATE SENSOR TrafficObservation (
 	Barrio
 );
 //WITH BBOX ([40.42, -3.7], 12);
+
+CREATE SENSORGROUP Grupo1 (
+	QAObservation,
+	TrafficObservation
+);

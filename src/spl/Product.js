@@ -16,6 +16,7 @@ class Product {
     this.relationships = [];
     this.dataWarehouse = {
       sensors: [],
+      sensorGroups: [],
     };
     this.enums = [];
     this.layers = [];
@@ -69,6 +70,31 @@ class Product {
 
   getSensor(id) {
     return this.dataWarehouse.sensors.find((s) => s.id == id);
+  }
+
+  addSensorGroup(name, sensors) {
+    if (this.getSensorGroup(name)) {
+      throw `Sensor group ${name} already exists!!!`;
+    }
+
+    if (!Array.isArray(sensors)) {
+      sensors = [sensors];
+    }
+
+    sensors.forEach((s) => {
+      if (!this.getSensor(s)) {
+        throw `Sensor ${s} does not exists!!!`;
+      }
+    });
+
+    this.dataWarehouse.sensorGroups.push({
+      id: name,
+      sensors: sensors,
+    });
+  }
+
+  getSensorGroup(id) {
+    return this.dataWarehouse.sensorGroups.find((s) => s.id == id);
   }
 
   getMaps() {
