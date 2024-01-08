@@ -411,7 +411,14 @@ class Visitor extends SensorGrammarVisitor {
   visitAddCategoricalDimensionToSensor(ctx) {
     const sensor = this.store.getCurrentSensor();
 
-    let index = 4;
+    let dimGroup = ctx.getChild(3).getText();
+    let index = 5;
+
+    if (dimGroup == "(") {
+      index = 4;
+      dimGroup = null;
+    }
+
     while (index < ctx.getChildCount()) {
       // CHECK IF DIMENSION EXISTS
       const dimName = ctx.getChild(index).getText();
@@ -428,7 +435,10 @@ class Visitor extends SensorGrammarVisitor {
         id: dimName,
         type: "CATEGORICAL",
         field: dim.field,
+        groupId: dimGroup,
       };
+
+      if (dimGroup == null) delete dimToAdd.groupId;
 
       if (hasCustomRanges) {
         const rangeName = ctx.getChild(index + 2).getText();
