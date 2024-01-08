@@ -12,6 +12,7 @@ sentence
 createStatement:
   CREATE_SYMBOL (
     createProduct
+    | createSensorGroup
     | createRange
     | createDimension
     | createSensor
@@ -20,7 +21,13 @@ createStatement:
 
 createProduct:
   PRODUCT_SYMBOL identifier USING_SYMBOL srid SCOL_SYMBOL
-; 
+;
+
+createSensorGroup:
+  SENSORGROUP_SYMBOL identifier OPAR_SYMBOL
+    identifier (COMMA_SYMBOL identifier)*
+  CPAR_SYMBOL SCOL_SYMBOL
+;
 
 // RANGES
 createRange:
@@ -199,6 +206,7 @@ fragment QUOTE_SYMBOL: '"';
 
 CREATE_SYMBOL: C R E A T E;
 SENSOR_SYMBOL: S E N S O R;
+SENSORGROUP_SYMBOL: S E N S O R G R O U P;
 PRODUCT_SYMBOL: P R O D U C T;
 USING_SYMBOL: U S I N G;
 DIMENSION_SYMBOL: D I M E N S I O N;

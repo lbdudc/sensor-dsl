@@ -99,6 +99,7 @@ function transformation(spec) {
       },
       dataWarehouse: {
         sensors: spec.dataWarehouse.sensors,
+        sensorGroups: spec.dataWarehouse.sensorGroups,
       },
       forms: [],
       lists: [],

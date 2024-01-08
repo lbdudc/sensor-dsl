@@ -52,6 +52,22 @@ class Visitor extends SensorGrammarVisitor {
     baseStyles.forEach((style) => this.store.getProduct().addStyle(style));
   }
 
+  // --------   SENSOR GROUPS  --------
+  visitCreateSensorGroup(ctx) {
+    const sensorName = ctx.getChild(1).getText();
+
+    let index = 3;
+    const sensors = [];
+    while (index < ctx.getChildCount()) {
+      const sensor = ctx.getChild(index).getText();
+      if (sensor == ";") break;
+      sensors.push(sensor);
+      index += 2;
+    }
+
+    this.store.getProduct().addSensorGroup(sensorName, sensors);
+  }
+
   // --------   DIMENSIONS  --------
   visitCreateSpatialDimension(ctx) {
     const dimensionName = ctx.getChild(2).getText();

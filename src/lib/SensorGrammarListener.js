@@ -41,6 +41,15 @@ export default class SensorGrammarListener extends antlr4.tree.ParseTreeListener
 	}
 
 
+	// Enter a parse tree produced by SensorGrammarParser#createSensorGroup.
+	enterCreateSensorGroup(ctx) {
+	}
+
+	// Exit a parse tree produced by SensorGrammarParser#createSensorGroup.
+	exitCreateSensorGroup(ctx) {
+	}
+
+
 	// Enter a parse tree produced by SensorGrammarParser#createRange.
 	enterCreateRange(ctx) {
 	}
