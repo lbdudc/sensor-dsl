@@ -2,7 +2,7 @@
 
 import meow from "meow";
 import fs from "fs";
-import sensordslParser from "./index.js";
+import { parse } from "./index.js";
 import path from "path";
 
 const usage = "Usage: sensor-dsl input output";
@@ -26,7 +26,7 @@ const input = fs.readFileSync(inputPath, {
   encoding: "utf-8",
 });
 
-const spec = sensordslParser(input, cli.flags.debug);
+const spec = parse(input, cli.flags.debug);
 
 const outputPath = path.resolve(process.cwd(), cli.input.at(1));
 fs.writeFileSync(outputPath, JSON.stringify(spec, null, 2), "utf8");
