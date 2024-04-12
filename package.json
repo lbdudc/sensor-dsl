@@ -1,7 +1,7 @@
 {
   "name": "sensor-dsl",
   "author": "Victor Lamas",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Sensor DSL is a domain specific language for describing sensors and their data.",
   "main": "index.js",
   "repository": {
