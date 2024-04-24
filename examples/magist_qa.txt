@@ -82,11 +82,11 @@ CREATE SENSOR QAObservation (
 ) WITH MEASUREMENT DATA (
 	valor Double,
 	isValid Boolean
-) WITH SPATIAL DIMENSIONS Administrative (
+) WITH SPATIAL GROUP Administrative (
 	Section, District, Municipality
-) WITH SPATIAL DIMENSIONS Voronoi (
+) WITH SPATIAL GROUP Voronoi (
 	Voronoi
-) WITH CATEGORICAL DIMENSIONS (
+) WITH CATEGORICAL GROUP (
 	Magnitud RANGE MagnitudRange
 );
 //WITH BBOX ([40.42, -3.7], 12);

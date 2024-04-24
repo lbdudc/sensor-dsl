@@ -68,7 +68,7 @@ CREATE SENSOR StationObservation (
   temperature_ITS90 Double UNITS "ºC",
   salinity Double UNITS "PSU",
   conductivity Double UNITS "S/m"
-) WITH SPATIAL DIMENSIONS Estuary (
+) WITH SPATIAL GROUP Estuary (
   Estuary
 ) WITH BBOX ([42.7, -8.1], 9);
 ```

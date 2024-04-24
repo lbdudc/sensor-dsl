@@ -91,11 +91,11 @@ CREATE SENSOR QAObservation (
 ) WITH MEASUREMENT DATA (
 	valor Double,
 	isValid Boolean
-) WITH SPATIAL DIMENSIONS Administrative (
+) WITH SPATIAL GROUP Administrative (
 	Section, District, Municipality
-) WITH SPATIAL DIMENSIONS Voronoi (
+) WITH SPATIAL GROUP Voronoi (
 	Voronoi
-) WITH CATEGORICAL DIMENSIONS (
+) WITH CATEGORICAL GROUP (
 	Magnitud RANGE MagnitudRange
 );
 //WITH BBOX ([40.42, -3.7], 12);
@@ -116,11 +116,11 @@ CREATE SENSOR TrafficObservation (
 	intensidad Double UNITS "veh/h" ICON "network_check",
 	velocidad Double UNITS "km/h" ICON "speed",
 	ocupacion Double UNITS "%" ICON "emoji_transportation"
-) WITH SPATIAL DIMENSIONS Administrative (
+) WITH SPATIAL GROUP Administrative (
 	Section,
 	District,
 	Municipality
-) WITH SPATIAL DIMENSIONS Barrio (
+) WITH SPATIAL GROUP Barrio (
 	Barrio
 );
 //WITH BBOX ([40.42, -3.7], 12);
