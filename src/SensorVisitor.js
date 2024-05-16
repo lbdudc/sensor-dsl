@@ -504,7 +504,7 @@ class Visitor extends SensorGrammarVisitor {
     const sensor = this.store.getCurrentSensor();
 
     const sensorProps = {};
-    const sensorName = ctx.getChild(0).getText();
+    const sensorName = ctx.getChild(0).getText().toLowerCase();
     const sensorType = ctx.getChild(1).getText();
 
     if (ctx.getChildCount() > 2) {
