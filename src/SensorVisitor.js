@@ -267,6 +267,39 @@ class Visitor extends SensorGrammarVisitor {
       );
     this.store.getCurrentEntity().addProperty("geometry", sensor.geom);
 
+    // ADD ENTITY FOR MEASUREMENTS
+    // Create relationship between current entity and measurement entity
+    const sourceOpts = {
+      label: "sensors",
+      multiplicity: "0..*",
+    };
+    const targetOpts = {
+      label: "sensor_id",
+      multiplicity: "0..1",
+    };
+    const rSource = this.store.getCurrentSensor().entity;
+    const rTarget = this.store.getCurrentSensor().id + "Measurement";
+
+    this.store
+      .getProduct()
+      .addRelationship(rSource, rTarget, sourceOpts, targetOpts);
+
+    this.store.getProduct().addEntity(sensor.id + "Measurement");
+    this.store.setCurrentEntity(sensor.id + "Measurement");
+    this.store
+      .getCurrentEntity()
+      .addProperty(
+        "id",
+        "Long",
+        getPropertyParams(["identifier", "required", "unique"])
+      );
+
+    this.store
+      .getProduct()
+      .addRelationship(rSource, rTarget, sourceOpts, targetOpts);
+
+    this.store.setCurrentEntity(sensor.entity);
+
     // ADD BASE LAYER AND SENSOR LAYER
     const { id, defaultMap } = sensor;
 
@@ -375,6 +408,23 @@ class Visitor extends SensorGrammarVisitor {
           .find((d) => d.id == dimRelName)
           .entities.push(dimName);
       }
+
+      // Add dimension to entity
+      // Create relationship between current entity and measurement entity
+      const sourceOpts = {
+        label: dimName.toLowerCase() + "_id",
+        multiplicity: "0..1",
+      };
+      const targetOpts = {
+        label: this.store.getCurrentSensor().entity,
+        multiplicity: "0..*",
+      };
+      const rSource = this.store.getCurrentSensor().entity;
+      const rTarget = dimName;
+
+      this.store
+        .getProduct()
+        .addRelationship(rSource, rTarget, sourceOpts, targetOpts);
 
       // Addd layer to map
       const layer = new GeoJSONLayer(
@@ -491,6 +541,18 @@ class Visitor extends SensorGrammarVisitor {
 
       sensor.addDimension(dimToAdd);
 
+      // Add dimension to entity
+      this.store.getCurrentEntity().addProperty(
+        dimToAdd.field,
+        dimToAdd.categories ? "Double" : "String",
+        getPropertyParams(
+          ctx.children
+            .slice(index + 2)
+            .filter((s) => s.getSymbol)
+            .map((s) => s.getSymbol().text.toLowerCase())
+        )
+      );
+
       index += hasCustomRanges ? 4 : 2;
     }
   }
@@ -502,6 +564,7 @@ class Visitor extends SensorGrammarVisitor {
 
   visitCreateMeasurementProperty(ctx) {
     const sensor = this.store.getCurrentSensor();
+    this.store.setCurrentEntity(sensor.id + "Measurement");
 
     const sensorProps = {};
     const sensorName = ctx.getChild(0).getText().toLowerCase();
@@ -532,10 +595,34 @@ class Visitor extends SensorGrammarVisitor {
         type: sensorType,
         ...sensorProps,
       });
+
+      // Add property to entity
+      this.store.getCurrentEntity().addProperty(
+        sensorName,
+        sensorType,
+        getPropertyParams(
+          ctx.children
+            .slice(2)
+            .filter((s) => s.getSymbol)
+            .map((s) => s.getSymbol().text.toLowerCase())
+        )
+      );
     } else {
       sensorProps.name = sensorName;
       sensorProps.type = sensorType;
       sensor.addMeasureData(sensorProps);
+
+      // Add property to entity
+      this.store.getCurrentEntity().addProperty(
+        sensorName,
+        sensorType,
+        getPropertyParams(
+          ctx.children
+            .slice(2)
+            .filter((s) => s.getSymbol)
+            .map((s) => s.getSymbol().text.toLowerCase())
+        )
+      );
     }
 
     // Add styles to layer
