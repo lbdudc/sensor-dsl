@@ -157,6 +157,8 @@ class Visitor extends SensorGrammarVisitor {
       throw `Dimension ${dimensionName} not found!`;
     }
 
+    // this.store.getCurrentDimension().parent = parentDim;
+
     // Create relationship between current entity and parent dimension
     const sourceOpts = {
       label: "belongs",
@@ -265,6 +267,7 @@ class Visitor extends SensorGrammarVisitor {
         "Long",
         getPropertyParams(["identifier", "required", "unique"])
       );
+
     this.store.getCurrentEntity().addProperty("geometry", sensor.geom);
 
     // ADD ENTITY FOR MEASUREMENTS

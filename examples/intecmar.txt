@@ -14,6 +14,10 @@ CREATE CATEGORICAL DIMENSION Depth (
 	field: depth
 );
 
+CREATE CATEGORICAL DIMENSION NivelAlerta (
+	field: nivelAlerta
+);
+
 // RANGES
 
 CREATE RANGE DepthRange (
@@ -51,7 +55,7 @@ CREATE SENSOR StationObservation (
 ) WITH SPATIAL GROUP Estuary (
   Estuary
 ) WITH CATEGORICAL GROUP (
-  Depth RANGE DepthRange
+  Depth
 ) WITH BBOX ([42.7, -8.1], 9);
 
 
