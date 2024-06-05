@@ -22,7 +22,7 @@ The Sensor Specification DSL Library is a Node.js-based tool designed to assist 
 1. Add the library as a dependency to your project:
 
    ```bash
-   npm install --save @lbdudc/sensordsl
+   npm install --save @lbdudc/sensor-dsl
    ```
 
 2. Install the dependencies:
@@ -34,7 +34,7 @@ The Sensor Specification DSL Library is a Node.js-based tool designed to assist 
 ## Usage
 
 ```javascript
-import { parse } from "sensordsl";
+import { parse } from "@lbdudc/sensor-dsl";
 
 const spec = parse(inputString);
 ```
