@@ -1,9 +1,10 @@
 {
-  "name": "sensor-dsl",
-  "author": "Victor Lamas",
-  "version": "0.1.8",
+  "name": "@lbdudc/sensor-dsl",
+  "author": "victor.lamas@udc.es",
+  "version": "0.1.9",
   "description": "Sensor DSL is a domain specific language for describing sensors and their data.",
   "main": "index.js",
+  "homepage": "https://gitlab.lbd.org.es/pcmg/sensor-dsl",
   "repository": {
     "type": "git",
     "url": "https://gitlab.lbd.org.es/pcmg/sensor-dsl.git"
