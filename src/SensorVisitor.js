@@ -298,6 +298,10 @@ class Visitor extends SensorGrammarVisitor {
       );
 
     this.store
+      .getCurrentEntity()
+      .addProperty("date", "DateTime", getPropertyParams(["required"]));
+
+    this.store
       .getProduct()
       .addRelationship(rSource, rTarget, sourceOpts, targetOpts);
 
