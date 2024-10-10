@@ -1,4 +1,4 @@
-// Generated from grammar/SensorGrammar.g4 by ANTLR 4.13.1
+// Generated from grammar/SensorGrammar.g4 by ANTLR 4.13.2
 // jshint ignore: start
 import antlr4 from 'antlr4';
 
@@ -164,12 +164,6 @@ export default class SensorGrammarVisitor extends antlr4.tree.ParseTreeVisitor {
 
 	// Visit a parse tree produced by SensorGrammarParser#text.
 	visitText(ctx) {
-	  return this.visitChildren(ctx);
-	}
-
-
-	// Visit a parse tree produced by SensorGrammarParser#dataSource.
-	visitDataSource(ctx) {
 	  return this.visitChildren(ctx);
 	}
 

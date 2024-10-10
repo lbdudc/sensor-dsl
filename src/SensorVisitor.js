@@ -239,14 +239,20 @@ class Visitor extends SensorGrammarVisitor {
 
   // --------   SENSORS  --------
   visitCreateSensor(ctx) {
-    const sensorName = ctx.getChild(1).getText();
-    const sensorInterval = parseInt(ctx.getChild(5).getText());
-    const sensorDatasource = ctx.getChild(9).getText();
-    const sensorGeom = ctx.getChild(13).getText();
+    const isMoving = ctx.getChild(0).getText() == "MOVING";
+    const sensorName = isMoving
+      ? ctx.getChild(2).getText()
+      : ctx.getChild(1).getText();
+    const sensorInterval = isMoving
+      ? parseInt(ctx.getChild(6).getText())
+      : parseInt(ctx.getChild(5).getText());
+    const sensorGeom = isMoving
+      ? ctx.getChild(10).getText()
+      : ctx.getChild(9).getText();
 
     this.store
       .getProduct()
-      .addSensor(sensorName, sensorInterval, sensorDatasource, sensorGeom);
+      .addSensor(sensorName, sensorInterval, isMoving, sensorGeom);
 
     this.store.setCurrentSensor(sensorName);
     super.visitCreateSensor(ctx);

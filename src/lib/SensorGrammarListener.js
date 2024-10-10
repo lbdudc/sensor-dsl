@@ -1,4 +1,4 @@
-// Generated from grammar/SensorGrammar.g4 by ANTLR 4.13.1
+// Generated from grammar/SensorGrammar.g4 by ANTLR 4.13.2
 // jshint ignore: start
 import antlr4 from 'antlr4';
 
@@ -245,15 +245,6 @@ export default class SensorGrammarListener extends antlr4.tree.ParseTreeListener
 
 	// Exit a parse tree produced by SensorGrammarParser#text.
 	exitText(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SensorGrammarParser#dataSource.
-	enterDataSource(ctx) {
-	}
-
-	// Exit a parse tree produced by SensorGrammarParser#dataSource.
-	exitDataSource(ctx) {
 	}
 
 
