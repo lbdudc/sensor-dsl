@@ -1,7 +1,7 @@
 {
   "name": "@lbdudc/sensor-dsl",
   "author": "victor.lamas@udc.es",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Sensor DSL is a domain specific language for describing sensors and their data.",
   "main": "index.js",
   "homepage": "https://gitlab.lbd.org.es/pcmg/sensor-dsl",
@@ -13,16 +13,16 @@
     "sensor-dsl": "src/cli.js"
   },
   "dependencies": {
-    "meow": "^12.0.1",
-    "antlr4": "^4.13.0"
+    "antlr4": "^4.13.2",
+    "meow": "^12.0.1"
   },
   "type": "module",
   "devDependencies": {
-    "mocha": "^10.2.0",
     "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.8.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.2",
+    "mocha": "^10.2.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.8",
     "strip-bom": "^5.0.0"
@@ -36,7 +36,7 @@
     ]
   },
   "scripts": {
-    "build-grammar": "antlr -Dlanguage=JavaScript -lib grammar -o src/lib -visitor -Xexact-output-dir grammar/SensorGrammar.g4",
+    "build-grammar": "antlr4 -Dlanguage=JavaScript -lib grammar -o src/lib -visitor -Xexact-output-dir grammar/SensorGrammar.g4",
     "lint": "npm-run-all lint_eslint lint_prettier",
     "lint_eslint": "eslint --ext js,vue --fix src test",
     "lint_prettier": "prettier --write --ignore-unknown src test",

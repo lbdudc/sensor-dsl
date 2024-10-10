@@ -126,6 +126,22 @@
               "bidirectional": "belongs",
               "multiple": true,
               "required": false
+            },
+            {
+              "name": "QAObservationEntity",
+              "class": "QAObservationEntity",
+              "owner": false,
+              "bidirectional": "municipality_id",
+              "multiple": true,
+              "required": false
+            },
+            {
+              "name": "TrafficObservationEntity",
+              "class": "TrafficObservationEntity",
+              "owner": false,
+              "bidirectional": "municipality_id",
+              "multiple": true,
+              "required": false
             }
           ],
           "displayString": "$id"
@@ -164,6 +180,22 @@
               "bidirectional": "belongs",
               "multiple": true,
               "required": false
+            },
+            {
+              "name": "QAObservationEntity",
+              "class": "QAObservationEntity",
+              "owner": false,
+              "bidirectional": "district_id",
+              "multiple": true,
+              "required": false
+            },
+            {
+              "name": "TrafficObservationEntity",
+              "class": "TrafficObservationEntity",
+              "owner": false,
+              "bidirectional": "district_id",
+              "multiple": true,
+              "required": false
             }
           ],
           "displayString": "$id"
@@ -194,6 +226,22 @@
               "bidirectional": "contains",
               "multiple": false,
               "required": false
+            },
+            {
+              "name": "QAObservationEntity",
+              "class": "QAObservationEntity",
+              "owner": false,
+              "bidirectional": "section_id",
+              "multiple": true,
+              "required": false
+            },
+            {
+              "name": "TrafficObservationEntity",
+              "class": "TrafficObservationEntity",
+              "owner": false,
+              "bidirectional": "section_id",
+              "multiple": true,
+              "required": false
             }
           ],
           "displayString": "$id"
@@ -216,6 +264,14 @@
               "name": "cBarrio",
               "class": "Integer",
               "displayString": true
+            },
+            {
+              "name": "TrafficObservationEntity",
+              "class": "TrafficObservationEntity",
+              "owner": false,
+              "bidirectional": "barrio_id",
+              "multiple": true,
+              "required": false
             }
           ],
           "displayString": "$id"
@@ -238,6 +294,14 @@
               "name": "magnitude",
               "class": "Integer",
               "displayString": true
+            },
+            {
+              "name": "QAObservationEntity",
+              "class": "QAObservationEntity",
+              "owner": false,
+              "bidirectional": "voronoi_id",
+              "multiple": true,
+              "required": false
             }
           ],
           "displayString": "$id"
@@ -319,6 +383,84 @@
             {
               "name": "viaPar",
               "class": "String"
+            },
+            {
+              "name": "sensors",
+              "class": "QAObservationMeasurement",
+              "owner": false,
+              "bidirectional": "sensor_id",
+              "multiple": true,
+              "required": false
+            },
+            {
+              "name": "section_id",
+              "class": "Section",
+              "owner": true,
+              "bidirectional": "QAObservationEntity",
+              "multiple": false,
+              "required": false
+            },
+            {
+              "name": "district_id",
+              "class": "District",
+              "owner": true,
+              "bidirectional": "QAObservationEntity",
+              "multiple": false,
+              "required": false
+            },
+            {
+              "name": "municipality_id",
+              "class": "Municipality",
+              "owner": true,
+              "bidirectional": "QAObservationEntity",
+              "multiple": false,
+              "required": false
+            },
+            {
+              "name": "voronoi_id",
+              "class": "Voronoi",
+              "owner": true,
+              "bidirectional": "QAObservationEntity",
+              "multiple": false,
+              "required": false
+            }
+          ],
+          "displayString": "$id"
+        },
+        {
+          "name": "QAObservationMeasurement",
+          "properties": [
+            {
+              "name": "id",
+              "class": "Long (autoinc)",
+              "pk": true,
+              "required": true,
+              "unique": true
+            },
+            {
+              "name": "date",
+              "class": "DateTime",
+              "required": true
+            },
+            {
+              "name": "valor",
+              "class": "Double"
+            },
+            {
+              "name": "isvalid",
+              "class": "Boolean"
+            },
+            {
+              "name": "magnitud",
+              "class": "Double"
+            },
+            {
+              "name": "sensor_id",
+              "class": "QAObservationEntity",
+              "owner": true,
+              "bidirectional": "sensors",
+              "multiple": false,
+              "required": false
             }
           ],
           "displayString": "$id"
@@ -356,6 +498,84 @@
             {
               "name": "nombre",
               "class": "String"
+            },
+            {
+              "name": "sensors",
+              "class": "TrafficObservationMeasurement",
+              "owner": false,
+              "bidirectional": "sensor_id",
+              "multiple": true,
+              "required": false
+            },
+            {
+              "name": "section_id",
+              "class": "Section",
+              "owner": true,
+              "bidirectional": "TrafficObservationEntity",
+              "multiple": false,
+              "required": false
+            },
+            {
+              "name": "district_id",
+              "class": "District",
+              "owner": true,
+              "bidirectional": "TrafficObservationEntity",
+              "multiple": false,
+              "required": false
+            },
+            {
+              "name": "municipality_id",
+              "class": "Municipality",
+              "owner": true,
+              "bidirectional": "TrafficObservationEntity",
+              "multiple": false,
+              "required": false
+            },
+            {
+              "name": "barrio_id",
+              "class": "Barrio",
+              "owner": true,
+              "bidirectional": "TrafficObservationEntity",
+              "multiple": false,
+              "required": false
+            }
+          ],
+          "displayString": "$id"
+        },
+        {
+          "name": "TrafficObservationMeasurement",
+          "properties": [
+            {
+              "name": "id",
+              "class": "Long (autoinc)",
+              "pk": true,
+              "required": true,
+              "unique": true
+            },
+            {
+              "name": "date",
+              "class": "DateTime",
+              "required": true
+            },
+            {
+              "name": "intensidad",
+              "class": "Double"
+            },
+            {
+              "name": "velocidad",
+              "class": "Double"
+            },
+            {
+              "name": "ocupacion",
+              "class": "Double"
+            },
+            {
+              "name": "sensor_id",
+              "class": "TrafficObservationEntity",
+              "owner": true,
+              "bidirectional": "sensors",
+              "multiple": false,
+              "required": false
             }
           ],
           "displayString": "$id"
@@ -371,7 +591,7 @@
           "defaultMap": "qaobservation-map",
           "defaultLayer": "qaobservation-layer",
           "time": 3600,
-          "datasource": "elasticsearch",
+          "isMoving": false,
           "geom": "Point",
           "measureData": [
             {
@@ -379,7 +599,7 @@
               "type": "Double"
             },
             {
-              "name": "isValid",
+              "name": "isvalid",
               "type": "Boolean"
             }
           ],
@@ -483,7 +703,7 @@
           "defaultMap": "trafficobservation-map",
           "defaultLayer": "trafficobservation-layer",
           "time": 300,
-          "datasource": "elasticsearch",
+          "isMoving": false,
           "geom": "Point",
           "measureData": [
             {
@@ -524,7 +744,8 @@
             }
           ]
         }
-      ]
+      ],
+      "sensorGroups": []
     },
     "forms": [],
     "lists": [],
@@ -655,7 +876,7 @@
           "availableStyles": [
             "grayPoint",
             "valor",
-            "isValid"
+            "isvalid"
           ]
         },
         {
@@ -669,8 +890,8 @@
             "grayPolygon",
             "valor",
             "valor_POLYGON",
-            "isValid",
-            "isValid_POLYGON",
+            "isvalid",
+            "isvalid_POLYGON",
             "intensidad",
             "intensidad_POLYGON",
             "velocidad",
@@ -690,8 +911,8 @@
             "grayPolygon",
             "valor",
             "valor_POLYGON",
-            "isValid",
-            "isValid_POLYGON",
+            "isvalid",
+            "isvalid_POLYGON",
             "intensidad",
             "intensidad_POLYGON",
             "velocidad",
@@ -711,8 +932,8 @@
             "grayPolygon",
             "valor",
             "valor_POLYGON",
-            "isValid",
-            "isValid_POLYGON",
+            "isvalid",
+            "isvalid_POLYGON",
             "intensidad",
             "intensidad_POLYGON",
             "velocidad",
@@ -732,8 +953,8 @@
             "grayPolygon",
             "valor",
             "valor_POLYGON",
-            "isValid",
-            "isValid_POLYGON"
+            "isvalid",
+            "isvalid_POLYGON"
           ]
         },
         {
@@ -775,7 +996,8 @@
           "fillColor": "#FF0000",
           "strokeColor": "#FF0000",
           "fillOpacity": 1,
-          "strokeOpacity": 1
+          "strokeOpacity": 1,
+          "radius": 3
         },
         {
           "name": "greenPoint",
@@ -783,7 +1005,8 @@
           "fillColor": "#008000",
           "strokeColor": "#008000",
           "fillOpacity": 1,
-          "strokeOpacity": 1
+          "strokeOpacity": 1,
+          "radius": 3
         },
         {
           "name": "grayPoint",
@@ -791,7 +1014,8 @@
           "fillColor": "#808080",
           "strokeColor": "#808080",
           "fillOpacity": 1,
-          "strokeOpacity": 1
+          "strokeOpacity": 1,
+          "radius": 3
         },
         {
           "name": "orangePoint",
@@ -799,7 +1023,8 @@
           "fillColor": "#FFA500",
           "strokeColor": "#FFA500",
           "fillOpacity": 1,
-          "strokeOpacity": 1
+          "strokeOpacity": 1,
+          "radius": 3
         },
         {
           "name": "redPolygon",
@@ -807,7 +1032,8 @@
           "fillColor": "#FF0000",
           "strokeColor": "#FF0000",
           "fillOpacity": 0.5,
-          "strokeOpacity": 1
+          "strokeOpacity": 1,
+          "radius": 3
         },
         {
           "name": "greenPolygon",
@@ -815,7 +1041,8 @@
           "fillColor": "#008000",
           "strokeColor": "#008000",
           "fillOpacity": 0.5,
-          "strokeOpacity": 1
+          "strokeOpacity": 1,
+          "radius": 3
         },
         {
           "name": "grayPolygon",
@@ -823,7 +1050,8 @@
           "fillColor": "#808080",
           "strokeColor": "#808080",
           "fillOpacity": 0.5,
-          "strokeOpacity": 1
+          "strokeOpacity": 1,
+          "radius": 3
         },
         {
           "name": "orangePolygon",
@@ -831,7 +1059,8 @@
           "fillColor": "#FFA500",
           "strokeColor": "#FFA500",
           "fillOpacity": 0.5,
-          "strokeOpacity": 1
+          "strokeOpacity": 1,
+          "radius": 3
         },
         {
           "name": "valor",
@@ -864,25 +1093,25 @@
             {
               "minValue": "-Infinity",
               "maxValue": 20,
-              "style": "greenPoint"
+              "style": "greenPolygon"
             },
             {
               "minValue": 20,
               "maxValue": 40,
-              "style": "orangePoint"
+              "style": "orangePolygon"
             },
             {
               "minValue": 40,
               "maxValue": "Infinity",
-              "style": "redPoint"
+              "style": "redPolygon"
             }
           ],
           "defaultStyle": "grayPolygon"
         },
         {
-          "name": "isValid",
+          "name": "isvalid",
           "type": "StaticIntervalsStyle",
-          "property": "data.isValid",
+          "property": "data.isvalid",
           "intervals": [
             {
               "minValue": "-Infinity",
@@ -903,24 +1132,24 @@
           "defaultStyle": "grayPoint"
         },
         {
-          "name": "isValid_POLYGON",
+          "name": "isvalid_POLYGON",
           "type": "StaticIntervalsStyle",
-          "property": "data.isValid",
+          "property": "data.isvalid",
           "intervals": [
             {
               "minValue": "-Infinity",
               "maxValue": 20,
-              "style": "greenPoint"
+              "style": "greenPolygon"
             },
             {
               "minValue": 20,
               "maxValue": 40,
-              "style": "orangePoint"
+              "style": "orangePolygon"
             },
             {
               "minValue": 40,
               "maxValue": "Infinity",
-              "style": "redPoint"
+              "style": "redPolygon"
             }
           ],
           "defaultStyle": "grayPolygon"
@@ -956,17 +1185,17 @@
             {
               "minValue": "-Infinity",
               "maxValue": 20,
-              "style": "greenPoint"
+              "style": "greenPolygon"
             },
             {
               "minValue": 20,
               "maxValue": 40,
-              "style": "orangePoint"
+              "style": "orangePolygon"
             },
             {
               "minValue": 40,
               "maxValue": "Infinity",
-              "style": "redPoint"
+              "style": "redPolygon"
             }
           ],
           "defaultStyle": "grayPolygon"
@@ -1002,17 +1231,17 @@
             {
               "minValue": "-Infinity",
               "maxValue": 20,
-              "style": "greenPoint"
+              "style": "greenPolygon"
             },
             {
               "minValue": 20,
               "maxValue": 40,
-              "style": "orangePoint"
+              "style": "orangePolygon"
             },
             {
               "minValue": 40,
               "maxValue": "Infinity",
-              "style": "redPoint"
+              "style": "redPolygon"
             }
           ],
           "defaultStyle": "grayPolygon"
@@ -1048,17 +1277,17 @@
             {
               "minValue": "-Infinity",
               "maxValue": 20,
-              "style": "greenPoint"
+              "style": "greenPolygon"
             },
             {
               "minValue": 20,
               "maxValue": 40,
-              "style": "orangePoint"
+              "style": "orangePolygon"
             },
             {
               "minValue": 40,
               "maxValue": "Infinity",
-              "style": "redPoint"
+              "style": "redPolygon"
             }
           ],
           "defaultStyle": "grayPolygon"

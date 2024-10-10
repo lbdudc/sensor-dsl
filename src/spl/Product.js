@@ -59,13 +59,11 @@ class Product {
     );
   }
 
-  addSensor(name, interval, datasource, geom) {
+  addSensor(name, interval, isMoving, geom) {
     if (this.getSensor(name)) {
       throw `Sensor ${name} already exists!!!`;
     }
-    this.dataWarehouse.sensors.push(
-      new Sensor(name, interval, datasource, geom)
-    );
+    this.dataWarehouse.sensors.push(new Sensor(name, interval, isMoving, geom));
   }
 
   getSensor(id) {

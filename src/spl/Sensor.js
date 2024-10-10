@@ -1,5 +1,5 @@
 export default class Sensor {
-  constructor(id, interval, datasource, geom) {
+  constructor(id, interval, moving, geom) {
     if (!id) {
       throw `Sensor ID cannot be null`;
     }
@@ -9,7 +9,7 @@ export default class Sensor {
     this.defaultMap = id.toLowerCase() + "-map";
     this.defaultLayer = id.toLowerCase() + "-layer";
     this.time = interval || 1000;
-    this.datasource = datasource || "elasticsearch";
+    this.isMoving = moving || false;
     this.geom = geom || "Point";
     this.measureData = [];
     this.dimensions = [];

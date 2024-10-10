@@ -1,5 +1,5 @@
 import assert from "assert";
-import parse from "../src/index.js";
+import { parse } from "../src/index.js";
 import { resetProducts, readFile, p } from "./utils.js";
 
 suite("Syntax");
