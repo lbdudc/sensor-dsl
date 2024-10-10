@@ -59,7 +59,6 @@ CREATE SPATIAL DIMENSION Estuary (
 // Create the Sensor
 CREATE SENSOR StationObservation (
   interval: 300,
-  datasource: elasticsearch,
   geometry: Point
 ) WITH PROPERTIES (
   name String,
@@ -173,7 +172,6 @@ This will generate a JSON output with the following structure:
           "defaultMap": "stationobservation-map",
           "defaultLayer": "stationobservation-layer",
           "time": 300,
-          "datasource": "elasticsearch",
           "geom": "Point",
           "measureData": [
             {
