@@ -135,6 +135,14 @@
             {
               "name": "zone",
               "class": "String"
+            },
+            {
+              "name": "StationObservationEntity",
+              "class": "StationObservationEntity",
+              "owner": false,
+              "bidirectional": "estuary_id",
+              "multiple": true,
+              "required": false
             }
           ],
           "displayString": "$id"
@@ -176,6 +184,92 @@
             {
               "name": "endTime",
               "class": "DateTime"
+            },
+            {
+              "name": "sensors",
+              "class": "StationObservationMeasurement",
+              "owner": false,
+              "bidirectional": "sensor_id",
+              "multiple": true,
+              "required": false
+            },
+            {
+              "name": "estuary_id",
+              "class": "Estuary",
+              "owner": true,
+              "bidirectional": "StationObservationEntity",
+              "multiple": false,
+              "required": false
+            }
+          ],
+          "displayString": "$id"
+        },
+        {
+          "name": "StationObservationMeasurement",
+          "properties": [
+            {
+              "name": "id",
+              "class": "Long (autoinc)",
+              "pk": true,
+              "required": true,
+              "unique": true
+            },
+            {
+              "name": "date",
+              "class": "DateTime",
+              "required": true
+            },
+            {
+              "name": "temperature_its90",
+              "class": "Double"
+            },
+            {
+              "name": "salinity",
+              "class": "Double"
+            },
+            {
+              "name": "pressure",
+              "class": "Double"
+            },
+            {
+              "name": "ph",
+              "class": "Double"
+            },
+            {
+              "name": "oxygen",
+              "class": "Double"
+            },
+            {
+              "name": "transmittance",
+              "class": "Double"
+            },
+            {
+              "name": "irradiance",
+              "class": "Double"
+            },
+            {
+              "name": "uv_flourescence",
+              "class": "Double"
+            },
+            {
+              "name": "density",
+              "class": "Double"
+            },
+            {
+              "name": "conductivity",
+              "class": "Double"
+            },
+            {
+              "name": "depth",
+              "class": "Double"
+            },
+            {
+              "name": "sensor_id",
+              "class": "StationObservationEntity",
+              "owner": true,
+              "bidirectional": "sensors",
+              "multiple": false,
+              "required": false
             }
           ],
           "displayString": "$id"
@@ -191,11 +285,11 @@
           "defaultMap": "stationobservation-map",
           "defaultLayer": "stationobservation-layer",
           "time": 300,
-          "datasource": "elasticsearch",
+          "isMoving": false,
           "geom": "Point",
           "measureData": [
             {
-              "name": "temperature_ITS90",
+              "name": "temperature_its90",
               "type": "Double",
               "units": "ºC",
               "icon": "thermometer-low",
@@ -292,7 +386,8 @@
             }
           ]
         }
-      ]
+      ],
+      "sensorGroups": []
     },
     "forms": [],
     "lists": [],
@@ -348,7 +443,7 @@
           "defaultStyle": "grayPoint",
           "availableStyles": [
             "grayPoint",
-            "temperature_ITS90",
+            "temperature_its90",
             "salinity",
             "pressure",
             "ph",
@@ -369,8 +464,8 @@
           "defaultStyle": "grayPolygon",
           "availableStyles": [
             "grayPolygon",
-            "temperature_ITS90",
-            "temperature_ITS90_POLYGON",
+            "temperature_its90",
+            "temperature_its90_POLYGON",
             "salinity",
             "salinity_POLYGON",
             "pressure",
@@ -399,7 +494,8 @@
           "fillColor": "#FF0000",
           "strokeColor": "#FF0000",
           "fillOpacity": 1,
-          "strokeOpacity": 1
+          "strokeOpacity": 1,
+          "radius": 3
         },
         {
           "name": "greenPoint",
@@ -407,7 +503,8 @@
           "fillColor": "#008000",
           "strokeColor": "#008000",
           "fillOpacity": 1,
-          "strokeOpacity": 1
+          "strokeOpacity": 1,
+          "radius": 3
         },
         {
           "name": "grayPoint",
@@ -415,7 +512,8 @@
           "fillColor": "#808080",
           "strokeColor": "#808080",
           "fillOpacity": 1,
-          "strokeOpacity": 1
+          "strokeOpacity": 1,
+          "radius": 3
         },
         {
           "name": "orangePoint",
@@ -423,7 +521,8 @@
           "fillColor": "#FFA500",
           "strokeColor": "#FFA500",
           "fillOpacity": 1,
-          "strokeOpacity": 1
+          "strokeOpacity": 1,
+          "radius": 3
         },
         {
           "name": "redPolygon",
@@ -431,7 +530,8 @@
           "fillColor": "#FF0000",
           "strokeColor": "#FF0000",
           "fillOpacity": 0.5,
-          "strokeOpacity": 1
+          "strokeOpacity": 1,
+          "radius": 3
         },
         {
           "name": "greenPolygon",
@@ -439,7 +539,8 @@
           "fillColor": "#008000",
           "strokeColor": "#008000",
           "fillOpacity": 0.5,
-          "strokeOpacity": 1
+          "strokeOpacity": 1,
+          "radius": 3
         },
         {
           "name": "grayPolygon",
@@ -447,7 +548,8 @@
           "fillColor": "#808080",
           "strokeColor": "#808080",
           "fillOpacity": 0.5,
-          "strokeOpacity": 1
+          "strokeOpacity": 1,
+          "radius": 3
         },
         {
           "name": "orangePolygon",
@@ -455,12 +557,13 @@
           "fillColor": "#FFA500",
           "strokeColor": "#FFA500",
           "fillOpacity": 0.5,
-          "strokeOpacity": 1
+          "strokeOpacity": 1,
+          "radius": 3
         },
         {
-          "name": "temperature_ITS90",
+          "name": "temperature_its90",
           "type": "StaticIntervalsStyle",
-          "property": "data.temperature_ITS90",
+          "property": "data.temperature_its90",
           "intervals": [
             {
               "minValue": "-Infinity",
@@ -481,24 +584,24 @@
           "defaultStyle": "grayPoint"
         },
         {
-          "name": "temperature_ITS90_POLYGON",
+          "name": "temperature_its90_POLYGON",
           "type": "StaticIntervalsStyle",
-          "property": "data.temperature_ITS90",
+          "property": "data.temperature_its90",
           "intervals": [
             {
               "minValue": "-Infinity",
               "maxValue": 20,
-              "style": "greenPoint"
+              "style": "greenPolygon"
             },
             {
               "minValue": 20,
               "maxValue": 40,
-              "style": "orangePoint"
+              "style": "orangePolygon"
             },
             {
               "minValue": 40,
               "maxValue": "Infinity",
-              "style": "redPoint"
+              "style": "redPolygon"
             }
           ],
           "defaultStyle": "grayPolygon"
@@ -534,17 +637,17 @@
             {
               "minValue": "-Infinity",
               "maxValue": 20,
-              "style": "greenPoint"
+              "style": "greenPolygon"
             },
             {
               "minValue": 20,
               "maxValue": 40,
-              "style": "orangePoint"
+              "style": "orangePolygon"
             },
             {
               "minValue": 40,
               "maxValue": "Infinity",
-              "style": "redPoint"
+              "style": "redPolygon"
             }
           ],
           "defaultStyle": "grayPolygon"
@@ -580,17 +683,17 @@
             {
               "minValue": "-Infinity",
               "maxValue": 20,
-              "style": "greenPoint"
+              "style": "greenPolygon"
             },
             {
               "minValue": 20,
               "maxValue": 40,
-              "style": "orangePoint"
+              "style": "orangePolygon"
             },
             {
               "minValue": 40,
               "maxValue": "Infinity",
-              "style": "redPoint"
+              "style": "redPolygon"
             }
           ],
           "defaultStyle": "grayPolygon"
@@ -626,17 +729,17 @@
             {
               "minValue": "-Infinity",
               "maxValue": 20,
-              "style": "greenPoint"
+              "style": "greenPolygon"
             },
             {
               "minValue": 20,
               "maxValue": 40,
-              "style": "orangePoint"
+              "style": "orangePolygon"
             },
             {
               "minValue": 40,
               "maxValue": "Infinity",
-              "style": "redPoint"
+              "style": "redPolygon"
             }
           ],
           "defaultStyle": "grayPolygon"
@@ -672,17 +775,17 @@
             {
               "minValue": "-Infinity",
               "maxValue": 20,
-              "style": "greenPoint"
+              "style": "greenPolygon"
             },
             {
               "minValue": 20,
               "maxValue": 40,
-              "style": "orangePoint"
+              "style": "orangePolygon"
             },
             {
               "minValue": 40,
               "maxValue": "Infinity",
-              "style": "redPoint"
+              "style": "redPolygon"
             }
           ],
           "defaultStyle": "grayPolygon"
@@ -718,17 +821,17 @@
             {
               "minValue": "-Infinity",
               "maxValue": 20,
-              "style": "greenPoint"
+              "style": "greenPolygon"
             },
             {
               "minValue": 20,
               "maxValue": 40,
-              "style": "orangePoint"
+              "style": "orangePolygon"
             },
             {
               "minValue": 40,
               "maxValue": "Infinity",
-              "style": "redPoint"
+              "style": "redPolygon"
             }
           ],
           "defaultStyle": "grayPolygon"
@@ -764,17 +867,17 @@
             {
               "minValue": "-Infinity",
               "maxValue": 20,
-              "style": "greenPoint"
+              "style": "greenPolygon"
             },
             {
               "minValue": 20,
               "maxValue": 40,
-              "style": "orangePoint"
+              "style": "orangePolygon"
             },
             {
               "minValue": 40,
               "maxValue": "Infinity",
-              "style": "redPoint"
+              "style": "redPolygon"
             }
           ],
           "defaultStyle": "grayPolygon"
@@ -810,17 +913,17 @@
             {
               "minValue": "-Infinity",
               "maxValue": 20,
-              "style": "greenPoint"
+              "style": "greenPolygon"
             },
             {
               "minValue": 20,
               "maxValue": 40,
-              "style": "orangePoint"
+              "style": "orangePolygon"
             },
             {
               "minValue": 40,
               "maxValue": "Infinity",
-              "style": "redPoint"
+              "style": "redPolygon"
             }
           ],
           "defaultStyle": "grayPolygon"
@@ -856,17 +959,17 @@
             {
               "minValue": "-Infinity",
               "maxValue": 20,
-              "style": "greenPoint"
+              "style": "greenPolygon"
             },
             {
               "minValue": 20,
               "maxValue": 40,
-              "style": "orangePoint"
+              "style": "orangePolygon"
             },
             {
               "minValue": 40,
               "maxValue": "Infinity",
-              "style": "redPoint"
+              "style": "redPolygon"
             }
           ],
           "defaultStyle": "grayPolygon"
@@ -902,17 +1005,17 @@
             {
               "minValue": "-Infinity",
               "maxValue": 20,
-              "style": "greenPoint"
+              "style": "greenPolygon"
             },
             {
               "minValue": 20,
               "maxValue": 40,
-              "style": "orangePoint"
+              "style": "orangePolygon"
             },
             {
               "minValue": 40,
               "maxValue": "Infinity",
-              "style": "redPoint"
+              "style": "redPolygon"
             }
           ],
           "defaultStyle": "grayPolygon"

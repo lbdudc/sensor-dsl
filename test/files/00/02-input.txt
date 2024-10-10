@@ -69,7 +69,6 @@ CREATE RANGE MagnitudRange (
 
 CREATE SENSOR QAObservation (
 	interval: 3600,
-	datasource: elasticsearch,
 	geometry: Point
 ) WITH PROPERTIES (
 	direccion String,
@@ -91,11 +90,11 @@ CREATE SENSOR QAObservation (
 ) WITH MEASUREMENT DATA (
 	valor Double,
 	isValid Boolean
-) WITH SPATIAL DIMENSIONS Administrative (
+) WITH SPATIAL GROUP Administrative (
 	Section, District, Municipality
-) WITH SPATIAL DIMENSIONS Voronoi (
+) WITH SPATIAL GROUP Voronoi (
 	Voronoi
-) WITH CATEGORICAL DIMENSIONS (
+) WITH CATEGORICAL GROUP (
 	Magnitud RANGE MagnitudRange
 );
 //WITH BBOX ([40.42, -3.7], 12);
@@ -104,7 +103,6 @@ CREATE SENSOR QAObservation (
 // SENSORS
 CREATE SENSOR TrafficObservation (
 	interval: 300,
-	datasource: elasticsearch,
 	geometry: Point
 ) WITH PROPERTIES (
 	descripcion String,
@@ -116,11 +114,11 @@ CREATE SENSOR TrafficObservation (
 	intensidad Double UNITS "veh/h" ICON "network_check",
 	velocidad Double UNITS "km/h" ICON "speed",
 	ocupacion Double UNITS "%" ICON "emoji_transportation"
-) WITH SPATIAL DIMENSIONS Administrative (
+) WITH SPATIAL GROUP Administrative (
 	Section,
 	District,
 	Municipality
-) WITH SPATIAL DIMENSIONS Barrio (
+) WITH SPATIAL GROUP Barrio (
 	Barrio
 );
 //WITH BBOX ([40.42, -3.7], 12);
