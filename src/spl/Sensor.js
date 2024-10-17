@@ -10,6 +10,7 @@ export default class Sensor {
     this.defaultLayer = id.toLowerCase() + "-layer";
     this.time = interval || 1000;
     this.isMoving = moving || false;
+    this.factTableEntity = id + "Measurement";
     this.geom = geom || "Point";
     this.measureData = [];
     this.dimensions = [];
