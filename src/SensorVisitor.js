@@ -274,7 +274,9 @@ class Visitor extends SensorGrammarVisitor {
         getPropertyParams(["identifier", "required", "unique"])
       );
 
-    this.store.getCurrentEntity().addProperty("geometry", sensor.geom);
+    if (!this.store.getCurrentSensor().isMoving) {
+      this.store.getCurrentEntity().addProperty("geometry", sensor.geom);
+    }
 
     // ADD ENTITY FOR MEASUREMENTS
     // Create relationship between current entity and measurement entity
@@ -302,6 +304,10 @@ class Visitor extends SensorGrammarVisitor {
         "Long",
         getPropertyParams(["identifier", "required", "unique"])
       );
+
+    if (this.store.getCurrentSensor().isMoving) {
+      this.store.getCurrentEntity().addProperty("geometry", sensor.geom);
+    }
 
     this.store
       .getCurrentEntity()

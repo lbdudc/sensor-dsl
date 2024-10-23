@@ -10,7 +10,7 @@ CREATE SPATIAL DIMENSION Zone (
 
 // SENSORS
 
-CREATE SENSOR ShipObservation (
+CREATE MOVING SENSOR ShipObservation (
 	interval: 300,
 	geometry: Point
 ) WITH PROPERTIES (
