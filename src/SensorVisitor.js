@@ -343,8 +343,8 @@ class Visitor extends SensorGrammarVisitor {
 
     const layer = new GeoJSONLayer(
       sensor.defaultLayer,
-      sensor.entity,
-      sensor.entity + "-geometry",
+      sensor.isMoving ? sensor.factTableEntity : sensor.entity,
+      sensor.isMoving ? sensor.factTableEntity : sensor.entity + "-geometry",
       false,
       "grayPoint"
     );
