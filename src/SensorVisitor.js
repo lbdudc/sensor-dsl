@@ -441,9 +441,11 @@ class Visitor extends SensorGrammarVisitor {
       const rSource = this.store.getCurrentSensor().entity;
       const rTarget = dimName;
 
-      this.store
-        .getProduct()
-        .addRelationship(rSource, rTarget, sourceOpts, targetOpts);
+      if (!this.store.getCurrentSensor().isMoving) {
+        this.store
+          .getProduct()
+          .addRelationship(rSource, rTarget, sourceOpts, targetOpts);
+      }
 
       // Addd layer to map
       const layer = new GeoJSONLayer(
