@@ -598,13 +598,14 @@ class Visitor extends SensorGrammarVisitor {
         const value = ctx.getChild(index + 1).getText();
 
         if (property === "UNITS") {
-          sensorProps.units = value.replace(/"/g, "");
+          // replace quotes, "" and '' quotes
+          sensorProps.units = value.replace(/["']/g, "");
           index += 2;
         } else if (property === "ICON") {
-          sensorProps.icon = value.replace(/"/g, "");
+          sensorProps.icon = value.replace(/["']/g, "");
           index += 2;
         } else if (property === "RANGE") {
-          sensorProps.range = value.replace(/"/g, "");
+          sensorProps.range = value.replace(/["']/g, "");
           index += 2;
         } else {
           index += 2;
