@@ -2,7 +2,7 @@
 
 ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Node.js Version](https://img.shields.io/badge/node-%3E%3D%2020.2.0-brightgreen.svg)
-![npm version](https://badge.fury.io/js/sensor-builder.svg)
+![npm version](https://badge.fury.io/js/@lbdudc%2Fsensor-dsl.svg)
 
 The Sensor Specification DSL Library is a Node.js-based tool designed to assist users in defining sensor specifications using a comprehensive Domain-Specific Language (DSL). This library enables the creation of detailed sensor specifications and outputs the data in JSON format. This JSON specification can be utilized in software product lines to generate complex Geographic Information System (GIS) web-based systems based on the provided sensor specifications.
 
