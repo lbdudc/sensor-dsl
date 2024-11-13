@@ -14,8 +14,6 @@ function transformation(spec) {
       "MV_Tools",
       "MV_MapManagement",
       "DM_SD_PostGIS",
-      "MV_T_Pan",
-      "MV_T_Zoom",
       "UserManagement",
       "UM_Authentication",
       "UM_UpdatePassword",
